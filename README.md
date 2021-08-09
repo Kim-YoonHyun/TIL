@@ -2,6 +2,8 @@
 
 ## Python project code
 
+(main 을 기반으로 git이 설정되어 있기에 git push 만으로 등록가능)
+
 ### 2021년
 
 #### 8월
@@ -15,6 +17,8 @@
 - 아직 class 사용 방법 및 어떤 구조에서 사용하는게 좋은지 등이 익숙치 않아 **의도적으로 사용하면서 연습중**
 
 ## Basic study
+
+(이후 코드는 전부 git push origin master 로 가능하도록 통일)
 
 ### 2021 년
 
