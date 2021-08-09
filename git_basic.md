@@ -68,6 +68,14 @@ $ git remote rm
 
 git push -u origin master 를 할 경우 그냥 git push로 가능하지만
 
+### 없어진 파일을 커밋할 경우
+
+``` bash
+$ git re <삭제된 파일 이름>
+```
+
+
+
 
 
 
