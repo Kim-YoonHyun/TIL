@@ -94,3 +94,7 @@
 - [pandas](pandas_basic.md)
   series, value 등 기본적인 개념 이해, 데이터 입출력, 인덱싱 방법, 데이터 조작, 인덱스 조작
 
+##### 12일
+
+- pandas 심화
+  합성, 그룹분석
