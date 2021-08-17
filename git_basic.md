@@ -74,6 +74,7 @@ $ git remote add origin http://github.com/<username>/<저장소이름>.git
 $ git push origin master
 # git push -u origin master 를 할 경우 이후 그냥 git push로 가능
 $ git pull origine master
+$ git push --set-upstream origin <branch_name> # branch 자체를 push
 ```
 
 > 원격저장소가 있는지 없는지
