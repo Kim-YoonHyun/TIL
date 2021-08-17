@@ -50,6 +50,20 @@ $ git log # 확인
 
 	* master 브랜치에서 브랜치명을 병합
 
+7. 브랜치 자체 push
+
+   ```bash
+   $ git push --set-upstream origin <branch_name> # branch 자체를 pus
+   ```
+
+8. 브랜치 clone
+
+   ```
+   git clone -b <branch name> <주소>
+   ```
+
+   
+
 ## 2. branch 병합 시나리오
 
 > branch 관련된 명령어는 간단하다.

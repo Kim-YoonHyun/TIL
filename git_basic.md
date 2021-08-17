@@ -75,6 +75,7 @@ $ git push origin master
 # git push -u origin master 를 할 경우 이후 그냥 git push로 가능
 $ git pull origine master
 $ git push --set-upstream origin <branch_name> # branch 자체를 push
+$ git push origin master -f #강제 push
 ```
 
 > 원격저장소가 있는지 없는지
@@ -108,7 +109,16 @@ $ git stash				# 임시 공간에 보관
 $ git stash pop			# 임시 공간에 보관된 정보 가져옴
 ```
 
+> 특정 commit으로 이동
 
+```bash
+$ git checkout <commit>
+$ git checkout -		# 최신 HEAD commit 으로 이동
+```
+
+```
+
+```
 
 
 
