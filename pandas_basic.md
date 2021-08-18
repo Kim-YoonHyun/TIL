@@ -195,7 +195,7 @@ df[df['열2'].notnull()]	# 열2 기준 NaN가 존재하지 않는 인덱스(행)
 # apply 변환
 df.apply(lambda x: x.max() - x.min())
 
-df.set_index('열0')		# 열0 의 값을 인덱스 이름으로 변경
+df.set_index('열0', inplace=True)	# 열0 의 값을 인덱스 이름으로 변경
 df.reset_index()		# 기존의 인덱스를 열의 값으로 바꾸고 디폴트 인덱스를 추가
 ```
 
