@@ -18,6 +18,11 @@
 
 [Mark down basic](mark_down_basic.md)
 [git basic](git_basic.md)
+[branch basic](branch_basic.md)
+[numpy basic](numpy_basic.md)
+[pandas_basic1](pandas_basic1.md)
+[pandas_basic2](pandas_basic2.md)
+[matplotlib basic](matplotlib.md)
 
 ### 2021 년
 
@@ -103,6 +108,6 @@
 
 - matplotlib 기본
 
-##### 17일~19일
+##### 17일~20일
 
 - crawling 기본, 유튜브 랭킹, 인스타그램 맛집 등
