@@ -18,6 +18,8 @@ Typora 다운받아서 md (mark down) 주로 사용
 - Second item
 - Third item
 
+문장뒤에 공백 두칸 입력시  줄바꿈.
+
 `code`
 
 ---
