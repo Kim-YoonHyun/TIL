@@ -39,6 +39,7 @@ plt.plot(x, y, 'rs--', label='bb')	# 추가 그래프 그리기
 
 # DataFrame plot
 df.plot()
+df.plot(kind='barh', grid=True, figsize=(12, 8)) 	# 다양한 설정 가능
 ```
 
 ```python
