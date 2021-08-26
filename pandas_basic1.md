@@ -228,6 +228,7 @@ df.set_index('열0', inplace=True)    # 열0 의 값을 인덱스 이름으로 �
 
 ```python
 df.drop(index='인덱스0', inplace=True)	# 인덱스0 의 행을 지움
+df.drop(columns='열0', inplace=True)	# 열0 을 지움
 df.drop(index=df.index[0])	# 0번째 행을 지움
 df.dropna()
 df.drop_duplicates()	# 중복데이터 삭제
