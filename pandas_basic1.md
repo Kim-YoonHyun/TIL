@@ -212,6 +212,7 @@ df[df['열0']=='aa']					   # 열0 에서 값이 'aa' 인 행으로만 DataFrame
 df[df['열2'].notnull()]				   # 열2 기준 NaN가 존재하지 않는 인덱스(행)으로 DataFrame 재구성 
 df.apply(lambda x: x.max() - x.min())	# apply 변환
 df['열0'] = df['열0'].replace(df['열0'][0], 'aaa')		# 열0 의 0번째 값을 aaa 로 변경
+df['열0'][0] = 'aaa'		# 변경가능한데 경고가 나옴
 ```
 
 ##### index 관련
