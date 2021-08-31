@@ -139,7 +139,7 @@ soup.select('.sample') 	# class를 찾을 땐 . 을 붙임
 soup.select_one('div#ex_id')			
 soup.select_one('div.ex_class.sample')		# 띄어쓰기는 .으로
 soup.select_one('a.a.sample').get_text()	# 내용을 text로 가져오기
-soup.select_one('a.a.sample').string		# 내용을 text로 가져오기
+soup.select_one('a.a.sample').string		# 내용을 text로 가져오기(위하고 다름)
 soup.select_one('a.a.sample')['herf']		# 속성 값 가져오기
 ```
 
@@ -278,7 +278,8 @@ driver.execute_script("window.scrollTo(0, y)") # y 까지 내림
 # 끝까지 내릴 경우는 y 값에 document.body.scrollHeight
 driver.execute_script("return document.body.scrollHeight")  # 다시 높이 가져옴
 
-
+# 뒤로가기
+driver.back()
 ````
 
 > html 불러오기 --> 이후 BeautifulSoup로 진행

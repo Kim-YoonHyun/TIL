@@ -116,8 +116,11 @@ $ git checkout <commit>
 $ git checkout -		# 최신 HEAD commit 으로 이동
 ```
 
-```
+> git 수정 이전으로 내용 되돌리기
 
+```bash
+git reset --hard				# 모든 변경 파일 되돌리기
+git checkout -- path/hello.c	# path/hello.c 의 변경 취소
 ```
 
 
