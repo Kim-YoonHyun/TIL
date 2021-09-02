@@ -236,11 +236,13 @@ df.drop_duplicates()	# 중복데이터 삭제
 
 ```
 
-##### 이름 추가
+##### 이름 관련
 
 ```python
 df.index.name = '도시'	# index 이름 추가
 df.columns.name = '특성'	# columns 이름 추가
+df.rename(columns = {'old_nm' : 'new_nm'}, inplace = True)
+df.rename(index = {'old_nm': 'new_nm'}, inplace = True)
 ```
 
 ##### 전치
