@@ -68,6 +68,7 @@ plt.savefig(f'path/image_name.png', 	# 저장 경로 및 파일이름, 확장자
 ```python
 # 플롯 보이기
 plt.grid()	# 격자 표시
+plt.colorbar() # 칼라 바 표시
 plt.show()	# 윈도우 보이기
 
 # 자동으로 닫고 싶을 경우
