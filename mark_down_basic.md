@@ -8,6 +8,8 @@ Typora 다운받아서 md (mark down) 주로 사용
 
 *기울인 문장 작성(\**)
 
+<span style="color:red">HTML 코드를 통해 글자 색 변경</span>
+
 > Blockqoute
 
 1. First item

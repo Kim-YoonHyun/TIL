@@ -166,3 +166,7 @@
 
 - git basic 내용 수정
 - Linux 커널 관련 기본 지식 추가
+
+30일
+
+- mark down 글자 색 변경 추가
