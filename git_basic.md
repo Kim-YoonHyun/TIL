@@ -79,8 +79,6 @@ $ git reset HEAD~2			# 마지막 2개의 commit 취소
 $ git reset --hard HEAD^	# commit을 취소하고 파일도 삭제
 ```
 
-
-
 ---
 
 ### 원격저장소
