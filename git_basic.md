@@ -69,6 +69,18 @@ $ git checkout <commit>
 $ git checkout -		# 최신 HEAD commit 으로 이동
 ```
 
+#### commit 삭제
+
+```bash
+$ git reset --soft HEAD^	# commit을 취소하고 파일은 staged 상태로 디렉터리 보존
+$ git reset --mixed HEAD^	# commit을 취소하고 파일은 unstaged 상태로 디렉터리 보존(기본)
+$ git reset HEAD^			# 위와 동일
+$ git reset HEAD~2			# 마지막 2개의 commit 취소
+$ git reset --hard HEAD^	# commit을 취소하고 파일도 삭제
+```
+
+
+
 ---
 
 ### 원격저장소
