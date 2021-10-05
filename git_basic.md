@@ -142,11 +142,11 @@ git remote add origin https://github.com/<user_name>/<repo_name>.git
 git pull origin master
 ```
 
-#### 사용자 이름 설정
+#### 사용자 이름 설정(본인 계정으로 꼭 해줘야함)
 
 ```bash
 git config --global user.name 'My name'
-git config --global user.email 'my_email@example.com'
+git config --global user.email 'my_email@example.com' 
 ```
 
 
