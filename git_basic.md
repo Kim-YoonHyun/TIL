@@ -112,13 +112,11 @@ $ git remote -v
 $ git remote rm
 ```
 
-#### remote 이름변경
+#### 기존 원격 저장소 url 변경
 
 ```bash
-$ git remote rename <이전이름> <바꿀이름>
+$ git remote set-url origin https://github.com/<username>/<remotename>.git
 ```
-
-
 
 #### main 을 master로 변경하는 경우
 
