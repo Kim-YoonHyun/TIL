@@ -15,8 +15,6 @@ np.random.choice(5, 3, replace=False)	# 범위 5에서 값 3개 비복원 추출
 numpy.insert(arr, obj, values, axis=None)
 ```
 
-
-
 ```python
 np.max(a, axis=0)				# a에서 최대값 추출
 np.maximum(a, b)		# a, b 를 비교하여 최대값으로 재구성
