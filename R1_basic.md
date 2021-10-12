@@ -444,7 +444,8 @@ setwd(path)		# 워킹 디렉토리 지정
 ```R
 data()		# R에 내장된 데이터셋 리스트 보여줌
 summary(dataset)	# 데이터셋의 변수내용 요약
-head(dataset)		# 6개 레코드까지 데이터 조회
+head(dataset)		# 처음 6개 레코드 조회
+tail(dataset)		# 마지막 6개 레코드 조회
 ```
 
 #### 패키지 관련
