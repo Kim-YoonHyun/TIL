@@ -431,6 +431,40 @@ as.list(df)	# 리스트로 변경
 as.matrix(df)	# 행렬로 변경
 ```
 
+### 통계
+
+#### 평균
+
+```R
+mean(data&column)	# 특정 column의 평균
+```
+
+#### 중앙값
+
+```R
+median(data$column)	# 특정 column의 중앙값
+```
+
+#### 표준편차
+
+```R
+sd(data$column)	# 특정 column의 표준편차
+```
+
+#### 분산
+
+```R
+var(data$column) # 특정 column의 분산
+```
+
+#### 분위수
+
+```R
+quantile(data$column) 	# 특정 column의 분위수
+```
+
+
+
 ### 기타
 
 #### 워킹 디렉토리 지정
@@ -445,6 +479,7 @@ setwd(path)		# 워킹 디렉토리 지정
 data()		# R에 내장된 데이터셋 리스트 보여줌
 summary(dataset)	# 데이터셋의 변수내용 요약
 head(dataset)		# 처음 6개 레코드 조회
+head(dataset, n)	# 처음 n개 레코드 조회
 tail(dataset)		# 마지막 6개 레코드 조회
 ```
 
