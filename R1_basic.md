@@ -457,13 +457,23 @@ sd(data$column)	# 특정 column의 표준편차
 var(data$column) # 특정 column의 분산
 ```
 
+#### 공분산
+
+```R
+cov(x, y=NULL, use='everything', method=c('pearson', 'kendall', 'spearman'))
+```
+
 #### 분위수
 
 ```R
 quantile(data$column) 	# 특정 column의 분위수
 ```
 
+### 상관관계
 
+```R
+cor(x, y=NULL, use='everything', method=c('pearson', 'kendall', 'spearman'))
+```
 
 ### 기타
 

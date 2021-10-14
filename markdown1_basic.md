@@ -8,6 +8,10 @@ Typora 다운받아서 md (mark down) 주로 사용
 
 *기울인 문장 작성(\**)
 
+위첨자: \<sup>, \</sup> <sup>위첨자</sup>
+
+아래첨자: \<sup>, \</sup> <sub>아래첨자</sub>
+
 <span style="color:red">HTML 코드를 통해 글자 색 변경</span>
 
 > Blockqoute
@@ -59,6 +63,13 @@ term
 - [x] 할일표시
 
 - [ ] 아아 
+
+$$
+$$ + enter 를 통해 수식 입력
+LaTex 관련 명령어는 치트시트 참고
+$$
+
+
 
 
 
