@@ -469,7 +469,7 @@ cov(x, y=NULL, use='everything', method=c('pearson', 'kendall', 'spearman'))
 quantile(data$column) 	# 특정 column의 분위수
 ```
 
-### 상관관계
+#### 상관관계
 
 ```R
 cor(x, y=NULL, use='everything', method=c('pearson', 'kendall', 'spearman'))
