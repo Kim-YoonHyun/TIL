@@ -20,7 +20,7 @@ np.max(a, axis=0)				# a에서 최대값 추출
 np.maximum(a, b)		# a, b 를 비교하여 최대값으로 재구성
 np.maximum.reduce(a)	# a에서 axis에 따른 최대값으로 재구성
 np.linspace(0.0, 5.0, 4) # 0.0 에서 5.0 까지 4분할
-np.take(a, index, axis=0)		# a에서 axis를 기준으로 지정한 index 갑을 추출
+np.take(a, index, axis=0)		# a에서 axis를 기준으로 지정한 index 값을 추출
 ```
 
 ```python

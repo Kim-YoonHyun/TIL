@@ -1,6 +1,28 @@
-# CV2
+# OpenCV
 
-## 명령어
+## CV2
+
+### 이미지 불러오기
+
+이미지는 numpy 배열 형식과 동일
+
+```python
+img = cv2.imread('<path>/<image_name>.ext')
+```
+
+### 이미지 show
+
+```python
+cv2.imshow('title', img)
+cv2.waitKey()			# imshow 이후 꼭 적어야함
+cv2.destroyAllWindows()	# imshow 이후 꼭 적어야함
+```
+
+### 이미지 저장
+
+```python
+cv2.imwrite('<path>/<image_name>.ext', img)
+```
 
 ### threshold
 
