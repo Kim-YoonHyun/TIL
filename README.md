@@ -1,10 +1,8 @@
 # TIL
 
-## Python project code
+## 2021년
 
-### 2021년
-
-#### 8월
+### 8월
 
 9일
 
@@ -14,8 +12,6 @@
 - 현재 code 리뉴얼 과정에 있으며 기본적인 논리연산에서의 더욱 간결하고 python 스러운 표현방식, class 및 numpy 등을 더욱 효율적으로 활용하여 **코드를 깔끔하게 바꾸는 작업** 중.  
 - 아직 class 사용 방법 및 어떤 구조에서 사용하는게 좋은지 등이 익숙치 않아 **의도적으로 사용하면서 연습중**
 
-## Basic study
-
 [Mark down basic](mark_down_basic.md)
 [git basic](git_basic.md)
 [branch basic](branch_basic.md)
@@ -24,18 +20,10 @@
 [pandas_basic2](pandas_basic2.md)
 [matplotlib basic](matplotlib.md)
 
-### 2021 년
-
-#### 8월
-
-9일
-
 1. [Mark down의 기본적인 사용법](mark_down_basic.md)
 2. [Mark down 사용 예시 - python 정리](mark_down_python.md)
 3. [git 명령어의 종류 및 이해](git_basic.md)
 4. [git status 상세](status.md)
-
-
 
 10일
 
@@ -195,3 +183,9 @@
 
 - 가설, 추정, 회귀분석 부분 정리
 - 가능하면 너무 이론적으로 파고들지 않고 적당히 진행 필요
+
+#### 11월
+
+2일
+
+- github profile 오픈소스 파악
