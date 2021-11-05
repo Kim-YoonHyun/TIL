@@ -1,5 +1,3 @@
-Typora 다운받아서 md (mark down) 주로 사용
-
 # Heading1 (#)
 
 ## Heading2 (##)
