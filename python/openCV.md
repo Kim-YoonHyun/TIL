@@ -10,6 +10,14 @@
 img = cv2.imread('<path>/<image_name>.ext')
 ```
 
+### 이미지 변환
+
+```python
+img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+```
+
 ### 이미지 show
 
 ```python
@@ -82,3 +90,10 @@ for i in circles[0]:
 최대 반지름에 음수를 입력하면 검출된 원의 중심만 반환
 
 circles 는 (1, N, 3) 차원 형태. 반복문을 통해 중심점과 반지름을 반환.
+
+### 특정 범위 안에 있는 행렬 원소 검출
+
+```python
+mask = cv2.inRange(src, lowerb, upperb, dst=None)
+```
+
