@@ -67,7 +67,7 @@ isinstance(kim_yh, MyClass)
 ### 예시 코드
 
 ```python
-class Man(MyClass):			# class 상속
+class Man(MyClass, MyClass2:			# class 상속, 추가 상속 가능
     def __init__(self, name):	
         super().__init__(name)		# 부모 class의 인스턴스변수 살리기
         self.sex = 'male'
