@@ -4,39 +4,53 @@ tkinter, PyQt, wxPython, PyGui, PySide 등 다양하게 존재
 
 ## tkinter
 
-### import
-
 ```python
-import tkinter
+import tkinter as tk
+from tkinter import *
 ```
 
-### root 윈도우 생성
+### root window
+
+#### 윈도우 생성
 
 ```python
-root_window = tkinter.Tk()
+root_window = tk.Tk()
 ```
 
-### root 윈도우 제목 설정
+#### 윈도우 제목 설정
 
 ```python
 root_window.title('title')
 ```
 
-### 객체 생성
-
-#### label
+#### 윈도우 크기 설정
 
 ```python
-label = tkinter.Label(root_window, text='test app')
+root_window.geometry('500x200')
 ```
 
-#### list box
+#### 윈도우 실행
 
 ```python
-list_box = tkinter.Listbox(root_window, exportselection=False)	# exportselection: 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
-list_box.insert(0, 'text')				# 0위치에 text 리스트박스 생성
-list_box.insert(tkinter.END, 'text')	# 마지막에 text 리스트박스 생성
-list_box.delete(0, 2)					# 0 ~ 2 위치 삭제
+root_window.mainloop()		# 가장 마지막 부분에 적음
+```
+
+#### 윈도우 끄기
+
+```python
+root_window.destroy()
+```
+
+
+
+### 위젯 생성
+
+#### label 
+
+```python
+label = tk.Label(root_window, text='test app')
+label = tk.Label(root_window, text='text app', bg='red', fg='blue')
+label = tk.Label(root_window, text='text app', width=10, height=3)
 ```
 
 #### entry
@@ -44,8 +58,8 @@ list_box.delete(0, 2)					# 0 ~ 2 위치 삭제
 한줄 문자열 입력
 
 ````python
-entry = tkinter.Entry(root_window)
-entry.insert(0, 'string')
+entry = tk.Entry(root_window)
+entry = tk.Entry(root_window, bg='red', fg='blue', width=3)
 ````
 
 #### text
@@ -53,29 +67,75 @@ entry.insert(0, 'string')
 여러줄 문자열 입력
 
 ````python
-text = tkinter.Text(root_window)
-text.insert(1.0, 'string')		# 1.0 부터 시작. 실수값만 가능.
+text = tk.Text(root_window)
 ````
 
 #### button
 
 ```python
-button = tkinter.Button(root_window, text='버튼')
+button = tk.Button(root_window, text='버튼')
+button = tk.Button(root_window, text='버튼', bg='red', fg='blue', width=3)
 ```
 
-### 윈도우에 배치
-
-pack 또는 grid 둘중 하나만 적용 가능
-
-#### 단순배치
-
-기본적으로 명령어 순서대로 행배치, 가운데 열배치가 된다.
+#### list box
 
 ```python
-<객체>.pack()
+list_box = tk.Listbox(root_window, exportselection=False)	# exportselection: 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
+list_box.insert(0, 'text')				# 0위치에 text 리스트박스 생성
+list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
+list_box.delete(0, 2)					# 0 ~ 2 위치 삭제
 ```
 
-#### 그리드 배치
+### 위젯값
+
+#### 값 입력
+
+```python
+entry.insert(0, 'string')		# 0 부터 시작. 정수값 가능
+text.insert(1.0, 'string')		# 1.0 부터 시작. 실수값만 가능.
+```
+
+#### 입력 값 가져오기
+
+```python
+entry.get()
+list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜플 형태로 리턴
+```
+
+#### 값 삭제
+
+```python
+entry.delete(0, 1)			# 0 ~ 1 까지의 값 삭제
+text.delete(1.0, tk.END)	# 전부 삭제
+```
+
+### 이미지 넣기
+
+```python
+img = tk.PhotoImage(file=<path>)
+img_wg = tk.Label(root_window, image=img)
+img_wg = tk.Button(root_window, image=img)
+```
+
+### 위젯 배치
+
+#### place
+
+위젯 위치를 절대 좌표로 정하는 방식. 위젯의 크기는 변하지 않는다.
+
+```python
+<위젯>.place(0, 1)
+```
+
+#### pack
+
+부모위젯에 패킹하여 불필요한 공간을 없애는 방색.
+
+```python
+<위젯>.pack()
+```
+
+#### grid
 
 객체 하나하나가 전부 하나의 row 이자 col 을 생성함.
 row: 객체의 행 위치
@@ -86,18 +146,22 @@ ns: 남북 방향 길이 맞춤
 으로 객체의 위치&크기 지정 가능
 
 ```python
-<객체>.grid(row=1, column=0)
-<객체>.grid(row=0, column=3, columnspan=3, sticky='ew')
-<객체>.grid(row=4, column=2, columnspan=3, sticky='ns')
+<위젯>.grid(row=1, column=0)
+<위젯>.grid(row=0, column=3, columnspan=3, sticky='ew')
+<위젯>.grid(row=4, column=2, columnspan=3, sticky='ns')
 ```
 
-### 동작 생성
+### 바인딩
+
+#### 클릭시 이벤트
 
 ```python
-<객체>.bind('<이벤트명령어>', 함수)
+def button_click(event):
+    print('위젯이 클릭되었습니다.')
+<위젯>.bind('<Button-1>', button_click)
 ```
 
-#### 리스트 박스 선택시 동작
+#### 리스트 박스 선택
 
 ```python
 def event_for_list_box(event):	# 예시 함수
@@ -106,20 +170,55 @@ def event_for_list_box(event):	# 예시 함수
 list_box.bind('<<ListboxSelect>>', event_for_list_box)
 ```
 
-#### 버튼 클릭시 동작
+#### 커서가 위에 올라갈 경우 이벤트
 
 ```python
-def button_click(event):
-    print('버튼이 클릭되었습니다.')
-    
-button.bind('<Button-1>', button_click)
+def mouse_in(event):
+    print('마우스가 위젯 위에 있습니다.')
+<위젯>.bind('<Enter>', mouse_in)
 ```
 
+#### 커서가 밖으로 나올 경우 이벤트
 
+```python
+def mouse_out(event):
+    print('마우스가 위젯 밖으로 나왔습니다.')
+<위젯>.bind('<Leave>', mouse_out)
+```
 
+#### ESC 단축키 설정
 
+```python
+def closer(event):
+	pass 
+<위젯>.bind('<Escape>', closer)
+<위젯>.bind('<q>', closer)
+```
 
+#### 엔터키 단축키 설정
 
+```python
+<위젯>.bind('<Return>', going)
+<위젯>.bind('<r>', going)
+```
+
+### 탭 생성
+
+```python
+import tkinter.ttk as ttk
+
+notebook = ttk.Notebook(root_window, width=800, height=500)
+tab1 = tk.Frame(root_window)		# 탭 추가
+tab2 = tk.Frame(root_window)
+
+notebook.add(tab1, text="TAB1")		# 탭 이름
+notebook.add(tab2, text="TAB2")
+
+label1=tk.Label(tab1, text="TAB1")
+label2=tk.Label(tab2, text="TAB2")
+```
+
+이후 위젯을 root_window 가 아닌 tab1 또는 tab2에 생성하면 그 탭에 생성됨
 
 
 
