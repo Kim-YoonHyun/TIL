@@ -41,16 +41,26 @@ root_window.mainloop()		# 가장 마지막 부분에 적음
 root_window.destroy()
 ```
 
-
-
 ### 위젯 생성
+
+모든 위젯은 기본적으로
+`bg='red', fg='blue', width=10, height=3`
+의 옵션을 가지고 있음.
+
+단, entry는 높이 설정이 불가능하여 height가 없는 것처럼 특정 위젯은 없는 경우도 있음.
 
 #### label 
 
 ```python
 label = tk.Label(root_window, text='test app')
-label = tk.Label(root_window, text='text app', bg='red', fg='blue')
-label = tk.Label(root_window, text='text app', width=10, height=3)
+```
+
+#### message
+
+현재로썬 Label 과의 차이점 불명
+
+```python
+msg = tf.Message(root_window, text='msee')
 ```
 
 #### entry
@@ -59,7 +69,6 @@ label = tk.Label(root_window, text='text app', width=10, height=3)
 
 ````python
 entry = tk.Entry(root_window)
-entry = tk.Entry(root_window, bg='red', fg='blue', width=3)
 ````
 
 #### text
@@ -74,25 +83,32 @@ text = tk.Text(root_window)
 
 ```python
 button = tk.Button(root_window, text='버튼')
-button = tk.Button(root_window, text='버튼', bg='red', fg='blue', width=3)
+```
+
+#### Checkbutton
+
+```python
+ch1 = tf.Checkbutton(root_window, text='check1')
 ```
 
 #### list box
 
 ```python
-list_box = tk.Listbox(root_window, exportselection=False)	# exportselection: 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
-list_box.insert(0, 'text')				# 0위치에 text 리스트박스 생성
-list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
-list_box.delete(0, 2)					# 0 ~ 2 위치 삭제
+list_box = tk.Listbox(root_window, exportselection=False)	
+# exportselection: 
+# 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
 ```
 
-### 위젯값
+### 위젯의 값
 
 #### 값 입력
 
 ```python
+<위젯>.insert(<위치>, 'text')
 entry.insert(0, 'string')		# 0 부터 시작. 정수값 가능
 text.insert(1.0, 'string')		# 1.0 부터 시작. 실수값만 가능.
+list_box.insert(0, 'text')		# 0위치에 text 리스트박스 생성
+list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 ```
 
 #### 입력 값 가져오기
@@ -105,11 +121,15 @@ list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜
 #### 값 삭제
 
 ```python
+<위젯>. delet(<시작>, <끝>)
 entry.delete(0, 1)			# 0 ~ 1 까지의 값 삭제
 text.delete(1.0, tk.END)	# 전부 삭제
+list_box.delete(0, 2)		# 0 ~ 2 위치 삭제
 ```
 
 ### 이미지 넣기
+
+PhotoImage로 불러와서 위젯을 통해 삽입
 
 ```python
 img = tk.PhotoImage(file=<path>)
@@ -146,7 +166,7 @@ ns: 남북 방향 길이 맞춤
 으로 객체의 위치&크기 지정 가능
 
 ```python
-<위젯>.grid(row=1, column=0)
+<위젯>.grid(row=1, column=0)	# 위젯 생성시 크기를 지정했을 경우 사용
 <위젯>.grid(row=0, column=3, columnspan=3, sticky='ew')
 <위젯>.grid(row=4, column=2, columnspan=3, sticky='ns')
 ```
@@ -166,7 +186,7 @@ def button_click(event):
 ```python
 def event_for_list_box(event):	# 예시 함수
     print('event')
-    
+
 list_box.bind('<<ListboxSelect>>', event_for_list_box)
 ```
 
@@ -220,11 +240,47 @@ label2=tk.Label(tab2, text="TAB2")
 
 이후 위젯을 root_window 가 아닌 tab1 또는 tab2에 생성하면 그 탭에 생성됨
 
+### 파일에 접근(filedialog)
 
+#### 불러오기
 
+```python
+import tkinter.filedialog as fd
 
+filedialog.asksaveasfilename()
+filedialog.asksaveasfile()
+filedialog.askopenfilename()
+filedialog.askopenfile()
+filedialog.askdirectory()
+filedialog.askopenfilenames()
+filedialog.askopenfiles()
+```
 
+### 스크롤 바
 
+#### pack 방식
+
+#### grid 방식
+
+```python
+<적용할 위젯 생성>
+
+# x축은 현재 잘 되지 않음
+#scrollbar = tf.Scrollbar(root_window, orient='horizontal', 
+#                         command=<적용할 위젯>.xview)
+#<적용할 위젯>.['xscrollcommand'] = scrollbar.set
+#scrollbar.grid(row=0, column=3, sticky='ew')
+
+# y 축
+scrollbar = tf.Scrollbar(root_window, orient='vertical', 
+                         command=<적용할 위젯>.yview)
+<적용할 위젯>.['yscrollcommand'] = scrollbar.set
+scrollbar.grid(row=0, column=3, sticky='ns')
+```
+
+탭을 생성할 경우 root_window 대신 tab 이름을 적어야한다.
+
+스크롤바는 기본적으로 위젯을 생성한 후 그 위젯에 적용하는 방식이 가장 무난함.
 
 # PyQt5
 
