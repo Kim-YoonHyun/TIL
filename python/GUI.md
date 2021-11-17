@@ -282,6 +282,14 @@ scrollbar.grid(row=0, column=3, sticky='ns')
 
 스크롤바는 기본적으로 위젯을 생성한 후 그 위젯에 적용하는 방식이 가장 무난함.
 
+### 오류 메세지
+
+```python
+tk.messagebox.showerror('오류', '오류가 발생했습니다.')
+```
+
+
+
 # PyQt5
 
 ```python

@@ -21,3 +21,9 @@ f'{data:<>16s}'		# 문자열 가운데 정렬
 ' text '.rstrip()	# 오른쪽 공백 제거
 ```
 
+### 공백 확인
+
+```python
+string.isspace()
+```
+
