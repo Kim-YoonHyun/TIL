@@ -83,9 +83,14 @@ $ git reset --hard HEAD^	# commit을 취소하고 파일도 삭제
 
 ### 원격저장소
 
-#### 원격저장소와 로컬 저장소 연결
+#### 원격저장소와 로컬 저장소 연결 순서
 
 ```bash
+$ git init
+$ git status
+$ git add .
+$ git commit -m 'fisrt commit'
+# 우선 깃을 생성한 뒤 첫 커밋을 하고 난 이후 연결
 $ git remote add origin http://github.com/<username>/<저장소이름>.git
 # origin 이라는 이름으로 <주소> 를 remote 에 추가
 ```

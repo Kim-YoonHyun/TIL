@@ -178,7 +178,11 @@ ns: 남북 방향 길이 맞춤
 ```python
 def button_click(event):
     print('위젯이 클릭되었습니다.')
-<위젯>.bind('<Button-1>', button_click)
+<위젯>.bind('<Button-1>', button_click)	# 왼쪽 클릭
+<위젯>.bind('<Button-2>', button_click)	# 휠 클릭
+<위젯>.bind('<Button-3>', button_click)	# 오른쪽 클릭
+<위젯>.bind('<Button-4>', button_click)	# 스크롤 업
+<위젯>.bind('<Button-5>', button_click)	# 스크롤 다운
 ```
 
 #### 리스트 박스 선택
@@ -206,13 +210,21 @@ def mouse_out(event):
 <위젯>.bind('<Leave>', mouse_out)
 ```
 
-#### ESC 단축키 설정
+#### 특정 버튼 입력시 이벤트 
 
 ```python
 def closer(event):
 	pass 
-<위젯>.bind('<Escape>', closer)
+<위젯>.bind('<Key>', closer)			# 특정 키
+<위젯>.bind('<Escape>', closer)		# ESC 키
 <위젯>.bind('<q>', closer)
+<위젯>.bind('<Return>', closer)		# Enter 키
+<위젯>.bind('<BackSpace>', closer)	# Backspace 키
+<위젯>.bind('<Up>', closer)			# 위쪽 방향키
+<위젯>.bind('<Down>', closer)			# 아래쪽 방향카
+<위젯>.bind('<Right>', closer)		# 오른쪽 방향키
+<위젯>.bind('<Left>', closer)			# 왼쪽 방향키
+
 ```
 
 #### 엔터키 단축키 설정

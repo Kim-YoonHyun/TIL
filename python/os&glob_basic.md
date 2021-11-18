@@ -38,10 +38,33 @@ os.path.dir(path)
 os.path.basename(path)
 ```
 
+### 현재 작업 파일의 경로 추출
+
+```python
+os.path.dirname(os.path.abspath("__file__"))
+```
+
 ### 디렉토리, 파일명 동시 추출
 
 ```python
 os.path.split(path)
+```
+
+### cmd 명령어 제어
+
+#### cmd 명령어 단순 실행
+
+```python
+os.system('<cmd 명령어>')
+os.system('dir')
+os.system('pyinstaller <파일이름>.py')
+```
+
+#### cmd 명령어 실행값 가져오기
+
+```python
+f = os.popen('<cmd 명령어>')
+print(f.read())
 ```
 
 

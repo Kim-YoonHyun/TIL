@@ -171,8 +171,27 @@
 
 - json 내용 추가
 
-15~17
+15~16
 
 - GUI 추가
 
 - 스크롤바 설정하는 방법에 대해서 공부
+
+17일
+
+- dict 값 제거 부분 추가
+- list 값 찾기 부분 추가
+- string 공백 여부 확인 추가
+
+18일
+
+- pyinstaller 설치를 통해 GUI를 exe 파일로 전환하기
+  윈도우 cmd에 pip install pyinstaller 를 설치해야한다.
+- 파이썬에서 cmd 명령어 사용하기.
+  os.system을 통해서 제어
+- class 에서 self, method, instance 의 개념을 다시 한번 정리.
+  instance: class 에 할당되는 객체
+  method: 클래스에 정의되는 동작
+  self: class 에 할당된 인스턴스
+- GUI: 위젯에 바인딩부분에서 event를 제외하고 변수를 넣으면 자동실행되는 현상을 어떻게 제어불가능한지 여부를 찾아보고 있음. > event 형식 아니면 안됨. > 변수를 직접 불러오는 방식으로 사용.
+  현재 수정버튼 작업중.
