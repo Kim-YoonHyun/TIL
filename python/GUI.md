@@ -26,7 +26,9 @@ root_window.title('title')
 #### 윈도우 크기 설정
 
 ```python
-root_window.geometry('500x200')
+root_window.geometry('500x200+100+100')	# 공백 있으면 안됨
+# 500 x 200 : 너비 X 높이 크기 설정
+# 100+100 : 메인화면이 출력할 시작 좌표. 100, 50 만큼 우측과 아래로 이동함.  
 ```
 
 #### 윈도우 실행
@@ -99,6 +101,24 @@ list_box = tk.Listbox(root_window, exportselection=False)
 # 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
 ```
 
+#### Canvas
+
+```python
+canvas = tk.Canvas(root_window)
+# width : 너비. default=378
+# height: 높이. default=265
+# relidf: 테두리 모양. flat,groove, raised, ridge, solid, sunken
+# bd: 테두리 두께. default=0
+# bg: 배경색. default=SystemButtonFace
+# offset: 오프셋 설정. x, y, n, e, w, s, ne, nw, se, sw
+```
+
+### 위젯 수정
+
+```python
+<위젯>.config(option='text')
+```
+
 ### 위젯의 값
 
 #### 값 입력
@@ -116,7 +136,10 @@ list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 ```python
 entry.get()
 list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜플 형태로 리턴
+list_box.get(0, tk.get)		# 리스트박스의 항목을 튜플 형태로 리턴
 ```
+
+listbox 에선 현재 선택된 값에 대해선 index 만 찾을 수 있음
 
 #### 값 삭제
 
@@ -125,6 +148,22 @@ list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜
 entry.delete(0, 1)			# 0 ~ 1 까지의 값 삭제
 text.delete(1.0, tk.END)	# 전부 삭제
 list_box.delete(0, 2)		# 0 ~ 2 위치 삭제
+```
+
+#### canvas 그리기
+
+```python
+canvas.line(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 선
+canvas.rectangle(x1, y1, x2, y2, option)	# 좌상단에서 우하단의 사각형
+canvas.ploygon(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 다각형
+canvas.oval(x1, y1, x2, y2, option)	# 좌표에서 좌표 반지름의 원
+canvas.arc(x1, y1, x2, y2, start, extent, option)	# 좌표에서 좌표 반지름, start에서 extent 각도의 호
+canvas.image(x, y, image, option)	# 좌표 위치 이미지 생성
+# fill : 색 채워넣기
+# outline: 두께 색상
+# width: 두께
+# anchor: 위치지정
+    
 ```
 
 ### 이미지 넣기

@@ -2,6 +2,21 @@
 
 ## 기본 명령어
 
+### dict 생성
+
+#### key list 와 value list 를 통해 생성
+
+```python
+key_list = ['a', 'b', 'c']
+value_list = [1, 2, 3]
+
+dict(zip(key_list, value_list))
+```
+
+
+
+
+
 ### key 추출
 
 ```python
@@ -37,6 +52,14 @@ example['a'] = 2
 example = {'a':1, 'b':2}
 
 del(example['a'])
+```
+
+#### 키값 삭제 + 키에 할당된 값 추출
+
+```python
+example = {'a':1, 'b':2}
+
+a_value = example.pop('a')
 ```
 
 
