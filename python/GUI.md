@@ -45,11 +45,21 @@ root_window.destroy()
 
 ### 위젯 생성
 
-모든 위젯은 기본적으로
-`bg='red', fg='blue', width=10, height=3`
-의 옵션을 가지고 있음.
+#### 옵션
 
-단, entry는 높이 설정이 불가능하여 height가 없는 것처럼 특정 위젯은 없는 경우도 있음.
+| 이름    | 의미                                  | 기본값           | 속성                                       |
+| ------- | ------------------------------------- | ---------------- | ------------------------------------------ |
+| width   | 너비                                  | 0                | 상수                                       |
+| height  | 높이                                  | 0                | 상수                                       |
+| relief  | 테두리모양                            | flat             | flat, groove, raised, ridge, solid, sunken |
+| bd      | 테두리두께                            | 2                | 상수                                       |
+| bg      | 배경색상                              | SystemButtonFace | color                                      |
+| fg      | 문자열 색상                           | SystenButtonFace | color                                      |
+| padx    | 라벨의 테두리와<br />내용의 세로 여백 | 1                | 상수                                       |
+| pady    | 라벨의 테두리와<br />내용의 세로 여백 | 1                | 상수                                       |
+| justify | 정렬                                  | center           | center, right, left                        |
+
+단, entry 처럼 높이 설정이 불가능한 경우도 있음
 
 #### label 
 
@@ -269,7 +279,6 @@ def closer(event):
 #### 엔터키 단축키 설정
 
 ```python
-<위젯>.bind('<Return>', going)
 <위젯>.bind('<r>', going)
 ```
 
