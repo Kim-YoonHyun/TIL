@@ -21,7 +21,7 @@ json_string = json.dumps(person, indent='\t')   # indent: 들여쓰기
 
 #### 값 추가 & 변환
 
-저장되어있는 객체의 스타일(dict, list 등)에 맞춰 해당 문법을 통해 추가
+저장되어있는 객체의 스타일(dict, list 등)에 맞춰 해당 문법을 통해 추가dict()
 
 ```python
 person['name'] = 'kim'

@@ -43,6 +43,15 @@ root_window.mainloop()		# 가장 마지막 부분에 적음
 root_window.destroy()
 ```
 
+#### root 윈도우에 추가 윈도우 생성
+
+```python
+new_window = tk.Toplevel(root_window)
+# new_window.mainloop()는 할 필요 없음
+```
+
+
+
 ### 위젯 생성
 
 #### 옵션
@@ -223,6 +232,8 @@ ns: 남북 방향 길이 맞춤
 ### 바인딩
 
 #### 클릭시 이벤트
+
+https://076923.github.io/posts/Python-tkinter-33/
 
 ```python
 def button_click(event):
