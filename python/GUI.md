@@ -54,7 +54,7 @@ new_window = tk.Toplevel(root_window)
 
 ### 위젯 생성
 
-#### 옵션
+#### 공통 옵션
 
 | 이름    | 의미                                  | 기본값           | 속성                                       |
 | ------- | ------------------------------------- | ---------------- | ------------------------------------------ |
@@ -104,6 +104,14 @@ text = tk.Text(root_window)
 
 ```python
 button = tk.Button(root_window, text='버튼')
+```
+
+#### button command option
+
+```python
+def test_def(num):
+    print(num)
+button = tk.Button(root_window, text='버튼', command=lambda: test_def(10))
 ```
 
 #### Checkbutton
