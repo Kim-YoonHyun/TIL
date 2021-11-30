@@ -202,3 +202,7 @@
   pop, 
 - GUI 에 내용 추가.
   Canvas, canvas 그리기, 위젯 수정
+
+30일
+
+- QGIS 오류 수정 방법 확인
