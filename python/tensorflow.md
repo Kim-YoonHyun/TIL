@@ -1,20 +1,20 @@
 # tensorflow
 
-## keras
+## 1. keras
 
-### 기본 imprt 
+### 1.1. 기본 imprt 
 
 ```python
 from tensorflow.keras.<name> import <name>
 ```
 
-### ImageDataGenerator
+### 1.2. ImageDataGenerator
 
 실시간 데이터 증강을 사용하여 텐서 이미지 데이터 batch를 생성. 데이터에 대해 batch 단위로 루프가 순환
 
 데이터 전처리용 keras 클래스.
 
-#### 옵션
+#### 1.2.1 옵션
 
 ```python
 ImageDataGenerator(<option>)
@@ -45,9 +45,9 @@ ImageDataGenerator(<option>)
 | `validation_split`              | 부동소수점(0~1)                                              |                   | validation용도로 남겨둘 이미지 비율.                         |
 | `dtype`                         | 자료형                                                       |                   | 생성된 배열에 사용할 자료형.                                 |
 
-#### method
+#### 1.2.2. method
 
-##### flow_from_directory
+##### 1.2.1.1. flow_from_directory
 
 디렉토리에의 경로를 전달받아 증강된 데이터의 batch를 생성.
 
@@ -82,5 +82,169 @@ directory:
   y: x에 대응하는 라벨 numpy array.
   ```
 
-  
+
+### 1.3. Sequential
+
+#### 1.3.1. 모델 생성
+
+각 레이어에 **정확히 하나의 입력 텐서와 하나의 출력 텐서**가 있는 **일반 레이어 스택**에 적합.
+
+<적합하지 않은 경우>
+모델 또는 레이어에 다중입력 또는 다중 출력이 있는경우.
+레이어 공유가 필요한 경우.
+비선형 토폴로지(잔류연결, 다중 분기 모델)이 필요한 경우.
+
+```python
+model = keras.Sequential(
+    [
+        layers.Dense(2, activation='relu', name='layer1')
+        layers.Dense(3, activation='relu', name='layer2')
+        layers.Dense(4, name='layer3')
+    ]
+)
+
+x = tf.ones((3, 3))
+y = model(x)
+```
+
+```python
+layer1 = layers.Dense(2, activation='relu', name='layer1')
+layer2 = layers.Dense(3, activation='relu', name='layer2')
+layer3 = layers.Dense(4, name='layer3')
+
+x = tf.ones((3, 3))
+y = model(x)
+```
+
+위 두 코드는 동일한 코드이다.
+
+##### 1.3.1.2. layer 확인
+
+```python
+model.layers
+```
+
+##### 1.3.1.3. layer 추가(점진적 작성)
+
+```python
+model.add(layer.Dense(5, activation='relu', name='layer5'))
+model.add(layer.Dense(6), name='layer6')
+```
+
+##### 1.3.1.4. layer 제거
+
+```python
+model.pop()	# 리스트와 유사하게 작동
+```
+
+##### 1.3.1.5. weight 확인
+
+```python
+model.weights
+```
+
+##### 1.3.1.6. 모델 내용 요약
+
+```python
+model.summary
+```
+
+#### 1.3.2. 모델 구성
+
+```python
+# 기본
+model.compile(
+    optimizer='adam'
+    loss='binary_crosstropy'
+    metrics=['accuracy']
+)
+```
+
+- loss(손실): 학습을 통해 직접적으로 줄이고자 하는 값.
+
+  square_loss, entropy_loss, binary_crossentropy, categorical_crossentropy 등
+
+- metric(척도): 학습을 통해 목표를 얼마나 잘(못) 달성했는지 평가할 항목.
+
+  accuracy 등
+
+| 인수                 | 설명                                                         | 값 예시                 |
+| -------------------- | ------------------------------------------------------------ | ----------------------- |
+| `optimizer`          | 최적화 프로그램                                              | `'adam'`                |
+| `loss`               | 손실 함수                                                    | `'binary_crossentropy'` |
+| `metrics`            | 척도 값                                                      | `'accuracy'`            |
+| `loss_weights`       | 각기 다른 모델 아웃풋의 손실 기여도에 가중치를 부여하는 스칼라 계수를 특정하는 선택적 리스트 또는 딕셔너리. |                         |
+| `sample_weight_mode` | `temporal` 설정시 시간 단계별 샘플 가중치 부여               | `None(default)`         |
+| `weighted_metrics`   | `sample_weight`이나 `class_weight`으로 가중치를 적용하여 평가할 측정항목의 리스트 |                         |
+| `target_tensors`     |                                                              |                         |
+
+#### 1.3.3 모델 학습
+
+##### 1.3.3.1 단일 input
+
+```python
+fit(
+    x=None, y=None, batch_size=None, 
+    epochs=1, 
+    initial_epoch=0, # 학습을 시작할 epoch
+    steps_per_epoch=None
+    validation_split=0.0, validation_data=None, , validation_steps=None, 
+    
+    shuffle=True, 
+    verbose=1, callbacks=None, 
+    class_weight=None, sample_weight=None, 
+     
+)
+```
+
+| 이름               | 값              | default | 설명                                                         |
+| ------------------ | --------------- | ------- | ------------------------------------------------------------ |
+| `initial_epoch`    | `int`           |         | 학습을 시작할 epoch. 이전의 학습 과정 재개에 유용.           |
+| `step_per_epoch`   | `int`           | `None`  | 다음 epoch를 시작하기까지의 sample batch 의 총 갯수.<br />None일 경우 sample batch의 총 갯수는<br />샘플수/batch 또는 1(확정 불가일 경우)이 된다. |
+| `validation_split` | `0 ~ 1`         |         | 검증용 데이터 비율.                                          |
+| `validation_data`  | `tuple`         |         | 검증용 데이터 (`validation_split`보다 우선순위 높음).        |
+| `validation_step`  | `int`           |         | 정지 전 검증할 sample batch의 총 갯수.<br />`step_per_epoch` 가 지정된 경우만 유의미. |
+| `shuffle`          | `boolean`       |         | 학습데이터를 뒤섞을지 여부.<br />`step_per_epoch`가 지정되지 않은 경우만 유의미. |
+| `verbose`          | `0, 1, 2`       |         | 0: 자동.<br />1: 진행 표시줄.<br />2: epoch 당 한 라인.      |
+| `callbacks`        | `instance list` |         | 학습과 검증 과정에서 적용할 콜백 리스트.                     |
+
+
+
+##### 1.3.3.2 배치 단위로 생산한 data input
+
+```python
+fit_generator(
+    generator, 
+    epochs=1, initial_epoch=0
+    steps_per_epoch=None,
+    validation_data=None, validation_steps=None,
+    
+    shuffle=True,
+    verbose=1, callbacks=None, 
+    class_weight=None, 
+    max_queue_size=10, workers=1, use_multiprocessing=False, 
+    
+)
+```
+
+
+
+#### 1.3.4 모델 평가
+
+```python
+predict(
+    x, 
+    batch_size=None, 
+    verbose=0, 
+    steps=None, 
+    callbacks=None
+)
+```
+
+| 이름   | 값            | default | 설명                                                         |
+| ------ | ------------- | ------- | ------------------------------------------------------------ |
+| `x`    | `numpy array` |         | 평가할 인풋 데이터                                           |
+| `step` | `int`         | `None`  | 예측이 한번 완료될 때 까지의 단계.<br />None일 경우 고려되지 않음. |
+
+
 
