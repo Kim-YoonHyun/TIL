@@ -13,10 +13,6 @@ value_list = [1, 2, 3]
 dict(zip(key_list, value_list))
 ```
 
-
-
-
-
 ### key 추출
 
 ```python

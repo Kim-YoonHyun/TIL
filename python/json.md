@@ -35,7 +35,10 @@ person['school'].append({})
 
 ```python
 with open('person.json', 'w', encoding='utf-8') as file:
-    json.dump(person, file, indent='\t')
+    json.dump(person, file, 
+              indent='\t',	# 들여쓰기 옵션
+              ensure_ascii=False	# 한글로 저장
+             )
 ```
 
 #### json 파일 dict 객체로 불러오기

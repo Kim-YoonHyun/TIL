@@ -1,29 +1,29 @@
-# GUI 툴킷
+# 1. 개요
 
 tkinter, PyQt, wxPython, PyGui, PySide 등 다양하게 존재
 
-## tkinter
+# 2. tkinter
 
 ```python
 import tkinter as tk
 from tkinter import *
 ```
 
-### root window
+## 2.1. root window
 
-#### 윈도우 생성
+### 2.1.1. 윈도우 생성
 
 ```python
 root_window = tk.Tk()
 ```
 
-#### 윈도우 제목 설정
+### 2.1.2. 윈도우 제목 설정
 
 ```python
 root_window.title('title')
 ```
 
-#### 윈도우 크기 설정
+### 2.1.3. 윈도우 크기 설정
 
 ```python
 root_window.geometry('500x200+100+100')	# 공백 있으면 안됨
@@ -31,19 +31,19 @@ root_window.geometry('500x200+100+100')	# 공백 있으면 안됨
 # 100+100 : 메인화면이 출력할 시작 좌표. 100, 50 만큼 우측과 아래로 이동함.  
 ```
 
-#### 윈도우 실행
+### 2.1.4. 윈도우 실행
 
 ```python
 root_window.mainloop()		# 가장 마지막 부분에 적음
 ```
 
-#### 윈도우 끄기
+### 2.1.5. 윈도우 끄기
 
 ```python
 root_window.destroy()
 ```
 
-#### root 윈도우에 추가 윈도우 생성
+### 2.1.6. root 윈도우에 추가 윈도우 생성
 
 ```python
 new_window = tk.Toplevel(root_window)
@@ -52,9 +52,9 @@ new_window = tk.Toplevel(root_window)
 
 
 
-### 위젯 생성
+## 2.2. 위젯 생성
 
-#### 공통 옵션
+### 2.2.1. 공통 옵션
 
 | 이름    | 의미                                  | 기본값           | 속성                                       |
 | ------- | ------------------------------------- | ---------------- | ------------------------------------------ |
@@ -70,13 +70,13 @@ new_window = tk.Toplevel(root_window)
 
 단, entry 처럼 높이 설정이 불가능한 경우도 있음
 
-#### label 
+### 2.2.2. label 
 
 ```python
 label = tk.Label(root_window, text='test app')
 ```
 
-#### message
+### 2.2.3. message
 
 현재로썬 Label 과의 차이점 불명
 
@@ -84,7 +84,7 @@ label = tk.Label(root_window, text='test app')
 msg = tf.Message(root_window, text='msee')
 ```
 
-#### entry
+### 2.2.4. entry
 
 한줄 문자열 입력
 
@@ -92,7 +92,7 @@ msg = tf.Message(root_window, text='msee')
 entry = tk.Entry(root_window)
 ````
 
-#### text
+### 2.2.5. text
 
 여러줄 문자열 입력
 
@@ -100,13 +100,13 @@ entry = tk.Entry(root_window)
 text = tk.Text(root_window)
 ````
 
-#### button
+### 2.2.6. button
 
 ```python
 button = tk.Button(root_window, text='버튼')
 ```
 
-#### button command option
+#### 2.2.6.1. button command option
 
 ```python
 def test_def(num):
@@ -114,13 +114,35 @@ def test_def(num):
 button = tk.Button(root_window, text='버튼', command=lambda: test_def(10))
 ```
 
-#### Checkbutton
+### 2.2.7. Checkbutton
 
 ```python
 ch1 = tf.Checkbutton(root_window, text='check1')
 ```
 
-#### list box
+#### 2.2.7.1. 버튼 체크 
+
+```python
+def ischecked():
+    if check_status.get() == 1:
+        print('체크되었습니다.')
+    elif check_status.get() == 0:
+        print('해제되었습니다.')
+    else:
+        tk.messagebox.showerror('에러', '에러발생')
+
+check_status = tk.IntVar()
+# check_status = tk.IntVar(value=1)   # 디폴트 상태를 체크된 상태로 할 경우
+
+ch1.config(variable=check_status	# 체크 값 설정할 int 변수.
+          onvalue=1,	# 1 일때 체크된 것으로 설정
+          offvalue=0,	# 0 일때 체크 해제된 것으로 설정
+          command=ischecked)
+```
+
+
+
+### 2.2.8. list box
 
 ```python
 list_box = tk.Listbox(root_window, exportselection=False)	
@@ -128,7 +150,7 @@ list_box = tk.Listbox(root_window, exportselection=False)
 # 포커스를 잃더라도 선택된 항목이 그대로 남아있도록 하기 위한 옵션
 ```
 
-#### Canvas
+### 2.2.9. Canvas
 
 ```python
 canvas = tk.Canvas(root_window)
@@ -140,15 +162,63 @@ canvas = tk.Canvas(root_window)
 # offset: 오프셋 설정. x, y, n, e, w, s, ne, nw, se, sw
 ```
 
-### 위젯 수정
+### 2.2.10. scrollbar
+
+#### 2.2.10.1. pack 방식
+
+#### 2.2.10.2. grid 방식
+
+```python
+<적용할 위젯 생성>
+
+# x축은 현재 잘 되지 않음
+#scrollbar = tk.Scrollbar(root_window, orient='horizontal', 
+#                         command=<적용할 위젯>.xview)
+#<적용할 위젯>.['xscrollcommand'] = scrollbar.set
+#scrollbar.grid(row=0, column=3, sticky='ew')
+
+# y 축
+scrollbar = tk.Scrollbar(root_window, orient='vertical', 
+                         command=<적용할 위젯>.yview)
+<적용할 위젯>['yscrollcommand'] = scrollbar.set
+scrollbar.grid(row=0, column=3, sticky='ns')
+```
+
+탭을 생성할 경우 root_window 대신 tab 이름을 적어야한다.
+
+스크롤바는 기본적으로 위젯을 생성한 후 그 위젯에 적용하는 방식이 가장 무난함.
+
+### 2.2.11. message box
+
+#### 2.2.11.1. error
+
+```python
+tk.messagebox.showerror('오류', '오류가 발생했습니다.')
+```
+
+#### 2.2.11.2. yes or no
+
+```python
+tk.messagebox.askyesno('선택창', '선택하시겠습니까?')	# 확인 시 True 리턴
+```
+
+#### 2.2.11.3. warning
+
+```python
+tk.messagebox.showwarning('경고', '경고입니다.')
+```
+
+
+
+## 2.3. 위젯 수정
 
 ```python
 <위젯>.config(option='text')
 ```
 
-### 위젯의 값
+### 2.3.1. 위젯의 값
 
-#### 값 입력
+#### 2.3.1.1. 값 입력
 
 ```python
 <위젯>.insert(<위치>, 'text')
@@ -158,7 +228,7 @@ list_box.insert(0, 'text')		# 0위치에 text 리스트박스 생성
 list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 ```
 
-#### 입력 값 가져오기
+#### 2.3.1.2. 입력 값 가져오기
 
 ```python
 entry.get()
@@ -168,7 +238,7 @@ list_box.get(0, tk.get)		# 리스트박스의 항목을 튜플 형태로 리턴
 
 listbox 에선 현재 선택된 값에 대해선 index 만 찾을 수 있음
 
-#### 값 삭제
+#### 2.3.1.3. 값 삭제
 
 ```python
 <위젯>. delet(<시작>, <끝>)
@@ -177,7 +247,7 @@ text.delete(1.0, tk.END)	# 전부 삭제
 list_box.delete(0, 2)		# 0 ~ 2 위치 삭제
 ```
 
-#### canvas 그리기
+#### 2.3.1.4. canvas 그리기
 
 ```python
 canvas.line(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 선
@@ -193,7 +263,7 @@ canvas.image(x, y, image, option)	# 좌표 위치 이미지 생성
     
 ```
 
-### 이미지 넣기
+#### 2.3.1.5. 이미지 넣기
 
 PhotoImage로 불러와서 위젯을 통해 삽입
 
@@ -203,9 +273,9 @@ img_wg = tk.Label(root_window, image=img)
 img_wg = tk.Button(root_window, image=img)
 ```
 
-### 위젯 배치
+## 2.4. 위젯 배치
 
-#### place
+#### 2.4.1. place
 
 위젯 위치를 절대 좌표로 정하는 방식. 위젯의 크기는 변하지 않는다.
 
@@ -213,7 +283,7 @@ img_wg = tk.Button(root_window, image=img)
 <위젯>.place(0, 1)
 ```
 
-#### pack
+#### 2.4.2. pack
 
 부모위젯에 패킹하여 불필요한 공간을 없애는 방색.
 
@@ -221,7 +291,7 @@ img_wg = tk.Button(root_window, image=img)
 <위젯>.pack()
 ```
 
-#### grid
+#### 2.4.3. grid
 
 객체 하나하나가 전부 하나의 row 이자 col 을 생성함.
 row: 객체의 행 위치
@@ -237,9 +307,9 @@ ns: 남북 방향 길이 맞춤
 <위젯>.grid(row=4, column=2, columnspan=3, sticky='ns')
 ```
 
-### 바인딩
+## 2.5. 바인딩
 
-#### 클릭시 이벤트
+### 2.5.1. 클릭시 이벤트
 
 https://076923.github.io/posts/Python-tkinter-33/
 
@@ -253,7 +323,7 @@ def button_click(event):
 <위젯>.bind('<Button-5>', button_click)	# 스크롤 다운
 ```
 
-#### 리스트 박스 선택
+### 2.5.2. 리스트 박스 선택
 
 ```python
 def event_for_list_box(event):	# 예시 함수
@@ -262,7 +332,7 @@ def event_for_list_box(event):	# 예시 함수
 list_box.bind('<<ListboxSelect>>', event_for_list_box)
 ```
 
-#### 커서가 위에 올라갈 경우 이벤트
+### 2.5.3. 커서가 위에 올라갈 경우 이벤트
 
 ```python
 def mouse_in(event):
@@ -270,7 +340,7 @@ def mouse_in(event):
 <위젯>.bind('<Enter>', mouse_in)
 ```
 
-#### 커서가 밖으로 나올 경우 이벤트
+### 2.5.4. 커서가 밖으로 나올 경우 이벤트
 
 ```python
 def mouse_out(event):
@@ -278,7 +348,7 @@ def mouse_out(event):
 <위젯>.bind('<Leave>', mouse_out)
 ```
 
-#### 특정 버튼 입력시 이벤트 
+### 2.5.5. 특정 버튼 입력시 이벤트 
 
 ```python
 def closer(event):
@@ -295,13 +365,7 @@ def closer(event):
 
 ```
 
-#### 엔터키 단축키 설정
-
-```python
-<위젯>.bind('<r>', going)
-```
-
-### 탭 생성
+## 2.6. 탭 생성
 
 ```python
 import tkinter.ttk as ttk
@@ -319,9 +383,9 @@ label2=tk.Label(tab2, text="TAB2")
 
 이후 위젯을 root_window 가 아닌 tab1 또는 tab2에 생성하면 그 탭에 생성됨
 
-### 파일에 접근(filedialog)
+## 2.7. 파일에 접근(filedialog)
 
-#### 불러오기
+### 2.7.1. 불러오기
 
 ```python
 import tkinter.filedialog as fd
@@ -334,40 +398,6 @@ filedialog.askdirectory()
 filedialog.askopenfilenames()
 filedialog.askopenfiles()
 ```
-
-### 스크롤 바
-
-#### pack 방식
-
-#### grid 방식
-
-```python
-<적용할 위젯 생성>
-
-# x축은 현재 잘 되지 않음
-#scrollbar = tf.Scrollbar(root_window, orient='horizontal', 
-#                         command=<적용할 위젯>.xview)
-#<적용할 위젯>.['xscrollcommand'] = scrollbar.set
-#scrollbar.grid(row=0, column=3, sticky='ew')
-
-# y 축
-scrollbar = tf.Scrollbar(root_window, orient='vertical', 
-                         command=<적용할 위젯>.yview)
-<적용할 위젯>.['yscrollcommand'] = scrollbar.set
-scrollbar.grid(row=0, column=3, sticky='ns')
-```
-
-탭을 생성할 경우 root_window 대신 tab 이름을 적어야한다.
-
-스크롤바는 기본적으로 위젯을 생성한 후 그 위젯에 적용하는 방식이 가장 무난함.
-
-### 오류 메세지
-
-```python
-tk.messagebox.showerror('오류', '오류가 발생했습니다.')
-```
-
-
 
 # PyQt5
 

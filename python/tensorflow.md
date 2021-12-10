@@ -14,11 +14,31 @@ from tensorflow.keras.<name> import <name>
 
 데이터 전처리용 keras 클래스.
 
+옵션을 통해 데이터 처리 및 부풀리기 진행 가능.
+
 #### 1.2.1 옵션
+
+학습용 데이터 처리 및 부풀리기.
 
 ```python
 ImageDataGenerator(<option>)
 ```
+
+- 자주 사용되는 옵션
+
+| 이름                 | 입력값                      | 기본값 | 의미                                                         |
+| -------------------- | --------------------------- | ------ | ------------------------------------------------------------ |
+| `rotation_range`     | `int`                       |        | 지정된 각도 범위 내에서 임의로 데이터 회전.                  |
+| `width_shift_range`  | `0 ~ 1`                     |        | 지정된 범위 내에서 임의로 수평 방향 이동.<br />전체 넓이의 비율로 계산. (넓이가 100, 지정값이 0.1인 경우 범위=10) |
+| `height_shift_range` | `0 ~ 1`                     |        | 지정된 범위 내에서 임의로 수직 방향 이동.<br />전체 높이의 비율로 계산. (높이가 100, 지정값이 0.1인 경우 범위=10) |
+| `shear_range`        | 부동소수점                  |        | 층밀리기 강도                                                |
+| `zoom_range`         | `0 ~ 1` or<br />[배율 범위] |        | 임의로 원본이미지 확대/축소. <br />부동소수점의 경우 `[배율 범위] = [1-zoom_range, 1+zoom_range]`<br />ex) 0.3 인 경우 배율범위 = `[0.7 ,1.3]` |
+| `horizontal_flip`    | `bool`                      |        | 무작위로 수평방향으로 뒤집기                                 |
+| `vertical_flip`      | `bool`                      |        | 무작위로 수직 방향으로 뒤집기.                               |
+| `rescale`            | `int, float`                | `None` | None 혹은 0 인경우 적용되지 않음.<br />그외의 경우 (다른변형을 전부 적용 후) 데이터를 주어진 값으로 곱함. |
+| `validation_split`   | `0 ~ 1`                     |        | validation용도로 남겨둘 이미지 비율.                         |
+
+- 그 외 옵션
 
 | 이름                            | 입력값                                                       | 기본값            | 의미                                                         |
 | ------------------------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------------------ |
@@ -28,21 +48,12 @@ ImageDataGenerator(<option>)
 | `samplewise_std_normalization`  | `bool`                                                       |                   | 각 input을 표준편차로 나눔                                   |
 | `zca_epsilon`                   | `float`                                                      | 1e-6              | 영위상 성분분석 백색화의 epsilon 값.                         |
 | `zca_whitening`                 | `bool`                                                       |                   | 영위상 성분분석 백색화 적용 여부                             |
-| `rotation_range`                | `int`                                                        |                   | 무작위 회전각도 범위                                         |
-| `width_shift_range`             | 부동소수점                                                   |                   | 1D 형태의 유사배열 혹은 정수<br />< 1: 전체 가로넓이에서의 비율<br />>=1: 픽셀의 갯수<br />정수: `(-width_shift_range, +width_shift_range)` 사이 구간의 픽셀 갯수. |
-| `height_shift_range`            | 부동소수점                                                   |                   | 1D 형태의 유사배열 혹은 정수<br />< 1: 전체 세로넓이에서의 비율<br />>=1: 픽셀의 갯수<br />정수: `(-height_shift_range, +height_shift_range)` 사이 구간의 픽셀 갯수. |
 | `brightenss_range`              | `list` or `tuple`                                            |                   | 두 부동소수점 값으로 이루어진 리스트 혹은 튜플.<br />밝기 정도를 조절할 값의 범위. |
-| `shear_range`                   | 부동소수점                                                   |                   | 층밀리기 강도                                                |
-| `zoom_range`                    | 부동소수점 or<br />[하한, 상한]                              |                   | 무작위 zoom의 범위. <br />부동소수점의 경우 `[하한, 상한] = [1-zoom_range, 1+zoom_range]` |
 | `channel_shift_range`           | 부동소수점                                                   |                   | 무작위 채널 이동 범위                                        |
 | `fill_mode`                     | 'constant',<br />'neareat',<br />'reflect',<br />'wrap' <br />중 하나 | 'nearest'         | 모드에 따라 input 경계의 바깥 공간을 채움.<br />'constant': `kkkkkkkk|abcd|kkkkkkkk`(cval=k)<br />'neareat': `aaaaaaaa|abcd|dddddddd`<br />'reflect': `abcddcba|abcd|dcbaabcd`<br />'wrap': `abcdabcd|abcd|abcdabcd` |
 | `cval`                          | 부동소수점 or<br />정수                                      |                   | `fill_mode = 'constant'` 일 경우 경계 밖 공간에 사용하는 값. |
-| `horizontal_flip`               | `bool`                                                       |                   | input을 무작위로 가로로 뒤집음.                              |
-| `vertical_flip`                 | `bool`                                                       |                   | input을 무작위로 세로로 뒤집음.                              |
-| `rescale`                       | `int, float`                                                 | `None`            | None 혹은 0 인경우 재조절이 적용되지 않음.<br />그외의 경우 (다른변형을 전부 적용 후) 데이터를 주어진 값으로 곱함. |
 | `preprocessing_function`        | `function`                                                   |                   | 이미지 크기조절 및 증강이 지난 후 작용하는 함수.<br />계수가 3인 numpy 텐서 단일 이미지를 하나의 인수로 가짐.<br />동일한 형태의 numpy 텐서 출력 필요. |
 | `data_format`                   | 이미지 데이터                                                | `'channels_last'` | `'channels_first' = (샘플, 채널, 넓이, 높이)`<br />`'channels_last' = (샘플, 높이, 넓이, 채널)`<br />모드에 따라 들어오는 이미지 데이터의 차원 구성이 바뀌어야함.<br />`~/keras/keras.json`에 위치한 value found in your 케라스 구성 파일의<br /> `image_data_format`값으로 설정할 수 있음. |
-| `validation_split`              | 부동소수점(0~1)                                              |                   | validation용도로 남겨둘 이미지 비율.                         |
 | `dtype`                         | 자료형                                                       |                   | 생성된 배열에 사용할 자료형.                                 |
 
 #### 1.2.2. method
@@ -118,10 +129,11 @@ y = model(x)
 
 위 두 코드는 동일한 코드이다.
 
-##### 1.3.1.2. layer 확인
+##### 1.3.1.2. layer 확인, layer 이름 확인
 
 ```python
-model.layers
+model.layers	# 리스트 형태의 레이어 집합
+model.layers[0].name
 ```
 
 ##### 1.3.1.3. layer 추가(점진적 작성)
