@@ -1,14 +1,12 @@
-# tensorflow
+# 1. tensorflow keras
 
-## 1. keras
-
-### 1.1. 기본 imprt 
+## 1.1. 기본 imprt 
 
 ```python
 from tensorflow.keras.<name> import <name>
 ```
 
-### 1.2. ImageDataGenerator
+## 1.2. ImageDataGenerator
 
 실시간 데이터 증강을 사용하여 텐서 이미지 데이터 batch를 생성. 데이터에 대해 batch 단위로 루프가 순환
 
@@ -16,7 +14,7 @@ from tensorflow.keras.<name> import <name>
 
 옵션을 통해 데이터 처리 및 부풀리기 진행 가능.
 
-#### 1.2.1 옵션
+### 1.2.1 옵션
 
 학습용 데이터 처리 및 부풀리기.
 
@@ -56,9 +54,9 @@ ImageDataGenerator(<option>)
 | `data_format`                   | 이미지 데이터                                                | `'channels_last'` | `'channels_first' = (샘플, 채널, 넓이, 높이)`<br />`'channels_last' = (샘플, 높이, 넓이, 채널)`<br />모드에 따라 들어오는 이미지 데이터의 차원 구성이 바뀌어야함.<br />`~/keras/keras.json`에 위치한 value found in your 케라스 구성 파일의<br /> `image_data_format`값으로 설정할 수 있음. |
 | `dtype`                         | 자료형                                                       |                   | 생성된 배열에 사용할 자료형.                                 |
 
-#### 1.2.2. method
+### 1.2.2. method
 
-##### 1.2.1.1. flow_from_directory
+#### 1.2.1.1. flow_from_directory
 
 디렉토리에의 경로를 전달받아 증강된 데이터의 batch를 생성.
 
@@ -94,9 +92,9 @@ directory:
   ```
 
 
-### 1.3. Sequential
+## 1.3. Sequential
 
-#### 1.3.1. 모델 생성
+### 1.3.1. 모델 생성
 
 각 레이어에 **정확히 하나의 입력 텐서와 하나의 출력 텐서**가 있는 **일반 레이어 스택**에 적합.
 
@@ -129,39 +127,39 @@ y = model(x)
 
 위 두 코드는 동일한 코드이다.
 
-##### 1.3.1.2. layer 확인, layer 이름 확인
+#### 1.3.1.2. layer 확인, layer 이름 확인
 
 ```python
 model.layers	# 리스트 형태의 레이어 집합
 model.layers[0].name
 ```
 
-##### 1.3.1.3. layer 추가(점진적 작성)
+#### 1.3.1.3. layer 추가(점진적 작성)
 
 ```python
 model.add(layer.Dense(5, activation='relu', name='layer5'))
 model.add(layer.Dense(6), name='layer6')
 ```
 
-##### 1.3.1.4. layer 제거
+#### 1.3.1.4. layer 제거
 
 ```python
 model.pop()	# 리스트와 유사하게 작동
 ```
 
-##### 1.3.1.5. weight 확인
+#### 1.3.1.5. weight 확인
 
 ```python
 model.weights
 ```
 
-##### 1.3.1.6. 모델 내용 요약
+#### 1.3.1.6. 모델 내용 요약
 
 ```python
 model.summary
 ```
 
-#### 1.3.2. 모델 구성
+### 1.3.2. 모델 구성
 
 ```python
 # 기본
@@ -190,9 +188,9 @@ model.compile(
 | `weighted_metrics`   | `sample_weight`이나 `class_weight`으로 가중치를 적용하여 평가할 측정항목의 리스트 |                         |
 | `target_tensors`     |                                                              |                         |
 
-#### 1.3.3 모델 학습
+### 1.3.3 모델 학습
 
-##### 1.3.3.1 단일 input
+#### 1.3.3.1 단일 input
 
 ```python
 fit(
@@ -222,7 +220,7 @@ fit(
 
 
 
-##### 1.3.3.2 배치 단위로 생산한 data input
+#### 1.3.3.2 배치 단위로 생산한 data input
 
 ```python
 fit_generator(
@@ -241,7 +239,7 @@ fit_generator(
 
 
 
-#### 1.3.4 모델 평가
+### 1.3.4 모델 평가
 
 ```python
 predict(
@@ -257,6 +255,50 @@ predict(
 | ------ | ------------- | ------- | ------------------------------------------------------------ |
 | `x`    | `numpy array` |         | 평가할 인풋 데이터                                           |
 | `step` | `int`         | `None`  | 예측이 한번 완료될 때 까지의 단계.<br />None일 경우 고려되지 않음. |
+
+# 2. GPU 연산가속(NVIDIA)
+
+보류
+
+# 3. GPU 연산(Intel)
+
+## 3.1. plaidML 사용
+
+### 3.1.1. install
+
+```bash
+$ pip install plaidml-keras plaidbench
+```
+
+### 3.1.2. setup
+
+```bash
+$ plaidml-setup
+```
+
+```bash
+Enable experimental device support? (y,n)[n]:y
+```
+
+```bash
+Please choose a default device:
+   1 : llvm_cpu.0
+   2 : opencl_intel_uhd_graphics_630.0
+   3 ....
+Default device? (1,2)[1]:2 # 선택
+```
+
+```bash
+Save settings to C:\Users\10-210917\.plaidml? (y,n)[y]:y
+```
+
+### 3.1.3 gpu 연간 가속 적용
+
+```python
+# keras를 import 하기 전 먼저 실행.
+import plaidml.keras
+plaidml.keras.install_backend()
+```
 
 
 

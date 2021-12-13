@@ -61,30 +61,7 @@
 
 1. 시작 버튼 옆에서 'window 기능 켜기/끄기'  검색
 
-   ![windows 기능켜기끄기](C:\Users\10-210917\Desktop\public git\TIL\LINUX\windows 기능켜기끄기.png)
-
 2. Linux용 Windows 하위 시스템 체크 
-
-   ![Linux용 Windows 하위 시스템](C:\Users\10-210917\Desktop\public git\TIL\LINUX\Linux용 Windows 하위 시스템.png)
-
-3. PC 재부팅
-
-4. Microsoft Store에서 Ubuntu 검색 후 설치 (18.04 LTS 버전)
-
-   ![Ubuntu설치검색](C:\Users\10-210917\Desktop\public git\TIL\LINUX\Ubuntu설치검색.png)
-
-5. 실행 후 자동 설치 기다리기.
-
-6. username 및 password 설정
-   단, username은 소문자만 가능하고 password는 입력이 되지 않는 것 처럼 보임.
-
-7. Microsoft Store에서 Windows Terminal Preview 검색 후 설치
-
-   ![Windows Termianl Preview](C:\Users\10-210917\Desktop\public git\TIL\LINUX\Windows Termianl Preview.png)
-
-8. PC 재부팅
-
-2. window terminal 에서 ubuntu 선택
 
 
 
@@ -92,13 +69,13 @@
 
 # 3. 명령어
 
-### 설명
+### 1.3.1. 설명
 
 ```bash
 man <명령어>	# <명령어> 에 대해 알 수 있음
 ```
 
-### 디렉토리
+### 1.3.2. 디렉토리
 
 ```bash
 ls					# 현재 디렉토리
@@ -108,7 +85,7 @@ cd <디렉토리 이름>	# 작업 디렉토리 변경
 mkdir <디렉토리 이름>	# 새로운 디렉토리 만들기
 ```
 
-### 파일
+### 1.3.3. 파일
 
 ```bash
 find						# 특정 파일을 찾을 때 (locate)와 같음
@@ -121,14 +98,14 @@ kill					   # 어플리케이션 실행 중지
 ps <프로세스 ID> kill		 # 프로세스 ID에 해당하는 앱 실행 중지 
 ```
 
-### 권한 부여
+### 1.3.4. 권한 부여
 
 ```bash
 sudo	# 루트사용자를 제외한 일반사용자에게 루트 권한 임시 부여(패스워드 필요)
 passwd	# 패스워드 변경. 현재 패스워드 입력 후 새로운 패스워드 입력
 ```
 
-### - , --
+### 1.3.5. - , --
 
 - 옵션이 문자 하나인 경우 `-`. `-a, -b, -h`
 - 여러개의 옵션 한번에 지정 가능 `-abh`
@@ -140,7 +117,7 @@ passwd	# 패스워드 변경. 현재 패스워드 입력 후 새로운 패스워
 ls -l -S -G -r >>> ls -lSGr
 ```
 
-### ^
+### 1.3.6. ^
 
 ```bash
 ^c, ^d, ^\, ^z
