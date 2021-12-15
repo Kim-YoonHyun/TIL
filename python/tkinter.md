@@ -1,8 +1,9 @@
 # 1. 개요
 
-tkinter, PyQt, wxPython, PyGui, PySide 등 다양하게 존재
+파이썬에서 GUI를 다루는 모듈 중 하나.
+tkinter 외에 PyQt, wxPython, PyGui, PySide 등 다양하게 존재
 
-# 2. tkinter
+# 2. 명령어
 
 ```python
 import tkinter as tk
@@ -69,6 +70,13 @@ new_window = tk.Toplevel(root_window)
 | justify | 정렬                                  | center           | center, right, left                        |
 
 단, entry 처럼 높이 설정이 불가능한 경우도 있음
+
+entry, text 와 같이 string을 입력 가능한 위젯의 경우 width 및 height의 측정 단위가 글자 기준임.
+이에, sticky와는 상관없이 크기를 정하기 않으면 항상 크게 설정됨.
+
+string이 입력 가능하지 않은 widget의 크기는 윈도우 픽셀에 의해 결정되며, sticky가 유효함.
+
+즉, 기본적으로 entry, text로 크기를 조정하고 그 외의 widget은 크기조절 또는 sticky로 따라가는것이 나음.
 
 ### 2.2.2. label 
 
@@ -233,7 +241,7 @@ list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 ```python
 entry.get()
 list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜플 형태로 리턴
-list_box.get(0, tk.get)		# 리스트박스의 항목을 튜플 형태로 리턴
+list_box.get(0, tk.END)		# 리스트박스의 항목을 튜플 형태로 리턴
 ```
 
 listbox 에선 현재 선택된 값에 대해선 index 만 찾을 수 있음

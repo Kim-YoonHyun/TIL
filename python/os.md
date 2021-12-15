@@ -138,6 +138,12 @@ str.endswith('확장자')		# 특정 확장자 설정
 >>> [_ for _ in os.listdir(fileDir) if _.endswith(fileExt)]
 ```
 
+### 2.2.3. 파일 유무 확인
+
+```python
+os.isfile(path)
+```
+
 
 
 ## 2.3. cmd 명령어 제어
