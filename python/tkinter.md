@@ -240,6 +240,7 @@ list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 
 ```python
 entry.get()
+text.get(1.0, tk.END)
 list_box.curselection()		# 현재 선택된 리스트 박스의 인덱스를 튜플 형태로 리턴
 list_box.get(0, tk.END)		# 리스트박스의 항목을 튜플 형태로 리턴
 ```
@@ -372,6 +373,19 @@ def closer(event):
 <위젯>.bind('<Left>', closer)			# 왼쪽 방향키
 
 ```
+
+### 2.5.6. lambda 활용
+
+```python
+def asd(a, b, event=None):
+    print(a, b)
+# listbox bind
+listbox.bind('<<ListboxSelect>>', lambda event: asd(1, 2)) 
+```
+
+event 부분은 lambda를 쓰기위한 일종의 장치일뿐 의미없음.
+
+아마 정식 방법은 아니겠지만 문제없이 작동함.
 
 ## 2.6. 탭 생성
 
