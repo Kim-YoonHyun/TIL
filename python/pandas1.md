@@ -334,7 +334,7 @@ c1, c2, c3
 ```python
 pd.read_csv('sample.csv')
 pd.read_csv('sample.csv', names=['c1', 'c2', 'c3'])		# 열 이름 정하기 (기존 열은 값으로 바뀜)
-pd.read_csv('sample'.csv', header=None)					# 열을 넣지만 이름은 없음
+pd.read_csv('sample.csv', header=None)					# 열을 넣지만 이름은 없음
 ```
 
 
