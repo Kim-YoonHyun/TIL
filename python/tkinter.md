@@ -259,12 +259,12 @@ list_box.delete(0, 2)		# 0 ~ 2 위치 삭제
 #### 2.3.1.4. canvas 그리기
 
 ```python
-canvas.line(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 선
-canvas.rectangle(x1, y1, x2, y2, option)	# 좌상단에서 우하단의 사각형
-canvas.ploygon(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 다각형
-canvas.oval(x1, y1, x2, y2, option)	# 좌표에서 좌표 반지름의 원
-canvas.arc(x1, y1, x2, y2, start, extent, option)	# 좌표에서 좌표 반지름, start에서 extent 각도의 호
-canvas.image(x, y, image, option)	# 좌표 위치 이미지 생성
+canvas.create_line(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 선
+canvas.create_rectangle(x1, y1, x2, y2, option)	# 좌상단에서 우하단의 사각형
+canvas.create_ploygon(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 다각형
+canvas.create_oval(x1, y1, x2, y2, option)	# 좌표에서 좌표 반지름의 원
+canvas.create_arc(x1, y1, x2, y2, start, extent, option)	# 좌표에서 좌표 반지름, start에서 extent 각도의 호
+canvas.create_image(x, y, image, option)	# 좌표 위치 이미지 생성
 # fill : 색 채워넣기
 # outline: 두께 색상
 # width: 두께
