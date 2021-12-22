@@ -68,6 +68,7 @@ new_window = tk.Toplevel(root_window)
 | padx    | 라벨의 테두리와<br />내용의 세로 여백 | 1                | 상수                                       |
 | pady    | 라벨의 테두리와<br />내용의 세로 여백 | 1                | 상수                                       |
 | justify | 정렬                                  | center           | center, right, left                        |
+| state   | 위젯 활성화 여부                      | 'normal'         | string ('normal' or 'disable')             |
 
 단, entry 처럼 높이 설정이 불가능한 경우도 있음
 
@@ -265,11 +266,12 @@ canvas.create_ploygon(x1, y1, x2, y2, ..., option)	# 좌표에서 좌표 연결 
 canvas.create_oval(x1, y1, x2, y2, option)	# 좌표에서 좌표 반지름의 원
 canvas.create_arc(x1, y1, x2, y2, start, extent, option)	# 좌표에서 좌표 반지름, start에서 extent 각도의 호
 canvas.create_image(x, y, image, option)	# 좌표 위치 이미지 생성
+# 옵션
 # fill : 색 채워넣기
 # outline: 두께 색상
 # width: 두께
 # anchor: 위치지정
-    
+# dash: (대쉬길이px, 빈칸길이px)  ex(5, 1)
 ```
 
 #### 2.3.1.5. 이미지 넣기
