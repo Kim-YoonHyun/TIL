@@ -186,9 +186,16 @@ df.values		     # 모든 values를 array로 추출
 df.index.values		 # 모든 인덱스 이름을 array로 추출
 df.columns		 	 # 모든 열 이름을 index로 추출
 df.columns.values	 # 모든 열 이름을 array로 추출
+```
+
+#### 2.2.6.2. 앞 또는 뒤 값 표시
+
+```python
 df.head(2)			 # 앞에서부터 2번째 행까지의 DataFrame 추출 (수치 미입력시 기본 5개)
 df.tail(2)			 # 뒤에서부터 2번째 행까지의 DataFrame 추출 (수치 미입력시 기본 5개)
 ```
+
+
 
 #### 갯수세기&정보표시
 
@@ -203,11 +210,16 @@ df['열0'].value_counts().to_frame()	    				# 선택한 열(Series)의 값 별 
 df['열0'].value_counts().sort_values()					# 값 별 갯수를 오름차순으로 나열
 df['열0'].value_counts().sort_values(ascending=False)	# 내림차순
 df.index.value_counts()		# 각 인덱스가 몇개씩 있는지 카운트 
-df.sort_values(by='열0')									# DataFrame을 '열0' 의 값 기준으로 오름차순 정렬
 
 df.info()					# DataFrame의 각종 정보 표시. 열 이름, NaN 갯수, Dtype 등
 df.describe()				# DataFrame의 각 열별 수치적 정보 표시. count, mean, std, min, max 등
 df.duplicated()	# 중복데이터 확인
+```
+
+#### 정렬하기
+
+```python
+df.sort_values(by='열0')     # DataFrame을 '열0' 의 값 기준으로 오름차순 정렬
 ```
 
 #### 결측치
@@ -237,12 +249,11 @@ df.shape		# df의 크기
 #### 값 변경
 
 ```python
-df[df['열0']=='aa']					   # 열0 에서 값이 'aa' 인 행으로만 DataFrame 재구성
-df[df['열2'].notnull()]				   # 열2 기준 NaN가 존재하지 않는 인덱스(행)으로 DataFrame 재구성 
+df[df['열0']=='aa']	   # 열0 에서 값이 'aa' 인 행으로만 DataFrame 재구성
+df[df['열2'].notnull()] # 열2 기준 NaN가 존재하지 않는 인덱스(행)으로 DataFrame 재구성 
 df.apply(lambda x: x.max() - x.min())	# apply 변환
 df['열0'] = df['열0'].replace(df['열0'][0], 'aaa')		# 열0 의 0번째 값을 aaa 로 변경
 df['열0'][0] = 'aaa'		# 변경가능한데 경고가 나옴
-
 sb = df[df.['열'].str.contains('aa|AA', case=False)]	# 열의 str값에서 aa, AA 가 포함된 값으로 재구성
 ```
 
@@ -335,6 +346,12 @@ c1, c2, c3
 pd.read_csv('sample.csv')
 pd.read_csv('sample.csv', names=['c1', 'c2', 'c3'])		# 열 이름 정하기 (기존 열은 값으로 바뀜)
 pd.read_csv('sample.csv', header=None)					# 열을 넣지만 이름은 없음
+```
+
+#### 한글이 포함된 csv 불러오기
+
+```python
+pd.read_csv('hangul.csv', encoding='euc-kr' or 'cp949')
 ```
 
 
