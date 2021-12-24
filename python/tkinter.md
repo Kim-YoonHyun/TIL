@@ -32,6 +32,10 @@ root_window.geometry('500x200+100+100')	# 공백 있으면 안됨
 # 100+100 : 메인화면이 출력할 시작 좌표. 100, 50 만큼 우측과 아래로 이동함.  
 ```
 
+```python
+root_window.resizable(width=False, height=False)	# 창 크기 고정
+```
+
 ### 2.1.4. 윈도우 실행
 
 ```python
@@ -50,6 +54,28 @@ root_window.destroy()
 new_window = tk.Toplevel(root_window)
 # new_window.mainloop()는 할 필요 없음
 ```
+
+### 2.1.7. root 윈도우에 메뉴바 추가.
+
+```python
+menubar = tk.Menu(root_window)
+
+filemenu1 = tk.Menu(menubar, tearoff=0)
+filemenu1.add_command(label='Save1')
+filemenu1.add_command(label='Save2')
+menubar.add_cascade(label='File1', menu=filemenu1)
+
+filemenu2 = tk.Menu(menubar, tearoff=0)
+filemenu2.add_command(label='quit1')
+filemenu2.add_command(label='quit2')
+menubar.add_cascade(label='File2', menu=filemenu2)
+
+root_window.config(menu=menubar)
+```
+
+### 2.1.8. 메뉴바에 단축키 설정
+
+2.5.7 메뉴바 단축키 설정 참고.
 
 
 
@@ -115,7 +141,7 @@ text = tk.Text(root_window)
 button = tk.Button(root_window, text='버튼')
 ```
 
-#### 2.2.6.1. button command option
+#### 2.2.6.1. button command lambda 적용.
 
 ```python
 def test_def(num):
@@ -197,6 +223,18 @@ scrollbar.grid(row=0, column=3, sticky='ns')
 
 스크롤바는 기본적으로 위젯을 생성한 후 그 위젯에 적용하는 방식이 가장 무난함.
 
+#### 2.2.10.3. canvas 에 scrollbar 적용
+
+캔버스에서 스크롤 영역을 지정해 주는 명령어.
+이게 없으면 스크롤 바가 생겨도 움직이지 않음.
+
+```python
+canvas.config(scrollregion=(x1, y1, x2, y2))   # 영역 지정
+canvas.config(scrollregion=canvas.bbox('all')) # 캔버스 전체에 적용
+```
+
+
+
 ### 2.2.11. message box
 
 #### 2.2.11.1. error
@@ -217,8 +255,6 @@ tk.messagebox.askyesno('선택창', '선택하시겠습니까?')	# 확인 시 Tr
 tk.messagebox.showwarning('경고', '경고입니다.')
 ```
 
-
-
 ## 2.3. 위젯 수정
 
 ```python
@@ -233,8 +269,8 @@ tk.messagebox.showwarning('경고', '경고입니다.')
 <위젯>.insert(<위치>, 'text')
 entry.insert(0, 'string')		# 0 부터 시작. 정수값 가능
 text.insert(1.0, 'string')		# 1.0 부터 시작. 실수값만 가능.
-list_box.insert(0, 'text')		# 0위치에 text 리스트박스 생성
-list_box.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
+listbox.insert(0, 'text')		# 0위치에 text 리스트박스 생성
+listbox.insert(tk.END, 'text')	# 마지막에 text 리스트박스 생성
 ```
 
 #### 2.3.1.2. 입력 값 가져오기
@@ -388,6 +424,25 @@ listbox.bind('<<ListboxSelect>>', lambda event: asd(1, 2))
 event 부분은 lambda를 쓰기위한 일종의 장치일뿐 의미없음.
 
 아마 정식 방법은 아니겠지만 문제없이 작동함.
+
+### 2.5.7. 메뉴바 단축키 설정
+
+```python
+def save(event=None):
+    print('저장되었습니다.')
+
+menubar = tk.Menu(root_window)
+
+filemenu = tk.Menu(menubar, tearoff=0)
+filemenu.add_command(label='Save', command=save, accelerator='Ctrl+S')
+filemenu.bind_all('<Control-s>', save)
+
+menubar.add_cascade(label='File', menu=filemenu)
+
+root_window.config(menu=menubar)
+```
+
+
 
 ## 2.6. 탭 생성
 
