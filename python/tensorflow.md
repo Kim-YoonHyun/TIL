@@ -1,3 +1,207 @@
+# 1. 개요
+
+참고 웹사이트: [TensorFlow](https://www.tensorflow.org/guide/keras/sequential_model?hl=ko)
+
+https://www.tensorflow.org/tutorials/images/segmentation?hl=ko
+
+## 1.1. 기본 import
+
+```python
+import tensorflow as tf
+```
+
+# 2. tensorflow keras
+
+## 2.1. 기본 import 
+
+```python
+from tensorflow import keras
+from tensorflow.keras import layers
+```
+
+## 2.2. 모델 생성(기본)
+
+- 가장 기본적인 생성법
+
+### 2.2.1. input 생성
+
+```python
+inputs = keras.Input(shape=(3,))
+```
+
+### 2.2.2. layers 생성
+
+```python
+layer1 = layers.Dense(2, activation="relu", name="layer1")(inputs)
+layer2 = layers.Dense(3, activation="relu", name="layer2")(layer1)
+outputs = layers.Dense(4, name="layer3")(layer2)
+```
+
+### 2.2.3. model 생성
+
+```python
+model = keras.Model(inputs=inputs, outputs=outputs)
+```
+
+### 2.2.4. 예시
+
+```python
+inputs = keras.Input(shape=(784,), name="digits")
+layer1 = layers.Dense(64, activation="relu", name="dense_1")(inputs)
+layer2 = layers.Dense(64, activation="relu", name="dense_2")(layer1)
+outputs = layers.Dense(10, activation="softmax", name="predictions")(layer2)
+
+model = keras.Model(inputs=inputs, outputs=outputs)
+```
+
+## 2.3. Sequential 모델 생성
+
+- `Sequential` 모델은 각 레이어에 정확히 **하나의 입력텐서**와 **하나의 출력텐서**가 있는 **일반 레이어 스택**에 적합함.
+
+### 2.3.1. layers 생성(기본)
+
+```python
+model = keras.Sequential(
+    [
+        layers.Dense(2, activation="relu"),
+        layers.Dense(3, activation="relu"),
+        layers.Dense(4),
+    ]
+)
+```
+
+### 2.3.2. layers 생성(add)
+
+```python
+model = keras.Sequential()
+model.add(layers.Dense(2, activation="relu"))
+model.add(layers.Dense(3, activation="relu"))
+model.add(layers.Dense(4))
+```
+
+### 2.3.3. layer 정보 확인
+
+```python
+model.layers
+```
+
+### 2.3.4. 레이어 제거
+
+```python
+model.pop()		# 리스트와 유사함.
+```
+
+### 2.3.5. 이름 적용
+
+```python
+model = keras.Sequential(name='sequential')
+model.add(layers.Dense(2, activation="relu", name="layer1"))
+```
+
+### 2.3.6. 모델의 시작 형상 지정(input)
+
+```python
+model.add(keras.Input(shape=(4,)))
+# Input 은 layers 가 아니기에 layer에 포함되지 않음.
+
+model.add(layers.Dense(2, activation="relu", input_shape=(4, )))
+# layer에 직접 지정
+```
+
+## 2.4. 모델 요약
+
+이 코드는 모델이 완전히 빌드 된 후 실행가능.
+
+```python
+model.summary()
+```
+
+## 2.5. 모델 구성 지정
+
+- `fit()` 으로 모델을 학습하기 위한 모델 구성(최적화 프로그램, 손실함수, 메트릭) 지정.
+
+```python
+model.compile(
+    optimizer="rmsprop",
+    loss="sparse_categorical_crossentropy",
+    metrics=["sparse_categorical_accuracy"],
+)
+```
+
+- optimizer : `SGD()`, `RMSprop()`, `Adam()` 등
+- loss : `MeanSquaredError()`, `KLDivergence()`, `CosineSimilarity()` 등
+- metrics : `Accuracy()`, `Presicion()`, `Recall()` 등
+
+## 2.6. 모델 훈련
+
+```python
+history = model.fit(
+    train_set, train_gt,
+    batch_size=64, epochs=2,    
+    validation_data=(x_val, y_val),
+)
+```
+
+
+
+# 3. 코드 예시
+
+## 3.1. 아
+
+
+
+```python
+os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
+
+# 학습 모델 구축
+model = tf.keras.Sequential()
+model.add(Dense(2, input_shape=(1, )))
+
+model.compile(
+    optimizer='sgd', loss='mse', metrics=['accuracy'])
+
+# 학습 모델 요약
+model.summary()
+
+# 학습 
+history = model.fit(train_datas, train_labels, batch_size=8, epochs=100
+         )
+```
+
+데이터 증식
+
+```python 
+os.environ['TF_ENABLE_WINOGRAD_NONFUSED'] = '1'
+
+# 데이터 증식
+Train_Img_Gen = ImageDataGenerator(rescale=1. / 255)
+
+Train_Gen = Train_Img_Gen.flow_from_directory(
+    <train set path>,
+    target_size=(150, 150),
+    batch_size=8)
+
+# 학습 모델 구축
+model = tf.keras.Sequential()
+
+model.add(Dense(units=1, input_shape=(1, )))
+
+model.compile(
+    optimizer='sgd', loss='mse', metrics=['accuracy'])
+
+# 학습 모델 요약
+model.summary()
+
+# 학습 
+history = model.fit_generator(Train_Gen, epochs=100)
+```
+
+
+
+
+
+
+
 # 1. tensorflow keras
 
 ## 1.1. 기본 imprt 
@@ -72,7 +276,7 @@ directory:
 | `target_size`   | `(int, int) = (높이, 넓이)`                                  | `(256, 256)`  | 모든 이미지의 크기를 재조정할 치수.                          |
 | `color_mode`    | 'grayscale',<br />'rbg', 'rbga' 중 하나.                     | 'rbg'         | 변환될 이미지가 1, 3, 4개의 채널 중 하나를 가질지 여부       |
 | `classes`       | 하위 디렉토리의 선택적 list                                  | `None`        | 값이 지정되있지 않으면 각 하위 디렉토리를 각기 다른 클래스로 대하는 방식으로.<br />`class_indices` 를 통해서 클래스 이름과 색인 간 매핑을 담은 dict 얻음. |
-| `class_mode`    | 'categorical', 'binary',<br />'sparse', 'input',<br />None 중 하나. | 'categorical' | 반환될 label 배열 종류를 결정.<br />categorical: 2D형태의 원-핫 인코딩<br />binary: 1D형태의 이진 라벨.<br />sparse: 1D형태의 정수 라벨.<br />input: 인풋 이미지와 동일한 이미지(주로 자동 인코더와 함께 사용)<br />None: 바렝르 반환하지 않음. |
+| `class_mode`    | 'categorical', 'binary',<br />'sparse', 'input',<br />None 중 하나. | 'categorical' | 반환될 label 배열 종류를 결정.<br />categorical: 2D형태의 원-핫 인코딩<br />binary: 1D형태의 이진 라벨.<br />sparse: 1D형태의 정수 라벨.<br />input: 인풋 이미지와 동일한 이미지(주로 자동 인코더와 함께 사용)<br />None: 라벨을 반환하지 않음. |
 | `batch_size`    | `int`                                                        | 32            | 데이터 batch 의 크기                                         |
 | `shuffle`       | `bool`                                                       | `True`        | 데이터를 뒤섞을지 여부                                       |
 | `seed`          | `int, float`                                                 |               | 데이터 shuffle에 사용할 선택적 난수 seed                     |
@@ -198,7 +402,8 @@ fit(
     epochs=1, 
     initial_epoch=0, # 학습을 시작할 epoch
     steps_per_epoch=None
-    validation_split=0.0, validation_data=None, , validation_steps=None, 
+    validation_split=0.0, validation_data=None, 
+    validation_steps=None, 
     
     shuffle=True, 
     verbose=1, callbacks=None, 

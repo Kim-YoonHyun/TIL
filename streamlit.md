@@ -398,5 +398,42 @@ st.latex(r”Y = \alpha + \beta X_i”)
 
 
 
-### 
+# 4. app 배포.
 
+streamlit 기반의 웹 어플리케이션을 배포(Deploy)하는 방법.
+
+1. ~~heroku 를 통한 배포~~  -> 너무 복잡하고 설명이 중구난방이라 도저히 하는 방법을 모르겠음.
+2. streamlit 에서 자체 제공하는 streamlit cloud 에서 배포 -> 현재 이 방법으로 진행.
+
+## 4.1. streamlit sharing
+
+이 방법은 기본적으로 github 와 연동하는 방식으로 진행됨.
+
+즉, **github 계정이 있다는 것을 전제**로 진행.
+
+### 4.1.1. 진행 순서
+
+1. streamlit cloud 접속
+
+2. 오른쪽 상단의 Sign in
+
+   ![signin](C:\Users\10-210917\Desktop\public git\TIL\signin.png)
+
+3. Continue with GitHub 를 통해 가입 및 계정 연동 진행
+
+   ![makeaccount](C:\Users\10-210917\Desktop\public git\TIL\makeaccount.png)
+
+4. New app 을 통해 git repo, branch, 실행파일 선택.
+
+   단, 연동되는 git 레파지토리에는 반드시 requirements.txt가 존재해야함.
+
+5. git 레파지토리를 갱신(push) 해줄때마다 자동 배포됨.
+
+### 4.1.2. requirements.txt
+
+실행 파일의 모듈 등의 정보가 들어가 있는 파일.
+
+반드시 연동된 github의 repo에 있어야함.
+
+- cv2 module: opencv-python-headless 추가.
+- tensorflow: tensorflow==1.14.0 추가.

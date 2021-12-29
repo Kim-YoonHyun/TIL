@@ -1,8 +1,8 @@
-# OpenCV
+# 1. 개요
 
-## CV2
+# 2. CV2 명령어
 
-### 이미지 불러오기
+## 2.1. 이미지 불러오기
 
 이미지는 numpy 배열 형식과 동일
 
@@ -10,7 +10,7 @@
 img = cv2.imread('<path>/<image_name>.ext')
 ```
 
-### 이미지 변환
+## 2.2. 이미지 변환
 
 ```python
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -18,7 +18,7 @@ img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
 ```
 
-### 이미지 show
+## 2.3. 이미지 show
 
 ```python
 cv2.imshow('title', img)
@@ -26,13 +26,19 @@ cv2.waitKey()			# imshow 이후 꼭 적어야함
 cv2.destroyAllWindows()	# imshow 이후 꼭 적어야함
 ```
 
-### 이미지 저장
+## 2.4. 이미지 resize
+
+```python
+resize_img = cv2.resize(img, dsize=(50, 50), interpolation=cv2.INTER_AREA)
+```
+
+## 2.4. 이미지 저장
 
 ```python
 cv2.imwrite('<path>/<image_name>.ext', img)
 ```
 
-### threshold
+## 2.5. threshold
 
 ```python
 cv2.threshold(
@@ -58,7 +64,7 @@ cv2.adaptiveThreshold(
                      )
 ```
 
-### 원 검출
+## 2.6. 원 검출
 
 ```python
 circles = cv2.HoughCircles(gray, 	# 입력 이미지
@@ -91,7 +97,7 @@ for i in circles[0]:
 
 circles 는 (1, N, 3) 차원 형태. 반복문을 통해 중심점과 반지름을 반환.
 
-### 특정 범위 안에 있는 행렬 원소 검출
+## 2.7. 특정 범위 안에 있는 행렬 원소 검출
 
 ```python
 mask = cv2.inRange(src, lowerb, upperb, dst=None)

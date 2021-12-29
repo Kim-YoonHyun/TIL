@@ -1,15 +1,15 @@
-# matplotlib
+# 1. 개요
 
-## 기본 명령어
+# 2. 명령어
 
-> 기본 세팅
+## 2.1. 기본 import
 
 ```python
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 ```
 
-> 한글 폰트 사용 (파이참), 폰트 다운로드 사이트:[https://hangeul.naver.com/2017/nanum](https://hangeul.naver.com/2017/nanum)
+### 2.1.1. 한글 폰트 사용
 
 ```python
 import matplotlib.font_manager as fm
@@ -19,65 +19,56 @@ fontprop = fm.FontProperties(fname=path, size=10)
 # 이후 한글 폰트를 적용하고자 하는 곳에 fontproperties=fontprop 입력
 ```
 
-> 기본 명령어(순서는 가능하면 지키는게 좋음)
+## 2.2. plot
+
+### 2.2.1. figure 크기 조정
 
 ```python
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 ```
+
+### 2.2.2. 제목 설정
 
 ```python
-# 제목 설정
-plt.title('제목 예시', fontproperties=fontprop)
+plt.title('title')
 ```
+
+### 2.2.3. 기본 plot
 
 ```python
-# 그래프 그리기 및 특성 설정
-plt.plot(x, y, c='b', lw=5, ls='--', marker='o', ms=15, mec='g', mew=5, mfc='r')
-
-plt.plot(x, y, 'bo--', label='aa')	
-plt.plot(x, y, 'rs--', label='bb')	# 추가 그래프 그리기
-
-# DataFrame plot
-df.plot()
-df.plot(kind='barh', grid=True, figsize=(12, 8)) 	# 다양한 설정 가능
+x = [1, 2, 3, 4, 5]
+y = [1, 2, 3, 4, 5]
+plt.plot(x, y)
 ```
+
+#### 2.2.3.1. 추가 plot
 
 ```python
-# 축 값 설정
-plt.xlim(0, 50)				# x 축 최솟값~최댓값 설정	
-plt.ylim(0, 20)				# y 축 최솟값~최댓값 설정
-plt.xticks([0, 20, 50])		# x 축 최솟값, 중간 격자, 최댓값 선택
-plt.yticks([0, 5, 10, 20])	# y 축 최솟값, 중간 격자, 최댓값 선택
+x = [1, 2, 3, 4, 5]
+y = [1, 2, 3, 4, 5]
+plt.plot(x, y)
+
+y2 = [1, 3, 5, 7, 9]
+plt.plot(x, y2)
 ```
+
+#### 2.1.3.2. 옵션
 
 ```python
-# 범례 표시
-plt.xlabel('xlabel')	# x 값 라벨 설정
-plt.ylabel('ylabel')	# y 값 라벨 설정
-plt.legend(loc=1)		# 그래프 범례 표시(plot에 label이 설정되어 있어야함)
+plt.plot(x, y, 
+         c='b', 	# 선 색
+         lw=5,  	# 선 굵기
+         ls='--',	# 선 스타일
+         marker='o',# 마커 형태
+         ms=15,		# 마커 사이즈
+         mfc='r',	# 마커 색
+         mec='g',	# 마커 테두리 색
+         mew=5,		# 마커 테두리 굵기
+         label='a'  # 라벨
+        )
+
+plt.plot(x, y, 'bo--') # 축약형태로 가능
 ```
-
-```python
-# 이미지 저장
-plt.savefig(f'path/image_name.png', 	# 저장 경로 및 파일이름, 확장자 설정
-            dpi=100, 					# dpi(해상도) 설정
-            facecolor='#eeeeee', 		# 배경색 설정 (기본 흰색)
-            edgecolor='blue')			# 테두리색 설정 (기본 흰색)
-```
-
-```python
-# 플롯 보이기
-plt.grid()	# 격자 표시
-plt.colorbar() # 칼라 바 표시
-plt.show()	# 윈도우 보이기
-
-# 자동으로 닫고 싶을 경우
-plt.show(block=False)
-plt.pause(2)	# 시간 지연
-plt.close()
-```
-
-> 특성 표
 
 | 색 명령어 | 의미    | 마커명령어 | 의미           | 스타일명령어 | 의미     |
 | --------- | ------- | ---------- | -------------- | ------------ | -------- |
@@ -102,63 +93,104 @@ plt.close()
 |           |         | `D`        | diamond        |              |          |
 |           |         | `d`        | thin_diamond   |              |          |
 
-[matplotlib.org](https://matplotlib.org/stable/gallery/index.html)
+### 2.2.4. 축 설정
 
->  서브플롯 기본 구조
+#### 2.2.4.1. 축 길이 설정
 
 ```python
+plt.xlim(0, 100)	# (최솟값, 최댓값)
+plt.ylim(0, 100)
+```
+
+#### 2.2.4.2. 격자 설정
+
+```python
+plt.xticks([0, 10, 30, 40, 50])	# (최솟값, 중간, ...,  최댓값)
+plt.yticks([0, 5, 10, 20])
+```
+
+### 2.2.5. 축 이름 설정
+
+```python
+plt.xlabel('xlabel')
+plt.ylabel('ylabel')
+```
+
+### 2.2.6. legend 표시
+
+```python
+plt.legend(loc=1)
+```
+
+### 2.2.7. 격자 표시
+
+```python
+plt.grid()
+```
+
+### 2.2.8. color 바 표시
+
+```python
+plt.colorbar()
+```
+
+### 2.2.9. image 저장
+
+```python
+plt.savefig('<path>/image_name.png', 	# 저장 경로 및 파일이름, 확장자 설정
+            dpi=100, 					# dpi(해상도) 설정
+            facecolor='#eeeeee', 		# 배경색 설정 (기본 흰색)
+            edgecolor='blue')			# 테두리색 설정 (기본 흰색)
+```
+
+### 2.2.10. show
+
+```python
+plt.show()
+```
+
+### 2.2.11. subplot
+
+```python
+x = [1, 2, 3, 4, 5]
+
 plt.subplot(2, 1, 1)		# 2 X 1 에서 1 의 위치
-# 이후 기본 구성 입력
-plt.title() ~ plt.grid()
-```
+y = [1, 2, 3, 4, 5]
+plt.plot(x, y)
+# <그외 구성 코드>
 
-```python
 plt.subplot(2, 1, 2)		# 2 X 1 에서 2 의 위치
-# 이후 기본 구성 입력
-plt.title() ~ plt.grid()
-```
+y2 = [1, 3, 5, 7, 9]
+plt.plot(x, y2)
+# <그외 구성 코드>
 
-```python
 plt.tight_layout()		# 각 서브플롯의 레이아웃이 겹치지 않게 조정
 plt.show()
 ```
 
-> 서브플롯 다른 표현방법 > 이 방식으로 반복문 설정 가능
+### 2.2.12. 다양한 plot 모음
+
+#### bar, barh
 
 ```python
-fig, axes = plt.subplot(2, 2)
-
-# 각 위치별 구성 입력
-axes[0, 0].plot(x, y) ...
-axes[0, 1].set_title('sub title') ...
-axes[1, 0].grid() ...
-axes[1, 1].plot() ...
-
-plt.tight_layout()
-plt.show()
-```
-
-## 다양한 플롯
-
-```python
-# bar chart
 x = [0, 1, 2]
 y = [200, 300, 100]
 plt.bar(x, y)
 plt.show()
 ```
 
-![bar_chart](bar_chart.png)
+![bar_chart](C:\Users\10-210917\Desktop\public git\TIL\python\bar_chart.png)
 
 ```python
 plt.barh(x, y)
 plt.show()
 ```
 
-![barh_chart](barh_chart.png)
+![barh_chart](C:\Users\10-210917\Desktop\public git\TIL\python\barh_chart.png)
+
+#### pie chart
 
 ```python
-# pie chart
 sizes = [15, 30, 45, 10]
 explode = (0, 0.1, 0, 0)  # 간격 여부
 labels = ['prog', 'pig', 'dog', 'tree']
@@ -174,7 +206,9 @@ plt.pause(2)
 plt.close()
 ```
 
-![pie_chart](pie_chart.png)
+![pie_chart](C:\Users\10-210917\Desktop\public git\TIL\python\pie_chart.png)
+
+#### histogram
 
 ```python
 # histogram
@@ -189,7 +223,9 @@ plt.pause(2)
 plt.close()
 ```
 
-![histogram](histogram.png)
+![histogram](C:\Users\10-210917\Desktop\public git\TIL\python\histogram.png)
+
+#### scatter
 
 ```python
 # scatter
@@ -201,10 +237,25 @@ plt.scatter(x, y)
 plt.show()
 ```
 
-![scatter_plot](scatter_plot.png)
+![scatter_plot](C:\Users\10-210917\Desktop\public git\TIL\python\scatter_plot.png)
+
+#### box
 
 ```python
 plt.boxplot([x1, y1, x2, y2],
             labels=['x1_label', 'y1_label', 'x2_label', 'y2_label'])
 ```
+
+## 2.3. imshow
+
+이미지를 보이기 위한 용도.
+
+### 2.3.1. 기본 imshow
+
+```python
+img = np.array([[20,2,2],[2,20,2],[2,2,20]])
+plt.imshow(img)
+```
+
+
 
