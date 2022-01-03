@@ -43,6 +43,12 @@ outputs = layers.Dense(4, name="layer3")(layer2)
 model = keras.Model(inputs=inputs, outputs=outputs)
 ```
 
+#### 2.2.3.1. 전이학습 미세조정
+
+```python
+
+```
+
 ### 2.2.4. 예시
 
 ```python
@@ -142,11 +148,111 @@ history = model.fit(
 )
 ```
 
+### 2.6.1. 체크포인트 콜백 지정
 
+```python
+checkpoint_path = "<path>/cp.ckpt"
+
+# 모델의 가중치를 저장하는 콜백 만들기
+cp_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_path,
+    save_weights_only=True,
+    verbose=1)
+
+model.fit(train_images, 
+          train_labels,  
+          epochs=10,
+          validation_data=(test_images, test_labels),
+          callbacks=[cp_callback])  # 콜백을 훈련에 전달합니다
+
+# ['cp.ckpt.index', 'cp.ckpt.data-00000-of-00001', 'checkpoint']
+# 3개의 파일 저장됨.
+```
+
+### 2.6.2. 체크포인트 콜백 option
+
+```python
+checkpoint_path = "training_2/cp-{epoch:04d}.ckpt"
+cp_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_path, 
+    save_weights_only=True,
+    verbose=1,
+	period=5)# 5번째 epoch 마다 저장
+```
+
+## 2.7. 모델 저장
+
+```python
+model.save('<path>/my_model')
+```
+
+- my_model 이라는 이름의 폴더가 만들어지고
+  assets, variables  폴더, keras_metadata.pb  saved_model.pb 파일이 저장됨.
+- tensorflow 버전이 1.XX 버전일 경우 폴더 없이 my_model 이라는 파일만 만들어짐.
+  버전에 따라 저장값이 다른것으로 추정.
+
+## 2.8. 모델 불러오기
+
+```python
+new_model = tf.keras.models.load_model('<path>/my_model')
+```
+
+
+
+## 2.9. 정확도 평가
+
+```python
+model.(test_data, test_gt_data, batch_size=8)
+```
+
+- test data 를 통해 학습된 모델을 평가
+- loss 및 metrics(정확도 등) 를 반환.
+
+## 2.10. 예측
+
+```python
+model.predict(test_data)
+```
+
+- test data에 대한 최종 예측
+
+## keras 내장 network
+
+### 기본 import
+
+```python
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.applications import MobileNetV2
+...
+
+```
+
+### layer 불러오기
 
 # 3. 코드 예시
 
-## 3.1. 아
+## 3.1. 예제 데이터 다운로드
+
+- tensorflow-datasets 를 추가 다운로드 필요
+- tensorflow 2.0 이상에서만 가능
+
+```bash
+pip install -q git+https://github.com/tensorflow/examples.git
+pip install -q -U tfds-nightly
+```
+
+```bash
+$ pip install tensorflow-datasets
+```
+
+안될경우
+
+```bash
+$ pip uninstall tensorflow-datasets
+$ pip install tensorflow-datasets
+```
+
+왜 고쳐졌는지 이유는 모르곘음
 
 
 

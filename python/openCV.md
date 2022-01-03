@@ -2,6 +2,14 @@
 
 # 2. CV2 명령어
 
+설치
+
+```bash
+$ pip install opencv-python
+```
+
+
+
 ## 2.1. 이미지 불러오기
 
 이미지는 numpy 배열 형식과 동일
