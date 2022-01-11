@@ -44,7 +44,7 @@ with open('person.json', 'w', encoding='utf-8') as file:
 #### json 파일 dict 객체로 불러오기
 
 ```python
-with open('person.json', 'r') as file:
+with open('person.json', 'r', encoding='utf-8') as file:
     json_data = json.load(file)
 json_string = json.dumps(json_data, indent='\t')
 ```

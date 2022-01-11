@@ -1,6 +1,6 @@
-# crawling
+# 1. 개요
 
-## 기본적인 흐름
+## 1.1. 기본적인 흐름
 
 1. 정적 웹페이지 제어(request)인지 동적 웹페이지 제어(selenium)인지 선택
 
@@ -49,11 +49,7 @@
    soup.select_one()
    ```
 
-
-
 대개 위의 순서로 크롤링이 진행됨
-
-
 
 ```python
 # url에 한글로 적기
@@ -61,23 +57,13 @@ from urllib.parse import quote
 url = f'{base_url}/search?keywords={quote("양재역")}'
 ```
 
+# 2. 명령어
 
-
-## 상세 설명
-
-### 0. 공통
-
-```python
-'div > id'
-```
-
-
-
-### 1. BeautifulSoup
+## 2.1. BeautifulSoup
 
 - html 을 통해 다양한 정보를 불러옴
 
-> 기본 세팅
+### 2.1.1. 기본 세팅
 
 ```python
 from bs4 import BeautifulSoup
@@ -88,7 +74,7 @@ with open('<html 파일>') as file:
     soup = BeautifulSoup(file, 'html.parser')
 ```
 
-> 예시 html
+### 2.1.2. 예시 html
 
 ```html
 <!DOCTYPE html>
@@ -128,7 +114,7 @@ soup.find('div')		# 최초(가장 위쪽)의 한 개만 찾음
 soup.find_all('div')	# 전부 찾음
 ```
 
-> CSS Selector
+### 2.1.3. CSS Selector
 
 ```python
 # 전부
@@ -153,11 +139,11 @@ for p in all_ps:
   print(p.string, p.get_text())
 ```
 
-### 2. requests
+## 2.2. requests
 
 - url 을 통해 html 을 불러옴 --> 이후 BeautifulSoup를 통해 진행
 
-> 기본 세팅
+### 2.2.1. 기본 세팅
 
 ```python
 import requests
@@ -165,8 +151,7 @@ import requests
 
 ```python
 url = 'https://www.genie.co.kr/chart/top200'	# url 적기. 예시: genie top200
-header = {'User-Agent':
-          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'}	# 이게 없으면 에러날때가 있음
+header = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'}	# 이게 없으면 에러날때가 있음
 req = requests.get(url, headers=header)		# url을 받아옴
 html = req.text		# html 을 받아옴
 ```
@@ -177,7 +162,7 @@ from bs4 import BeautifulSoup
 soup = BeautifulSoup(html, 'html.parser')
 ```
 
-> 예시 html
+### 2.2.2. 예시 html
 
 ```html
 ...
@@ -225,11 +210,13 @@ artist = tr.select_one('.info').select_one('.artist').get_text().strip()
 album = tr.select_one('.info').select_one('.albumtitle').get_text().strip()
 ```
 
-### 3. Selenium
+## 2.3. Selenium
 
 - 웹 어플리케이션을 테스트 하기 위한 라이브러리
 - webdriver를 통해 **웹 브라우저를 실행**하고 출력된 화면을 결과로 받는다.
 - **동적 웹페이지**에 대한 정보 수집 가능 --> 이후 BeautifulSoup으로 진행
+
+### 2.3.1. 기본 세팅
 
 ```python
 from selenium import webdriver
@@ -251,17 +238,37 @@ driver.get(url)
 # driver = webdriver.Chrome('chromedriver', options=options)
 ```
 
-> 웹 페이지에서 직접 제어가 필요할때
+### 2.3.2. 요소 불러오기
 
-````python
-# 요소 가져오기
+```python
 driver.find_element_by_< >('')  # 하나의 요소
 driver.find_elements_by_< >('')  # 복수의 요소
-# < > 에 가능한 명령어: name, tag_name, id, class_name, css_selector, link_text, partial_link_text, xpath
+# < > 에 가능한 명령어: 
+# name, 
+# tag_name, 
+# id, 
+# class_name, 
+# css_selector, : soup 의 css selector 와 같은 방식으로 불러옴
+# link_text, 
+# partial_link_text, 
+# xpath
+```
 
-# 속성값 가져오기
-driver.find_element_by_< >.get_attribute('속성이름. ex:herf')
+### 2.3.3. 텍스트 값 가져오기
 
+```python
+driver.find_element_by_< >.text
+```
+
+### 2.3.3. 속성값 가져오기
+
+```python
+driver.find_element_by_< >.get_attribute('<속성이름>')  # ex:herf
+```
+
+### 2.3.4. 예시
+
+````python
 # 아이디 입력 예시
 input_email = driver.find_element_by_css_selector('._2hvTZ.pexuQ.zyHYP')[0]
 input_email.clear()		# 비우기
