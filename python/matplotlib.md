@@ -9,6 +9,9 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 ```
 
+- spyder 에서 창을 따로 띄우고 싶을때
+  Tools -> Preferences -> IPython console -> Graphics -> Graphics backend 로 가서 Backend 를 Automatic 으로 변경
+
 ### 2.1.1. 한글 폰트 사용
 
 ```python
