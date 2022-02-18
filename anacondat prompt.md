@@ -3,3 +3,12 @@
 1. 우선 아나콘다 가상환경을 만든다.
 2. `conda istall spyder` 입력하여 spyder 설치
 3. `spyder` 입력하여 spyder를 가상환경 기반으로 시작
+
+# 2. 명령어
+
+## 2.1. 가상환경 생성
+
+```bash
+$ conda create -n <이름> python=<version>
+```
+

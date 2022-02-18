@@ -50,8 +50,22 @@ f'{data:<16s}'		# 문자열 왼쪽 정렬
 string.isspace()
 ```
 
-### 2.3.3. 글자 색 변경
+### 2.3.3. 이모티콘 제거
+
+- utf8 이 아닌 글자 제거
 
 ```python
+def rmEmoji(inputData):
+    return inputData.encode('utf-8', 'ignore').decode('utf-8')
+```
+
+- ascii 값이 없는 글자 제거
+
+```python
+# removing emoji
+def rmEmoji_ascii(inputString):
+    return inputString.encode('ascii', 'ignore').decode('ascii')
+
+print(rmEmoji_ascii('🏡 corpo'))
 ```
 

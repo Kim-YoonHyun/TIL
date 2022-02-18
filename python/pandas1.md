@@ -438,21 +438,12 @@ pd.concat([df1, df2], axis=1)	# df1과 df2를 axis=1 기준으로 연결
 
 ## 2.13. CSV
 
-#### DataFrame을 csv 로 추출
+#### DataFrame -> csv
 
 ```python
 df.to_csv('sample.csv', encoding='utf-8-sig')  
+df.to_csv('sample.csv', encoding='utf-8-sig', index=False)  
 # encoding 없으면 글자 깨짐
-```
-
-#### csv 파일 출력 > 파이참에선 안됨
-
-```python
-%%writefile sample1.csv
-c1, c2, c3
-1, 1.11, one
-2, 2.22, two
-3, 3.33, three
 ```
 
 #### CSV 파일 불러오기
@@ -467,6 +458,24 @@ pd.read_csv('sample.csv', header=None)					# 열을 넣지만 이름은 없음
 
 ```python
 pd.read_csv('hangul.csv', encoding='euc-kr' or 'cp949')
+```
+
+## 2.14. sampling & shuffle
+
+### 2.14.1. 랜덤 행 추출
+
+```python
+df_shuffled = df.sample(n=5)	# 5개 행 랜덤추출
+df_shuffled = df.sample(frac=0.5)	# 전체 행의 50 % 랜덤추출
+```
+
+### 2.14.1. 섞기
+
+- 본질적으로는 샘플링이지만 섞기와 같은 효과
+
+```python
+df_shuffled = df.sample(frac=1).reset_index(drop=True)
+# reset_index(drop=True): index 초기화
 ```
 
 

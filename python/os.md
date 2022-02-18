@@ -99,14 +99,6 @@ os.path.basename(
 return: 'trained_model'
 ```
 
-
-
-```python
-
-
-
-```
-
 ### 2.1.7. 경로, 파일명 동시 추출
 
 ```python
@@ -163,7 +155,19 @@ f = os.popen('<cmd 명령어>')
 print(f.read())
 ```
 
+## 2.4.폴더 생성
 
+### 2.4.1. 단일 폴더 생성
+
+```python
+os.mkdir('<path>/폴더이름')	
+```
+
+### 2.4.2. 다중 폴더 생성
+
+```python
+os.makedirs('<path>/폴더1/폴더2/폴더3')
+```
 
 
 

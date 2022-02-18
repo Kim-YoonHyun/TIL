@@ -11,7 +11,7 @@ import shutil
 ## 2.2. 파일 복사
 
 ```python
-shutil.copy(<기존 파일 이름&경로>, <복사할 파일 이름&경로>)
+shutil.copy(<기존 파일 경로&이름>, <복사할 파일 경로&이름>)
 ```
 
 
