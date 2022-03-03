@@ -173,6 +173,10 @@ plt.show()
 
 ### 2.2.12. 다양한 plot 모음
 
+#### imshow()
+
+이미지 플롯
+
 #### bar, barh
 
 ```python
