@@ -1,168 +1,258 @@
-# git 특강
+# 1. 개요
 
-## GUI 와 CLI 의 차이
+버전관리를 위한 커밋 도구
 
-GUI(Graphic User Interface): 그래픽을 통한 제어
-
-CLI(Command Line Interface): 줄 단위를 통한 제어
-
-## CLI 기본 명령어
-
-- 프롬프트 기본 인터페이스
-  - 컴퓨터 정보
-  - 디렉토리
-  - $
-
-| 명령어 | 풀네임                  | 의미                 | 예시        |
-| ------ | ----------------------- | -------------------- | ----------- |
-| ls     | list                    | 목록                 |             |
-| pwd    | print working directory | 현재 디렉토리 출력   |             |
-| cd     | change directory        | 디렉토리 변경        |             |
-| .      |                         | 현재 폴더            |             |
-| ..     |                         | 상위폴더             |             |
-| mkdir  | make directory          | 폴더 만들기          |             |
-| touch  |                         | 0 byte의 파일 만들기 | touch a.png |
-
-## git 기본 명령어
-
-### git 상태 확인([상세설명](status.md))
+## 1.1. 최초 커밋 시 순서
 
 ```bash
-$ git status
+1. $ git init (2.1)
+2. $ git status (2.2)  (필수는 아님)
+3. $ git add . (2.3.1)
+4. $ git commit -m 'initial commit'  (2.4.1)
+5. github 사이트에 원격저장소 생성
+6. $ git remote add origin https://github.com/<username>/<저장소이름>.git  (2.8.1)
+7. $ git push origin master (2.8.2)
+8. github에서 push 확인
 ```
 
-### 변경사항을 staged
+# 2. 명령어
 
-```bash
-$ git add . 			# 저장소 파일 전체
-$ git add c.txt 		# 특정 파일 
-$ git add a.txt b.docx  # 여러개 파일 동시에
-$ git add "*.txt" 		# 확장자 명으로 동시에, *: 뭐든지 들어갈수 있다는 의미
-$ git add test_folder/	# 특정 폴더
-$ git restore --staged a.txt 	# a.txt 를 add 에서 삭제 (최초 커밋 이후)
-$ git rm --cached a.txt 		# a.txt 를 add 에서 삭제 (최초 커밋 전)
-```
+## 2.1. git 시작
 
-### commit
-
-#### commit 실행 및 수정
-
-```bash
-$ git commit -m '<commit mesage>'	# 커밋 하기
-$ git commit --amend				# 커밋 수정(push 전에만 가능)
-$ git re <삭제된 파일 이름>            # 없어진 파일을 commit 할 경우
-```
-
-#### 현재 저장소에 기록된 commit 조회
-
-```bash
-$ git log				# 모든 commit 조회
-$ git log -1 			# 최근 1개만
-$ git log --oneline		# 한 줄로 조회
-$ git log -2 --oneline	# 최근 2개만 한 줄로
-```
-
-#### 특정 commit 으로 이동
-
-```bash
-$ git checkout <commit>
-$ git checkout -		# 최신 HEAD commit 으로 이동
-```
-
-#### commit 삭제
-
-```bash
-$ git reset --soft HEAD^	# commit을 취소하고 파일은 staged 상태로 디렉터리 보존
-$ git reset --mixed HEAD^	# commit을 취소하고 파일은 unstaged 상태로 디렉터리 보존(기본)
-$ git reset HEAD^			# 위와 동일
-$ git reset HEAD~2			# 마지막 2개의 commit 취소
-$ git reset --hard HEAD^	# commit을 취소하고 파일도 삭제
-```
-
----
-
-### 원격저장소
-
-#### 원격저장소와 로컬 저장소 연결 순서
+- 해당 명령어를 최초로 git 버전 관리가 가능해짐
+- 숨김파일 형식으로 .git 폴더가 만들어짐
+- <span style="color:red">절대로 상위폴더(또는 하위폴더)에 추가로 init 을 하면 안됨</span>
+  이 경우 git이 꼬여서 에러가 발생하기에 모든 .git 폴더를 지워버리고 새로 git을 시작하는것 밖에 답이 없음.
 
 ```bash
 $ git init
-$ git status
-$ git add .
-$ git commit -m 'fisrt commit'
-# 우선 깃을 생성한 뒤 첫 커밋을 하고 난 이후 연결
-$ git remote add origin https://github.com/<username>/<저장소이름>.git
-# origin 이라는 이름으로 <주소> 를 remote 에 추가
 ```
 
-#### push & pull
+## 2.2. 상태 확인
+
+- 파일의 변경 사항, stage 여부 등 상태(status) 확인 가능
+- 보통 커밋 전 가장 먼저 확인용으로 입력
+
+```bash
+$ git status
+```
+
+## 2.3. 변경사항을 staged
+
+### 2.3.1. 파일 전체
+
+- 100MB 넘어가면 에러 발생
+
+```bash
+$ git add .
+```
+
+### 2.3.2. 특정 파일(폴더) 지정
+
+````bash
+$ git add a.txt			# 파일 하나
+$ git add a.txt b.docx	# 파일 여러개
+$ git add *.txt			# 특정 확장자만 (*은 뭐든지 가능하다는 의미)
+$ git add test_folder/	# 특정 폴더 및 모든 하위 파일
+````
+
+### 2.3.3. stage 에서 제거(최초 커밋 이후)
+
+``` bash
+$ git restore --staged a.txt	# a.txt를 add 에서 삭제
+```
+
+### 2.3.4. stage 에서 제거(최초 커밋 전)
+
+```bash
+$ git rm --cached a.txt
+```
+
+## 2.4. commit
+
+### 2.4.1. 기본 커밋
+
+```bash
+$ git commit -m '<커밋 메세지>'
+```
+
+### 2.4.2. 커밋 수정
+
+- push 후에는 불가능
+
+```bash
+$ git commit --amend 
+```
+
+### 2.4.3. 없는 파일 커밋
+
+```bash
+$ git re <삭제된 파일 이름>
+```
+
+## 2.5. commit 조회
+
+- 일정 이상 넘어가면 과하게 많은 커밋내역으로 에러 발생
+
+### 2.5.1. 모든 커밋 내역 조회
+
+```bash
+$ git log
+```
+
+### 2.5.2. 최근 1개 커밋 조회
+
+```bash
+$ git log -1
+```
+
+### 2.5.3. 커밋 내역 한줄 조회
+
+```bash 
+$ git log --oneline
+```
+
+### 2.5.4. 최근 4개 한줄로
+
+```bash
+$ git log -2 --oneline
+```
+
+## 2.6. commit 이동
+
+### 2.6.1. 특정 commit 이동
+
+```bash
+$ git checkout <commit id>
+```
+
+### 2.6.2. 최신 HEAD commit 이동
+
+```bash
+$ git checkout -
+```
+
+## 2.7. commit 삭제
+
+- 가능하면 commit은 **삭제하지 않고** 갱신만 이어가는게 좋음.
+
+### 2.7.1. 커밋취소+파일 unstaged
+
+- 옵션이 없을경우 default 설정임
+
+```bash
+$ git reset --mixed HEAD^
+$ git reset HEAD^
+```
+
+### 2.7.2. 커밋취소+파일 staged
+
+```bash
+$ git reset --soft HEAD^
+```
+
+### 2.7.3. 특정 커밋 취소
+
+```bash
+$ git reset HEAD~2	# 마지막 2개 커밋 취소
+```
+
+### 2.7.4. 커밋취소 + 파일삭제
+
+- 별로 추천하지 않음
+
+```bash
+$ git reset --hard HEAD^
+```
+
+## 2.8. remote(원격저장소)
+
+- github 사이트에 계정 및 원격저장소가 생성되어있다는 가정 하에 진행
+
+### 2.8.1. git 폴더와 연결
+
+```bash
+$ git remote add origin https://github.com/<username>/<저장소이름>.git
+```
+
+### 2.8.2. push
+
+- 커밋 내역을 원격저장소에 저장
+
+- 최초커밋 및 git 폴더와 연결되어있지 않으면 불가능
 
 ```bash
 $ git push origin master
-# git push -u origin master 를 할 경우 이후 그냥 git push로 가능
-$ git pull origine master
-$ git push --set-upstream origin <branch_name> # branch 자체를 push
-$ git push origin master -f #강제 push
 ```
 
-#### 원격저장소가 있는지 없는지
+### 2.8.3. 강제 push
+
+```bash
+$ git push origin master -f
+```
+
+### 2.8.4. pull
+
+- 원격저장소의 커밋 내역을 불러옴
+
+```bash
+$ git pull origin master
+```
+
+### 2.8.5. 원격저장소 유무
 
 ```bash
 $ git remote -v
 ```
 
-#### remote 삭제
+### 2.8.6. 원격저장소 연결 삭제
 
 ```bash
 $ git remote rm
 ```
 
-#### 기존 원격 저장소 url 변경
+### 2.8.7. 원격저장소 url 변경
 
 ```bash
 $ git remote set-url origin https://github.com/<username>/<remotename>.git
 ```
 
-#### main 을 master로 변경하는 경우
+## 2.9. 그 외
+
+### 2.9.1. main 을 master로 변경
+
+- 위의 명령어로만 활용하면 이 경우는 없음
 
 ```bash
 $ git branch -M master
 ```
 
-#### 현재 저장소 내용 임시공간에 보관
+### 2.9.2. 현재 내용 임시공간에 보관
 
 ```bash
-$ git stash				# 임시 공간에 보관
-$ git stash pop			# 임시 공간에 보관된 정보 가져옴
+$ git stash
 ```
 
-#### git 수정 이전으로 내용 되돌리기
+### 2.9.3. 임시공간에 보관된 정보 가져옴
 
 ```bash
-git reset --hard				# 모든 변경 파일 되돌리기
-git checkout -- path/hello.c	# path/hello.c 의 변경 취소
+$ git stash pop
 ```
 
-### github 의 내용을 가져올 때
-
-#### 기본 흐름
+### 2.9.4. git 되돌리기
 
 ```bash
-git init
-git remote add origin https://github.com/<user_name>/<repo_name>.git
-git pull origin master
+$ git reset --hard
 ```
 
-#### 사용자 이름 설정(본인 계정으로 꼭 해줘야함)
+### 2.9.5. 사용자 이름 설정
+
+- 이걸 해주지 않으면 잔디가 생성되지 않는 경우가 있음
 
 ```bash
 git config --global user.name 'My name'
-git config --global user.email 'my_email@example.com' 
+git config --global user.email 'my_email@example.com'
 ```
-
-
-
-
 
 
 
