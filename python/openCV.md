@@ -1,32 +1,57 @@
 # 1. 개요
 
-# 2. CV2 명령어
+- 이미지를 처리하는 모듈
+- 보편적으로 cv2 를 활용함
 
-설치
+# 2. 명령어
+
+## 2.1. 설치 & import
 
 ```bash
 $ pip install opencv-python
 ```
 
-
-
-## 2.1. 이미지 불러오기
-
-이미지는 numpy 배열 형식과 동일
-
 ```python
-img = cv2.imread('<path>/<image_name>.ext')
+import cv2
 ```
 
-## 2.2. 이미지 변환
+
+
+## 2.2. 이미지 제어
+
+### 2.2.1. 불러오기
+
+- 이미지는 numpy 배열 형식
+
+```python
+img = cv2.imread('<path>/<img_name>')
+```
+
+### 2.2.2. RGB => GRAY
 
 ```python
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+```
+
+### 2.2.3. RGB => HSV
+
+```python
 img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+```
+
+### 2.2.4. RGB => LAB
+
+```python
 img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
 ```
 
-## 2.3. 이미지 show
+### 2.2.5.  resize
+
+```python
+resize_img = cv2.resize(img, dsize=(50, 50), interpolation=cv2.INTER_AREA)
+```
+
+### 2.2.6 show
 
 ```python
 cv2.imshow('title', img)
@@ -34,19 +59,15 @@ cv2.waitKey()			# imshow 이후 꼭 적어야함
 cv2.destroyAllWindows()	# imshow 이후 꼭 적어야함
 ```
 
-## 2.4. 이미지 resize
+### 2.2.7. 저장
 
 ```python
-resize_img = cv2.resize(img, dsize=(50, 50), interpolation=cv2.INTER_AREA)
+cv2.imwrite('<path>/<image_name>', img)
 ```
 
-## 2.4. 이미지 저장
+## 2.3. 검출
 
-```python
-cv2.imwrite('<path>/<image_name>.ext', img)
-```
-
-## 2.5. threshold
+### 2.3.1. threshold
 
 ```python
 cv2.threshold(
@@ -72,7 +93,7 @@ cv2.adaptiveThreshold(
                      )
 ```
 
-## 2.6. 원 검출
+### 2.3.2 원 검출
 
 ```python
 circles = cv2.HoughCircles(gray, 	# 입력 이미지
@@ -105,13 +126,63 @@ for i in circles[0]:
 
 circles 는 (1, N, 3) 차원 형태. 반복문을 통해 중심점과 반지름을 반환.
 
-## 2.7. 특정 범위 안에 있는 행렬 원소 검출
+### 2.3.3. 특정 범위 안에 있는 행렬 원소 검출
 
 ```python
 mask = cv2.inRange(src, lowerb, upperb, dst=None)
 ```
 
-## 2.8. numpy 입력할때
+## 2.4. track bar
+
+### 2.4.1. 기본 구조
+
+```python
+def onChange(x):
+    pass
+
+
+# 윈도우 이름 설정
+cv2.nameWindow('<window name>')
+
+# 최솟값 ~ 최댓값 범위를 지닌 트랙바 생성
+cv2.createTrackbar('<var name>', <min num>, <max num>, onChange)
+
+# 트랙바에 표시할 최초 값 설정
+var = <num>
+cv2.setTrackbarPos('upper_h', 'Trackbar Windows', var)
+
+# 'q' 입력을 통해 윈도우 종료시 트랙바 값 추출
+while cv2.waitKey(1) != ord('q'):
+    var1 = cv2.getTrackberPos('<var name>', '<window name>')
+print(var1)
+```
+
+### 2.4.2. 예시
+
+```python
+def onChange(pos):
+    pass
+
+cv2.namedWindow('Trackbar Windows')
+cv2.createTrackbar('var', 'Trackbar Windows', 0, 255, onChange)
+
+var = 125
+cv2.setTrackbarPos('var', 'Trackbar Windows', var)
+
+while cv2.waitKey(1) != ord('q'):
+    var = cv2.getTrackbarPos('var', 'Trackbar Windows')
+
+cv2.destroyAllWindows()
+print(var)
+```
+
+
+
+
+
+## 기타 
+
+### numpy 입력할때
 
 ```python
 numpy 의 type 을 uint8 로 해야함

@@ -308,6 +308,10 @@ history = model.fit_generator(Train_Gen, epochs=100)
 
 
 
+
+
+
+
 # 1. tensorflow keras
 
 ## 1.1. 기본 imprt 

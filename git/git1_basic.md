@@ -2,7 +2,7 @@
 
 버전관리를 위한 커밋 도구
 
-## 1.1. 최초 커밋 시 순서
+## 1.1. 최초 커밋 시
 
 ```bash
 1. $ git init (2.1)
@@ -13,6 +13,16 @@
 6. $ git remote add origin https://github.com/<username>/<저장소이름>.git  (2.8.1)
 7. $ git push origin master (2.8.2)
 8. github에서 push 확인
+```
+
+## 1.2. 최초 커밋 이후
+
+```bash
+1. $ git status (2.2)  (필수는 아님)
+2. $ git add . (2.3.1)
+3. $ git commit -m 'initial commit'  (2.4.1)
+4. $ git push origin master (2.8.2)
+5. github에서 push 확인
 ```
 
 # 2. 명령어
