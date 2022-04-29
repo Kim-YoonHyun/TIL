@@ -18,7 +18,7 @@ import argparse
 parser = argparse.ArgumentParser()
 ```
 
-### 2.2.2. option - usage
+#### option - usage
 
 - -h 옵션을 통해 볼 수 있는 usage 메세지를 재정의 할 수 있음
 - 기본값: `filename.py [-h] ...`
@@ -27,7 +27,7 @@ parser = argparse.ArgumentParser()
 parser = argparse.ArgumentParser(usage='<message>')
 ```
 
-### 2.2.3. option - description
+#### option - description
 
 - -h 옵션을 통해 프로그램에 대한 간략 설명 표시
 
@@ -35,7 +35,7 @@ parser = argparse.ArgumentParser(usage='<message>')
 parser = argparse.ArgumentParser(description='<message>')
 ```
 
-### 2.2.4. option - epilog
+#### option - epilog
 
 - -h 도움말 메시지의 마지막 부분에 나오는 설명
 
@@ -43,9 +43,7 @@ parser = argparse.ArgumentParser(description='<message>')
 parser = argparse.ArgumentParser(epilog='<message>')
 ```
 
-### 2.2.5. option - action
-
-#### 2.2.5.1. store_true / false
+#### option - action
 
 - store_true 의 경우 default 는 False 이며 인자를 적어주면 True 가 저장됨
 - store_false의 경우는 반대.
@@ -64,7 +62,7 @@ args.foo: True
 args.foo: False
 ```
 
-### 2.2.6. option - metavar
+#### option - metavar
 
 - `help=` 에서 도움말 메세지를 생성할 때 표시되는 이름을 변경.
 
@@ -105,7 +103,7 @@ $ python <filename>.py abc	# positional 만 지정됨
 
 
 
-### 2.3.3. option - type
+####  option - type
 
 - type을 지정하지 않으면 기본적으로 문자열 반환
 
@@ -119,7 +117,7 @@ parser.add_argument('-o', '--optional_val', type=int)
 python <filename>.py -e=123
 ```
 
-### 2.3.4. option - help
+#### option - help
 
 - 도움말 메세지에 인수의 설명을 추가
 
@@ -127,7 +125,7 @@ python <filename>.py -e=123
 parser.add_argument('-o', '--optional_val', help='위치변수입니다.')
 ```
 
-### 2.3.5. option - default
+#### option - default
 
 - 인자에 기본값을 지정함
 

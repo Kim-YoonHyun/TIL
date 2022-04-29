@@ -22,5 +22,24 @@ x.size()
 
 
 
+## 모델
+
+### 모델 저장
+
+```python
+torch.save(model.state_dict(), PATH)
+```
+
+### 모델 불러오기
+
+```python
+model.load_state_dict(torch.load(PATH))
+model.eval()
+```
+
+
+
+
+
 ### 2.1.1. 상세 분류(설명)
 
