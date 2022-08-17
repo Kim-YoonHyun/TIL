@@ -24,11 +24,12 @@ class Male:
         print('hello')
     
     def say_good_bye():
-        print('good bye')
+        print('good bye') # 3, 4
+        
 kim = Male(27)	# 1
 kim.say_hello()	# 2
-kim.say_good_by()	# 3
-Male.say_good_by()	# 4
+kim.say_good_bye()	# 3 error
+Male.say_good_bye()	# 4
 
 lee = Male(25)
 lee.say_hello()	# 6
@@ -37,14 +38,32 @@ Male.say_hello(lee) # 7
 ```
 
 1. kim 이라는 객체(인스턴스) 에 Male 이라는 클래스를 부여.
+
 2. Male 이라는 클래스는 say_hello 라는 method를 가지고 있기에
    Male 이라는 클래스에 속한 객체(인스턴스)인 kim 은 say_hello 라는 method 사용 가능.
+
+   ```python
+   >>> hello
+   ```
+
+   
+
 3. 해당 메서드에는 아무런 인자가 주어져 있지 않지만, 
    파이썬 method의 첫 번째 인자로 항상 인스턴스(객체)가 전달되기때문에
    '받을 인자가 없는데 하나의 인자(kim 인스턴스)를 받았다'는 오류가 발생.
    즉, self 를 넣어야 항상 자동 전달되는 첫번째 인자인 인스턴스를 받을 수 있음.
+
+   ```python
+   TypeError: say_good_bye() takes 0 positional arguments but 1 was given
+   ```
+
 4. 클래스명.method 의 경우 클래스에 인스턴스(객체)가 할당되어있지않음.
    즉, 첫번째 인자로 보낼 인스턴스가 존재하지 않기에 출력 가능
+
+   ```python
+   >>> good bye
+   ```
+
 5. 인스턴스(객체 kim)에 할당된 메모리 주소를 보여줌.
    즉, self 는 클래스에 할당된 인스턴스인 kim 과 동일하다고 볼 수 있다.
 6. lee 라는 새로운 객체에 Male 클래스를 부여하였기에
@@ -121,7 +140,7 @@ isinstance(kim_yh, MyClass)
 ### 예시 코드
 
 ```python
-class Man(MyClass, MyClass2:			# class 상속, 추가 상속 가능
+class Man(MyClass, MyClass2):			# class 상속, 추가 상속 가능
     def __init__(self, name):	
         super().__init__(name)		# 부모 class의 인스턴스변수 살리기
         self.sex = 'male'

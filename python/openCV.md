@@ -27,6 +27,19 @@ import cv2
 img = cv2.imread('<path>/<img_name>')
 ```
 
+#### 한글 이름으로 불러올 시
+
+```python
+import cv2
+import numpy as np
+ 
+path = 'D:/티스토리/티스토리 포스팅/python/cv2.imread 한글 파일 경로 인식 실패 문제 해결 방법'
+img_array = np.fromfile(path, np.uint8)
+img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+```
+
+
+
 ### 2.2.2. RGB => GRAY
 
 ```python
@@ -64,6 +77,36 @@ cv2.destroyAllWindows()	# imshow 이후 꼭 적어야함
 ```python
 cv2.imwrite('<path>/<image_name>', img)
 ```
+
+#### 한글 이름으로 저장 시
+
+```python
+import cv2
+import numpy as np
+import os
+ 
+path = 'D:/티스토리/티스토리 포스팅/python/cv2.imread 한글 파일 경로 인식 실패 문제 해결 방법'
+img_name = '교훈.jpg'
+full_path = path + '/' +img_name
+ 
+img_array = np.fromfile(full_path, np.uint8)
+img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+ 
+grayscale_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ 
+new_img_name = '교훈_그레이스케일.jpg'
+ 
+extension = os.path.splitext(new_img_name)[1] # 이미지 확장자
+ 
+result, encoded_img = cv2.imencode(extension, grayscale_img)
+ 
+if result:
+    with open(new_img_name, mode='w+b') as f:
+        encoded_img.tofile(f)
+
+```
+
+
 
 ## 2.3. 검출
 

@@ -171,33 +171,83 @@ ai = np.array([
 b = np.take_along_axis(a, ai, axis=2)
 ```
 
-## 2.6 전치
+## 2.6 구조 변경
+
+### 2.6.1. 전치
 
 ```python
 np.transpose(a)		# a를 전치
 np.swapaxes(a, axis1, axis2)	# a의 axis1과 axis2를 변경
 ```
 
-## 2.7. 원소 찾기
+### 2.6.2. 상하 반전
 
-### 2.7.1. np.where
+```python
+a = np.arange(12).reshape(4, 3)
+a_flipud = np.flipud(a)
+```
+
+### 2.6.3. 좌우 반전
+
+```python
+a = np.arange(12).reshape(4, 3)
+a_fliplr = np.fliplr(a)
+```
+
+### 2.6.4. 상하좌우 반전
+
+```python
+a = np.arange(12).reshape(4, 3)
+a_flip = np.flip(a)
+```
+
+
+
+## 2.7. 원소 찾기 & 대체
 
 ```python
 ary = np.array([1, 2, 3, 4, 5])
 
 np.where(ary > 3)	# 3보다 큰 값은 True 아니면 False
 np.where(ary > 3, 30, -3)	# 3보다 큰 값은 30 아니면 -3
+np.where(ary > 3, 30, ary)	# 3보다 큰 값은 30 아니면 그대로
 ```
 
 
 
-## 2.7. type 변환
+## 2.7. take
 
 ### 2.7.1 생성시 적용
 
+```python
+a = [4, 3, 5, 7, 6, 8]
+indices = [0, 1, 4]
+np.take(a, indices)
+array([4, 3, 6])
+```
 
+## 2.8. 숫자 세기
+
+### 2.8.1. np.count
 
 ```python
-
+a = [4, 3, 4, 4, 6, 8]
+a.count(4)
 ```
+
+
+
+### 2.8.1. np.unique
+
+```python
+unique_ary = np.unique(value_list)
+```
+
+#### option - return_counts
+
+```python 
+unique_ary, count_idx = np.unique(value_list, return_counts=True)
+```
+
+### 
 

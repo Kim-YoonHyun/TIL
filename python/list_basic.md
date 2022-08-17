@@ -9,7 +9,7 @@ a = [1, 2, 3]
 a.count(1)
 ```
 
-
+## 2.2. 
 
 ```python
 list(string)		# string 한 글자씩 전부 띄움 
@@ -24,6 +24,13 @@ list(string)		# string 한 글자씩 전부 띄움
 ```python
 a = [100, 200, 300]
 idx = a.index(200)
+```
+
+## 2.3. 리스트 내 인자 제거
+
+```python
+a = ['100', '2', 'asd', 'ccc']
+a.remove('asd')
 ```
 
 

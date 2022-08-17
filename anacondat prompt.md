@@ -28,11 +28,15 @@ $ conda remove --name <가상환경이름> --all
 
 ## 3. Linux 서버 내 설치
 
-`wget https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh`
+```bash
+wget https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh
+bash Anaconda3-2021.11-Linux-x86_64.sh
+source ~/.bashrc
+```
 
-`bash Anaconda3-2021.11-Linux-x86_64.sh`
 
-`source ~/.bashrc`
+
+
 
 
 
