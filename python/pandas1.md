@@ -417,23 +417,21 @@ fillna(method='ffill' or 'pad')		# 윗값 복사
 fillna(method='bfill' or 'backfill')# 아랫값 복사
 ```
 
-## 3.4. 설정
+## 3.4. index 설정
 
-### 3.4.1. index 설정
-
-#### 이름 추가
+### 3.4.1. 이름 추가
 
 ```python
 df.index.name = '도시'	# index 이름 추가
 ```
 
-#### 이름 변경
+### 3.4.2. 이름 변경
 
 ```python
 df.rename(index={'<기존 이름>': '<변경할 이름>'}, inplace = True)
 ```
 
-#### 리셋
+### 3.4.3. 리셋
 
 - 기존의 인덱스는 열로 바뀜
 
@@ -441,13 +439,21 @@ df.rename(index={'<기존 이름>': '<변경할 이름>'}, inplace = True)
 df.reset_index()
 ```
 
-#### columns -> index
+#### option - drop
+
+- 기존의 인덱스를 열에 추가하지 않고 없애는 여부. default = False
+
+```python
+df.reset_index(drop=True)
+```
+
+### 3.4.4. columns -> index
 
 ```python
 df.set_index('열0', inplace=True)   # 열0 의 값들을 인덱스로 변경.
 ```
 
-#### 셔플
+### 3.4.5. 셔플
 
 - 본질적으로는 샘플링이지만 셔플과 같은 효과
 
@@ -456,24 +462,22 @@ df_shuffled = df.sample(frac=1, random_state=42).reset_index(drop=True)
 # reset_index(drop=True): index 초기화
 ```
 
-### 3.4.2. column 설정
+## 3.5. column 설정
 
-#### 열 추가
+### 3.5.1. 열 추가
 
 ```python
 df['새로운 열'] = list
 df.insert(3, '새로운 열', list, True)
 ```
 
-
-
-#### 이름 추가
+### 3.5.2. 이름 추가
 
 ```python
 df.columns.name = '특성'	# columns 이름 추가
 ```
 
-#### 이름 변경
+### 3.5.3. 이름 변경
 
 ```python
 df.rename(columns = {'old_nm' : 'new_nm'}, inplace = True)
