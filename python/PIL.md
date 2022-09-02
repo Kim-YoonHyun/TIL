@@ -14,6 +14,12 @@
 from PIL import Image
 ```
 
+## 2.2. numpy 에서 PIL 변환
+
+```python
+pil_image = Image.fromarray(np_ary)
+```
+
 
 
 ### 2.1.1. 상세 분류(설명)
