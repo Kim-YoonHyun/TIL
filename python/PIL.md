@@ -20,7 +20,29 @@ from PIL import Image
 pil_image = Image.fromarray(np_ary)
 ```
 
+## 2.3. 이미지 불러오기
+
+```python
+img = Image.open('exam.jpg') # 이미지 파일명 또는 파일 위치
+```
+
+## 2.4. 보여주기
+
+```python
+img.show() # 이미지 확인
+```
 
 
-### 2.1.1. 상세 분류(설명)
+
+## 2.5. 이미지 저장
+
+```python
+img.save('memi_save.jpg',"JPEG") # 현재 환경에 memi_save라는 이름으로 저장
+```
+
+
+
+
+
+
 

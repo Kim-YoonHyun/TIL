@@ -69,3 +69,12 @@ def rmEmoji_ascii(inputString):
 print(rmEmoji_ascii('🏡 corpo'))
 ```
 
+## 2.4. 문자 병경
+
+### 2.4.1. replace
+
+```python
+a = 'hello world'
+a.replace('hello','hi')
+```
+

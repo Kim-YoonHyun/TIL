@@ -57,6 +57,7 @@ a[a > 3]
 ## 2.2. random
 
 ````python
+np.random.randint(0, 10, size=20)	# 범위 0 ~ 10-1 에서 20 크기만큼 생성
 np.random.choice(5, 3)					# 범위 5에서 값 3개 복원 추출
 np.random.choice(5, 3, replace=False)	# 범위 5에서 값 3개 비복원 추출
 ````

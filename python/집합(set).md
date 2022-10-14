@@ -47,3 +47,28 @@ print(set1.union(set2))
 # {1, 2, 3, 4, 5, 6, 8, 9}
 ```
 
+### 2.2.3. 차집합
+
+```python
+set1 = set([1,2,3,4,5,6])
+set2 = set([3,4,5,6,8,9])
+
+
+print(set1 - set2)
+print(set1.difference(set2))
+
+{1, 2}
+{1, 2}
+```
+
+### 2.2.4. 대칭 차집합
+
+```python
+set1 = set([1,2,3,4,5,6])
+set2 = set([3,4,5,6,8,9])
+
+print(set1 ^ set2)
+
+{1, 2, 8, 9}
+```
+
