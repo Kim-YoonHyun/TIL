@@ -60,10 +60,6 @@ $conda env create -f <가상환경이름>.yaml
    $tar -xzf my_env.tar.gz -C my_env # 해당 폴더 아래 압축 풀기
    ```
 
-   
-
-   
-
 ## 3. Linux 서버 내 설치
 
 ```bash

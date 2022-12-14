@@ -227,6 +227,18 @@ $ git remote rm
 $ git remote set-url origin https://github.com/<username>/<remotename>.git
 ```
 
+### 2.8.8. clone
+
+```bash
+$ git clone https://github.com/<username>/<remotename>.git
+```
+
+로컬에서는 상관없지만 다른 곳에서 할 경우 (예: 회사 --> 집) 토큰이 필요함.
+
+참고: [토큰생성방법](https://yian.tistory.com/38)
+
+
+
 ## 2.9. 그 외
 
 ### 2.9.1. main 을 master로 변경
