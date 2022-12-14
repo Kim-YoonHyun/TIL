@@ -16,7 +16,15 @@ $ pwd
 $ cd 
 ```
 
-## tmux
+### 2.1.3. 파일 리스트
+
+```bash
+$ ls
+```
+
+### tmux 설치
+
+
 
 ### 2.1.1. 디렉토리 생성
 
@@ -48,4 +56,36 @@ mkdir ~ aa
 [참고 블로그](https://dambi-ml.tistory.com/6)
 
 설치 후 재접속해야 적용됨.
+
+```bash
+netstat -lntp
+ps -ef | grep python
+kill -9 <pid>
+killall python3
+```
+
+## 2.2. 포트
+
+### 2.2.1. 열린 포트 확인
+
+```bash
+$netstat -ltup
+$netstat -nap
+$ss -lntu
+```
+
+### 2.2.2. 특정 포트 상태 확인
+
+```bash
+netstat -nap | grep <포트번호>
+```
+
+### 2.2.3. 특정 포트 열기
+
+```bash
+$firewall-cmd --permanent --zone=public --add-port=8080/tcp
+$firewall-cmd --reload
+
+prodigy ner.manual 0001 blank:en data_0001_8050.txt --label label1,label2,label3 --highlight-chars
+```
 

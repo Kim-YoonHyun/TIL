@@ -444,7 +444,7 @@ df.reset_index()
 - 기존의 인덱스를 열에 추가하지 않고 없애는 여부. default = False
 
 ```python
-df.reset_index(drop=True)
+df = df.reset_index(drop=True)
 ```
 
 ### 3.4.4. columns -> index

@@ -58,5 +58,23 @@ example = {'a':1, 'b':2}
 a_value = example.pop('a')
 ```
 
+## 2.2. 정렬
+
+### 2.2.1. value 기준
+
+```python
+sorted_dict = dict(sorted(my_dict.items(), 
+                          key=lambda item: item[1],
+                          reverse=False))
+```
+
+### 2.2.2. key 기준
+
+```python
+sorted_dict = dict(sorted(my_dict.items(), 
+                          key=lambda item: item[0],
+                          reverse=False))
+```
+
 
 

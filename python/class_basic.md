@@ -18,6 +18,7 @@
 class Male:
     def __init__(self, age):
         self.age = age
+        self.__raw = age * 10  # __ 는 내부적으로 사용하는 변수에 관례적으로 붙임. 외부에서 접근은 가능함.
     
     def say_hello(self):
         print(id(self)) # 5

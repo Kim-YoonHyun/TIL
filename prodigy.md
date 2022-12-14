@@ -13,6 +13,7 @@
 
 ```bash
 prodigy ner.manual <dataset name> blank:en <data file> --label label1,label2,label3,... --highlight-chars
+prodigy ner.manual 0001 blank:en data_0001.txt --label label1,label2,label3 --highlight-chars
 ```
 
 [레시피 설명 참고](https://prodi.gy/docs/recipes#ner)
