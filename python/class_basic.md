@@ -1,6 +1,8 @@
-# class basic
+# 1. 개념
 
-## 개념
+python 에서 객체를 만들어 내기 위한 기본 틀.
+
+# 2. 상세
 
 ### self
 
@@ -86,7 +88,7 @@ class MyClass:
         self.name = name		# name 속성, 같은 이름으로 쓰는 것이 관례
         self.age = 0			# age 속성
         self.tall = 0			# tall 속성
-        self.__money = 0		# 비공개 속성
+        self.__money = 0		# 비공개 속성 --> 이 값은 상속되지 않음
     
     def print_name(self):					# method
         print(self.name)
@@ -178,5 +180,23 @@ class Man(MyClass_abs):
     
     def study(self):		# 추상클래스의 메소드가 없으면 에러 발생
         print('study math')
+```
+
+## 2.2. 특수 설정
+
+### 2.2.2. \__init__
+
+```python
+def __init__(self, a):
+    self.a = a
+```
+
+
+
+### 2.2.1. \__len__
+
+```python
+def __len__(self):
+    return
 ```
 

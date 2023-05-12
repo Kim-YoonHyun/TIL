@@ -58,6 +58,10 @@ $ scp <옵션> <파일 전송>
 
 `-P`: ssh 포트 번호 지정 복사(대문자 P임)
 
+```bash
+$ scp -P 1122 /home/example.txt kyh@123.456.xxx.xxx:/home/test
+```
+
 `-i`: identity file 지정
 
 `-v`: 상세내용을 보면서 디버깅 시 

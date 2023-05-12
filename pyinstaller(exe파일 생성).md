@@ -21,7 +21,7 @@ pyinstaller <파일이름>.py
 ### 2.1.2. 실행 시 콘솔 창 제거
 
 ```bash
-pyinstaller -W <파일이름>.py
+pyinstaller -w <파일이름>.py
 pyinstaller --noconsole <파일이름>.py
 ```
 

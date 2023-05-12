@@ -33,7 +33,11 @@ a = ['100', '2', 'asd', 'ccc']
 a.remove('asd')
 ```
 
+### 2.3.1. 정렬
 
+```python
+a.sort(reverse=True)
+```
 
 
 

@@ -51,6 +51,41 @@ a 라는 중간 경로용 폴더를 자동으로 생성 후 aa 라는 이름의 
 mkdir ~ aa
 ```
 
+## 2.1.4. 용량확인
+
+#### 파일의 용량 확인
+
+```bash
+$du
+```
+
+#### option
+
+```bash
+-s # 선택한 디렉토리만의 용량
+-h # 읽기편한 단위
+```
+
+```bash
+$du -sh /<디렉토리>/*
+```
+
+```bash
+$du -h --max-depth=1
+```
+
+#### 남은 용량 확인
+
+```bash
+$df -k
+```
+
+
+
+
+
+
+
 ## Anaconda 설치
 
 [참고 블로그](https://dambi-ml.tistory.com/6)
@@ -87,5 +122,30 @@ $firewall-cmd --permanent --zone=public --add-port=8080/tcp
 $firewall-cmd --reload
 
 prodigy ner.manual 0001 blank:en data_0001_8050.txt --label label1,label2,label3 --highlight-chars
+```
+
+### 2.2.4. 백그라운드 실행
+
+```bash
+command > /dev/null 2>&1 &
+```
+
+## 2.3. 사양 확인
+
+### 2.3.1. kernel 확인
+
+```bash
+cat /proc/sys/kernel/osrelease
+```
+
+### 2.3.1. 운영 체제 확인
+
+```bash
+cat /etc/issue.net
+```
+
+### 2.3.2.
+
+```bash
 ```
 

@@ -214,6 +214,28 @@ df = pd.DataFrame(data, index=index_name)
 '''
 ```
 
+## 값
+
+### .1. 필터링
+
+```python
+a = [
+     [1, 2, 3, 4, 5],
+     [6, 7, 8, 9, 10],
+     [11, 12, 13, 14, 15],
+     [16, 17, 18, 19, 20]
+ ]
+df = pd.DataFrame(a, index=['a', 'b', 'c', 'd'], columns=['one', 'two', 'three', 'four', 'five'])
+df['one'][df['one'] > 10] = 123
+print(df)
+
+a = (df['one'] <= 6)
+b = (df['one'] >= 16)
+c = a | b
+df['one'][c] = 123123
+print(df)
+```
+
 
 
 ## 3.2. 추출

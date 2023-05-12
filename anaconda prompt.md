@@ -58,6 +58,7 @@ $conda env create -f <가상환경이름>.yaml
    ```bash
    $mkdir -p my_env # 폴더 생성 
    $tar -xzf my_env.tar.gz -C my_env # 해당 폴더 아래 압축 풀기
+   $tar -xzf my_env.tar.gz -C my_env --ignore-failed-read
    ```
 
 ## 3. Linux 서버 내 설치
@@ -71,7 +72,7 @@ source ~/.bashrc
 
 
 ```bash
-wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+$wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
 bash Anaconda3-2022.10-Linux-x86_64.sh
 source ~/.bashrc
 ```

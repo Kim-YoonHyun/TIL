@@ -250,5 +250,50 @@ unique_ary = np.unique(value_list)
 unique_ary, count_idx = np.unique(value_list, return_counts=True)
 ```
 
-### 
+## 2.9. 복제
+
+```python
+a = np.array([5, 6])
+
+np.tile(a, 3)
+# [5, 6, 5, 6, 5, 6]
+
+np.tile(a, (2, 2))
+'''
+[
+    [5, 6, 5, 6],
+    [5, 6, 5, 6]
+]
+'''
+```
+
+## 2.10. 타입 변경
+
+```python
+a = a.astype(int)
+a = np.array(a, dtype=int)
+```
+
+## 2.11. 결측치
+
+### 2.11.1. 
+
+```python
+a = ary
+np.isnan(a)
+```
+
+### 2.11.2. 결측값을 0
+
+```python
+np.nan_to_num(a)
+```
+
+### 2.11.3. 결측값을 특정 숫자
+
+```python
+np.nan_to_num(a, nan = -1)
+```
+
+
 
