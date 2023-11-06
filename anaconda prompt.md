@@ -66,15 +66,19 @@ $conda env create -f <가상환경이름>.yaml
 ```bash
 wget https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh
 bash Anaconda3-2021.11-Linux-x86_64.sh
-source ~/.bashrc
+source0 ~/.bashrc
 ```
 
 
 
 ```bash
-$wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+$wget https://repo.anaconda.com/archive/Anaconda3-2022.://10-Linux-x86_64.sh
 bash Anaconda3-2022.10-Linux-x86_64.sh
 source ~/.bashrc
+```
+
+```bash
+wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
 ```
 
 

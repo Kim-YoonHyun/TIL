@@ -2,9 +2,9 @@
 
 ## 기본 명령어
 
-### dict 생성
+### 1.1. dict 생성
 
-#### key list 와 value list 를 통해 생성
+#### 1.1.1. key list 와 value list 를 통해 생성
 
 ```python
 key_list = ['a', 'b', 'c']
@@ -12,6 +12,17 @@ value_list = [1, 2, 3]
 
 dict(zip(key_list, value_list))
 ```
+
+### 1.1.2. 하나의 list 만으로 생성
+
+```python
+a = dict.fromkeys(['a', 'b', 'c'], 0)
+'''
+{'a':0, 'b':0, 'c':0}
+'''
+```
+
+
 
 ### key 추출
 

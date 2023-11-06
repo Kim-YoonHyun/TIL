@@ -7,6 +7,8 @@
 - 프로디지는 설정 세팅 및 실행문 두 가지의 준비를 해야함.
 - [참고](https://prodi.gy/docs/)
 
+python -m pip install prodigy -f https://CFF8-35A6-BE53-C2C9@download.prodi.gy
+
 ## 2.1. NER
 
 ### 2.1.1. 실행문
@@ -15,6 +17,12 @@
 prodigy ner.manual <dataset name> blank:en <data file> --label label1,label2,label3,... --highlight-chars
 prodigy ner.manual 0001 blank:en data_0001.txt --label label1,label2,label3 --highlight-chars
 ```
+
+```bash
+prodigy ner.manual 0001 blank:en kca_data_8040.txt --label 상호,상품,이름,주소,계좌번호,주민등록번호,전화번호,사업자등록번호 --highlight-chars
+```
+
+
 
 [레시피 설명 참고](https://prodi.gy/docs/recipes#ner)
 

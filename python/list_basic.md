@@ -31,6 +31,7 @@ idx = a.index(200)
 ```python
 a = ['100', '2', 'asd', 'ccc']
 a.remove('asd')
+a.pop(2)
 ```
 
 ### 2.3.1. 정렬

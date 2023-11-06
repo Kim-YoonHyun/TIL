@@ -144,8 +144,37 @@ cat /proc/sys/kernel/osrelease
 cat /etc/issue.net
 ```
 
-### 2.3.2.
+### 2.3.2. 
 
 ```bash
 ```
+
+## 2.4. 서비스
+
+```bash
+sudo systemctl start jupyterhub
+start, stop
+```
+
+## 2.5. 유저
+
+### 2.5.1. 계정생성
+
+```bash
+sudo useradd <계정이름>
+```
+
+### 2.5.2. 비번 부여
+
+```bash
+sudo passwd <계정이름>
+```
+
+## 2.6. 권한
+
+```bash
+chown <계정> <파일>
+```
+
+
 
