@@ -59,9 +59,9 @@ plt.plot(x, y2)
 
 ```python
 plt.plot(x, y, 
-         c='b', 	# 선 색
-         lw=5,  	# 선 굵기
          ls='--',	# 선 스타일
+         lw=5,  	# 선 굵기
+         c='b', 	# 선 색
          marker='o',# 마커 형태
          ms=15,		# 마커 사이즈
          mfc='r',	# 마커 색
@@ -76,7 +76,7 @@ plt.plot(x, y, 'bo--') # 축약형태로 가능
 | 색 명령어 | 의미    | 마커명령어 | 의미           | 스타일명령어 | 의미     |
 | --------- | ------- | ---------- | -------------- | ------------ | -------- |
 | `b`       | blue    | `.`        | point marker   | `-`          | soild    |
-| `g`       | green   | `,`        | pixwl          | `--`         | dashed   |
+| `g`       | green   | `,`        | pixel          | `--`         | dashed   |
 | `r`       | red     | `o`        | circle         | `-.`         | dash-dot |
 | `c`       | cyan    | `v`        | triangle_down  | `:`          | dotted   |
 | `m`       | magenta | `^`        | triangle_up    |              |          |

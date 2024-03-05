@@ -391,6 +391,13 @@ df.apply(lambda x: x.max() - x.min())	# apply 변환
 df['column'] = df['column'].apply(lambda x: temp(x))	# apply 변환
 ```
 
+### 3.2.6. 행 순서대로 추출 
+
+```python
+for row in df.iterrows():
+    print(row)
+```
+
 
 
 ## 3.3. 결측치

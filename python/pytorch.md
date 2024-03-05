@@ -1,7 +1,15 @@
 # 1. 개요
 
 - 학습에 활용 되는 모듈
-- [pytorch 공식 사이트](https://pytorch.org/get-started/locally/)를 통해 install 가능
+- pytorch 공식 사이트](https://pytorch.org/get-started/locally/)를 통해 install 가
+
+11.7 버전
+
+```python
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
+```
+
+
 
 # 2. 명령어
 

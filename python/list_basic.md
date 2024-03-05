@@ -40,5 +40,17 @@ a.pop(2)
 a.sort(reverse=True)
 ```
 
+### 2.3.2. 비복원추출
+
+```python
+import random
+
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# 리스트에서 크기가 k인 비복원 추출
+k = 3
+sampled_list = random.sample(my_list, k)
+```
+
 
 

@@ -20,15 +20,30 @@ pip freeze > requirements.txt
 pip install -r requirements.txt
 ```
 
-### 2.1.3. download
+## 2.2. 폐쇄망
+
+### 2.2.1. download
+
+```bash
+pip download -d <경로> <패키지명>==<버전>
+# 예시
+# -d : <경로> 에 디렉토리 설정
+pip download -d ./ seaborn==0.11.2
+# requirements
+pip download -d ./ -r requirements.txt
+```
 
 pip download 옵션 관련 참고
 
 https://pip.pypa.io/en/stable/cli/pip_download/
 
-#### 특정 디렉토리
+### 2.1.4. install
 
 ```bash
-pip download -d $PATH -r requirements.txt
+pip install --no-index --find-links=./ <패키지명>==<버전>
+pip install --no-index --find-links=./ seaborn==0.11.2
+
+# --no-index --find-links=./
+# 패키지의 인덱스를 무시하고 ./ 경로에서 찾은 패키지만 다운
 ```
 

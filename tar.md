@@ -40,6 +40,7 @@ tar -zcvf <파일명>.tar.gz <폴더명>
 
 ```bash
 tar -zxvf <파일명>.tar.gz
+tar -zxvf <파일명>.tar.gz --strip-components=1  # 상위 폴더 1개 제거
 ```
 
 

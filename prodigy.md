@@ -38,8 +38,6 @@ prodigy ner.manual 0001 blank:en kca_data_8040.txt --label 상호,상품,이름,
 
 ### 2.1.2. prodigy.json (설정 세팅)
 
-
-
 - 프로디지를 설치할 경우 기본적으로 .prodigy 폴더가 같이 생성됨.
 - 해당 폴더 내에 prodigy.db 및 prodigy.json 이 기본적으로 존재.
 - 별다른 로컬 세팅을 진행하지 않으면 기본적으로 해당 2개 파일을 사용함.

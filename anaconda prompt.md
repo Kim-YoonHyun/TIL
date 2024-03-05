@@ -57,22 +57,28 @@ $conda env create -f <가상환경이름>.yaml
 
    ```bash
    $mkdir -p my_env # 폴더 생성 
-   $tar -xzf my_env.tar.gz -C my_env # 해당 폴더 아래 압축 풀기
-   $tar -xzf my_env.tar.gz -C my_env --ignore-failed-read
+   $tar -zxvf my_env.tar.gz -C my_env # 해당 폴더 아래 압축 풀기
+   $tar -zxvf my_env.tar.gz -C my_env --ignore-failed-read
    ```
 
-## 3. Linux 서버 내 설치
+## 2.2. Linux 서버 내 설치
 
 ```bash
 wget https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh
 bash Anaconda3-2021.11-Linux-x86_64.sh
-source0 ~/.bashrc
+source ~/.bashrc
 ```
 
 
 
+### 2.2.1. source ~/.bashrc 명령어가 자동으로 되지 않을경우
+
 ```bash
-$wget https://repo.anaconda.com/archive/Anaconda3-2022.://10-Linux-x86_64.sh
+echo "source ~/.bashrc" > ~/.bash_profile
+```
+
+```bash
+$wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
 bash Anaconda3-2022.10-Linux-x86_64.sh
 source ~/.bashrc
 ```
@@ -81,7 +87,53 @@ source ~/.bashrc
 wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
 ```
 
+```bash
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+```
+
+## 2.3. jupyterhub 환경 등록
+
+### 2.3.1. 순서
+
+```bash
+# 1. 주피터에 등록된 환경 리스트 확인
+jupyter kernelspec list
+
+# 2. 콘다 환경 activate 후 pkg 설치
+pip install ipykernel
+conda install nb_conda_kernels
+
+# 3. 커널 등록
+# 에러 발생시 pip install ipykernel
+python -m ipykernel install --user --name <My kernel name> --display-name <Module name>
+python -m ipykernel install --user --name module --display-name module
+
+
+# 4. 주피터에 등록된 환경 리스트 확인
+jupyter kernelspec list
+```
+
+### 2.3.2. 등록 삭제
+
+```bash
+jupyter kernelspec uninstall <my kernel name>
+```
 
 
 
+
+
+## 2.4. 아나콘다 삭제
+
+### 2.4.1. 
+
+```bash
+conda install anaconda-clean
+anaconda-clean #--yes 스킵옵션
+anaconda-clean --yes
+
+이후 anaconda3 (또는 miniconda3) 폴더 삭제
+
+source ~/.bashrc 
+```
 
