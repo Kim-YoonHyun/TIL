@@ -329,5 +329,23 @@ np.nan_to_num(a)
 np.nan_to_num(a, nan = -1)
 ```
 
+## 2.12. 연산
 
+### 2.12.1. 제곱
+
+```python
+np.square(ary)
+```
+
+### 2.12.2. 제곱근
+
+```python
+np.sqrt(ary)
+```
+
+### 2.12.3. 표준편차(STD)
+
+```python
+np.std(ary)
+```
 

@@ -394,8 +394,12 @@ df['column'] = df['column'].apply(lambda x: temp(x))	# apply 변환
 ### 3.2.6. 행 순서대로 추출 
 
 ```python
-for row in df.iterrows():
+for idx, row in df.iterrows():
     print(row)
+    
+# tqdm 적용
+for idx, row in tdqm(df.iterrows(), total=len(df)):
+    pass
 ```
 
 

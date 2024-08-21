@@ -133,7 +133,7 @@ str.endswith('확장자')		# 특정 확장자 설정
 ### 2.2.3. 파일 유무 확인
 
 ```python
-os.isfile(path)
+os.path.isfile(path)
 ```
 
 

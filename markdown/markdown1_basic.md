@@ -12,7 +12,7 @@
 
 <span style="color:red">HTML 코드를 통해 글자 색 변경</span>
 
-> Blockqoute
+> Blockqoute (>)
 
 1. First item
 2. Second item
@@ -57,7 +57,7 @@ Mack_down = {
 
 [^1]:이 명령어를 통해 footnote 를 작성합니다.
 
-### heading ID(무슨 기능인지는 모르겠음) {#custom-id}
+### heading ID{#custom-id}
 
 term
 
