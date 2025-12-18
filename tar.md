@@ -36,6 +36,26 @@ tar -xvf <파일명>.tar
 tar -zcvf <파일명>.tar.gz <폴더명>
 ```
 
+- 특정 확장자 제외 압축
+
+  ```bash
+  tar --exclude='*.csv' -zcvf <파일명>.tar.gz <폴더명>
+  ```
+
+- 특정 디렉토리 제외 압축
+
+  ```bash
+  tar --exclude='my_folder/tmp/*' -zcvf <파일명>.tar.gz <폴더명>
+  ```
+
+  ```bash
+  tar --exclude='project/module1/*' \
+      --exclude='project/module2/*' \
+      -zcvf <파일명>.tar.gz <폴더명>
+  ```
+
+  
+
 ### 압축해제
 
 ```bash

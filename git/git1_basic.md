@@ -308,4 +308,17 @@ git config --global user.email 'my_email@example.com'
    git clone git@github.com:Kim-YoonHyun/mypackage.git
    ```
 
-   
+
+### git 커밋 메시지 명세
+
+```bash
+<type>: <short summary>
+
+feat: 새로운 기능
+fix: 버그 수정
+docs: 문서 변경
+refactor: 리팩토링 (기능 변화 없음)
+test: 테스트 코드 추가/수정
+chore: 빌드 설정, 패키지 업데이트 등 자잘한 작업
+```
+

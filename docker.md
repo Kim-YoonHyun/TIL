@@ -30,8 +30,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # run_api.py 기준 디�
 json_path = os.path.join(BASE_DIR, "data_module", "supports", "supports.json")
 ```
 
-
-
 ## 순서
 
 ### (권한문제가 있는 경우) 권한 설정
@@ -46,8 +44,6 @@ su -<user>
 # user 계정에서 권한 확인
 docker info
 ```
-
-
 
 ### 환경 설정 추출
 
@@ -71,7 +67,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # 루트 경로 설정
-# ENV PYTHONPATH=/app 
+ENV PYTHONPATH=/app 
 
 # 종속성 복사 및 설치
 COPY requirements.txt .
@@ -88,8 +84,6 @@ CMD ["python", "run_api.py"]
 
 ```
 
-
-
 ### Dockerfile 생성 - conda
 
 ```dockerfile
@@ -99,19 +93,19 @@ FROM continuumio/miniconda3
 # Step 2: 작업 디렉토리 설정 (app 은 디렉토리 명이 아니라 진짜 app 으로 적음)
 WORKDIR /app
 
+# 환경 변수 설정
+ENV PYTHONPATH=/app
+
 # Step 3: 전체 모듈 복사
 COPY . .
 
 # Step 4: conda 환경 생성
 RUN conda env create -f environment.yml
 
-# 환경 변수 설정
-ENV PYTHONPATH=/app
-
 # Step 5: conda 환경 활성화 설정
 SHELL ["conda", "run", "-n", "<가상환경이름>", "/bin/bash", "-c"]
 
-# Step 6: FastAPI 실행
+# Step 6: 실행
 CMD ["conda", "run", "-n", "<가상환경이름>", "python", "run_api.py"]
 ```
 
@@ -192,6 +186,13 @@ docker rmi a1b2c3d3e4f5 # ID 로 삭제
 
 ```bash
 docker run -v <데이터경로>:<데이터경로> -p 7010:7010 mobility_api
+```
+
+```bash
+docker run --rm \
+    -v /home/data/bus:/data/kimyh/bus/data_raw \
+    -v /home/rmteam/mobility_api/result:/home/kimyh/python/project/2024/08_NG/whole_module/result \
+    -p 6342:7050 mobility_api
 ```
 
 ### 파일 저장시

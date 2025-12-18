@@ -46,7 +46,7 @@ sched.start()
 ### 2.3.2. () 분마다 실행
 
 ```python
-@sched.scheduled_job('interval', minute=25, id='test_1')
+@sched.scheduled_job('interval', minutes=25, id='test_1')
 def job1():
     print(f'job1 : {time.strftime("%H:%M:%S")}')
 sched.start()

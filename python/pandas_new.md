@@ -51,5 +51,25 @@ df['A'][df['A'] >= 10] = np.nan
 '''
 ```
 
+## 행 관련
+
+```python
+.dropna(subset=['col1'])	# col1 기준 결측치 삭제
+.drop(columns='col1')		# col1 삭제
+.sort_values(by='col1')		# col1 기준 정렬
+.rename(columns={'old_nm':'new_nm'})  # 이름 변경
+
+# 'speed' 단어 포함한 행만 추출
+filtered = df[df['value1'].str.contains('speed', case=False, na=False)]
+'''
+case=False : 대소문자 미구분
+na=False NaN 값이 있는 경우 에러가 아닌 False 취급
+'''
+```
+
+
+
+
+
 
 
