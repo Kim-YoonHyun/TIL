@@ -82,9 +82,8 @@ sorted_dict = dict(sorted(my_dict.items(),
 ### 2.2.2. key 기준
 
 ```python
-sorted_dict = dict(sorted(my_dict.items(), 
-                          key=lambda item: item[0],
-                          reverse=False))
+d = {'b': 2, 'a': 1, 'c': 3}
+sorted_dict = dict(sorted(d.items()))
 ```
 
 

@@ -325,11 +325,14 @@ let mut x = 10;
 x += 1; // --> 가능
 ```
 
-### 정수형 타입
+### 타입 모음
 
 ```rust
 i32 // signed 32-bit 정수. -2147483648 ~ 2147483648
 u32 // unsigned 32-bit 정수. 0 ~ 2147483648
+f64 // python 의 float
+bool
+String
 ```
 
 
