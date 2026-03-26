@@ -30,13 +30,19 @@ tar -xvf <파일명>.tar
 
 속도가 느림
 
-v 는 압축 내역을 보여주는 것으로 생략하면 안보임
-
 ### 2.2.1. 압축하기
 
 ```bash
-tar -zcvf <파일명>.tar.gz <폴더명>
+tar -czvf <경로>/<파일명>.tar.gz <폴더명>
 ```
+
+`-c` : 압축 생성 (create)
+
+`-z` : gzip 으로 압축 (gzip)
+
+`-v` : 진행 상황 표시 (verbose)
+
+`-f` : 생성할 파일 경로 + 이름 지정 (file)
 
 - 특정 확장자 제외 압축
 
@@ -55,7 +61,6 @@ tar -zcvf <파일명>.tar.gz <폴더명>
       --exclude='project/module2/*' \
       -zcvf <파일명>.tar.gz <폴더명>
   ```
-
 
 ### 2.2.2. 폴더 명 변경 압축
 
@@ -86,7 +91,7 @@ tar -zcvf output.tar.gz --transform='s|^stage/|system/|' stage/
 `exclude` 와 같이 사용
 
 ```bash
-tar -zcvf output.tar.gz --transform='s|^stage/|system/|' \
+tar -czvf output.tar.gz --transform='s|^stage/|system/|' \
 	--exclude='*/old' \
 	--exclued='*/log' \
 	stage/
@@ -95,9 +100,9 @@ tar -zcvf output.tar.gz --transform='s|^stage/|system/|' \
 ### 압축해제
 
 ```bash
-tar -zxvf <파일명>.tar.gz
-tar -zxvf <파일명>.tar.gz -C <폴더명> # 덮어쓰기
-tar -zxvf <파일명>.tar.gz --strip-components=1  # 상위 폴더 1개 제거
+tar -xzvf <파일명>.tar.gz
+tar -xzvf <파일명>.tar.gz -C <폴더명> # 덮어쓰기
+tar -xzvf <파일명>.tar.gz --strip-components=1  # 상위 폴더 1개 제거
 ```
 
 

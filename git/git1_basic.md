@@ -1,233 +1,268 @@
-# 1. 개요
-
 버전관리를 위한 커밋 도구
 
-## 1.1. 최초 커밋 시
+# 방법
 
-```bash
-1. $ git init (2.1)
-2. $ git status (2.2)  (필수는 아님)
-3. $ git add . (2.3.1)
-4. $ git commit -m 'initial commit'  (2.4.1)
-5. github 사이트에 원격저장소 생성
-6. $ git remote add origin https://github.com/<username>/<저장소이름>.git  (2.8.1)
-7. $ git push origin master (2.8.2)
-8. github에서 push 확인
-```
+1. git 생성
+   ```bash
+   git init
+   ```
 
-## 1.2. 최초 커밋 이후
+2. 상태 확인
+   ```bash
+   git status
+   ```
 
-```bash
-1. $ git status (2.2)  (필수는 아님)
-2. $ git add . (2.3.1)
-3. $ git commit -m 'initial commit'  (2.4.1)
-4. $ git push origin master (2.8.2)
-5. github에서 push 확인
-```
+3. 전부 add
+   ```bash
+   git add .
+   ```
 
-# 2. 명령어
+4. 커밋 진행
+   ```bash
+   git commit -m "initial commit"
+   ```
 
-## 2.1. git 시작
+5. github 사이트에서 원격저장소(레파지토리) 직접 생성
 
-- 해당 명령어를 최초로 git 버전 관리가 가능해짐
-- 숨김파일 형식으로 .git 폴더가 만들어짐
-- <span style="color:red">절대로 상위폴더(또는 하위폴더)에 추가로 init 을 하면 안됨</span>
-  이 경우 git이 꼬여서 에러가 발생하기에 모든 .git 폴더를 지워버리고 새로 git을 시작하는것 밖에 답이 없음.
+6. 생성된 레파지토리와 연동
+   ```bash
+   git remote add origin https://github.com/<username>/<저장소이름>.git
+   ```
 
-```bash
-$ git init
-```
+   ssh 로 인한 원격서버 연동시(key 설정 필요 --> 하단 상세 참고)
+   ```bash
+   git remote add origin git@github.com:<username>/<저장소이름>.git
+   ```
 
-## 2.2. 상태 확인
+7. push 진행
+   ```git
+   git push origin master
+   ```
 
-- 파일의 변경 사항, stage 여부 등 상태(status) 확인 가능
-- 보통 커밋 전 가장 먼저 확인용으로 입력
+8. github 에서 push 되었는지 확인
 
-```bash
-$ git status
-```
+9. 이후에는 remote 추가 과정없이 바로 진행 가능
+   ```bash
+   $ git status
+   $ git add .
+   $ git commit -m 'initial commit'
+   $ git push origin master
+   ```
 
-## 2.3. 변경사항을 staged
+# 상세
 
-### 2.3.1. 파일 전체
+## commit 전
 
-- 100MB 넘어가면 에러 발생
+- git 시작
 
-```bash
-$ git add .
-```
+  - 해당 명령어를 최초로 git 버전 관리가 가능해짐
 
-### 2.3.2. 특정 파일(폴더) 지정
+  - 숨김파일 형식으로 .git 폴더가 만들어짐
 
-````bash
-$ git add a.txt			# 파일 하나
-$ git add a.txt b.docx	# 파일 여러개
-$ git add *.txt			# 특정 확장자만 (*은 뭐든지 가능하다는 의미)
-$ git add test_folder/	# 특정 폴더 및 모든 하위 파일
-````
+  - ~~<span style="color:red">절대로 상위폴더(또는 하위폴더)에 추가로 init 을 하면 안됨</span>~~
+    ~~이 경우 git이 꼬여서 에러가 발생하기에 모든 .git 폴더를 지워버리고 새로 git을 시작하는것 밖에 답이 없음.~~
 
-### 2.3.3. stage 에서 제거(최초 커밋 이후)
+  - git 의 상위에 .git 을 생성하고 하위 .git 의 커밋 이력을 전부 옮기는 식으로 기존 커밋 보존 가능
+    ```bash
+    git init
+    ```
 
-``` bash
-$ git restore --staged a.txt	# a.txt를 add 에서 삭제
-```
 
-### 2.3.4. stage 에서 제거(최초 커밋 전)
+- 상태 확인
 
-```bash
-$ git rm --cached a.txt
-```
+  - 파일의 변경 사항, stage 여부 등 상태(status) 확인 가능
 
-## 2.4. commit
+  - 보통 커밋 전 가장 먼저 확인용으로 입력하며 **필수 과정은 아님**
+    ```bash
+    git status
+    ```
 
-### 2.4.1. 기본 커밋
 
-```bash
-$ git commit -m '<커밋 메세지>'
-```
+- 내부 내용 올리기
 
-### 2.4.2. 커밋 수정
+  - 100MB 넘어가면 에러 발생
 
-- push 후에는 불가능
+  - 전체 올리기
 
-```bash
-$ git commit --amend 
-```
+    ```bash
+    git add .
+    ```
 
-### 2.4.3. 없는 파일 커밋
+  - 특정 파일 지정
+    ```bash
+    $ git add a.txt			# 파일 하나
+    $ git add a.txt b.docx	# 파일 여러개
+    $ git add *.txt			# 특정 확장자
+    $ git add test_folder/	# 특정 폴더 및 모든 하위 파일
+    ```
+    
+  - add 취소
+    ```bash
+    git restore --staged .
+    ```
+  
+    
 
-```bash
-$ git re <삭제된 파일 이름>
-```
+## 내역 삭제
 
-## 2.5. commit 조회
+- stage 제거 (커밋 전)
 
-- 일정 이상 넘어가면 과하게 많은 커밋내역으로 에러 발생
+  ```bash
+  git rm --cached a.txt
+  ```
 
-### 2.5.1. 모든 커밋 내역 조회
+- stage 제거 (커밋 후)
+  ```bash
+  git restore --staged a.txt
+  ```
 
-```bash
-$ git log
-```
+## commit
 
-### 2.5.2. 최근 1개 커밋 조회
+- 기본
+  ```bash
+  git commit -m "<메시지>"
+  ```
 
-```bash
-$ git log -1
-```
+- 수정(push 이후 불가능)
+  ```bash
+  git commit --amend
+  ```
 
-### 2.5.3. 커밋 내역 한줄 조회
+- "삭제된 상태" 를 commit
+  ```bash
+  git re <삭제된 파일명>
+  ```
 
-```bash 
-$ git log --oneline
-```
+- 내역 조회
+  ```bash
+  git log
+  ```
 
-### 2.5.4. 최근 4개 한줄로
+- 최근 1개 커밋 조회
+  ```bash
+  git log -1
+  ```
 
-```bash
-$ git log -2 --oneline
-```
+- 커밋 내역 한줄 조회
+  ```bash
+  git log --oneline
+  ```
 
-## 2.6. commit 이동
+- 최근 n 개 1줄로 조회
+  ```bash
+  git log -2 --oneline
+  ```
 
-### 2.6.1. 특정 commit 이동
+## commit 이동
 
-```bash
-$ git checkout <commit id>
-```
+- 특정 id 이동
+  ```bash
+  git checkout <commit id>
+  ```
 
-### 2.6.2. 최신 HEAD commit 이동
+- 최신 head 커밋 이동
+  ```bash
+  git  checkout -
+  ```
 
-```bash
-$ git checkout -
-```
+## commit 삭제
 
-## 2.7. commit 삭제
+- 취소 + unstaged
+  ```bash
+  git reset --mixed HEAD^
+  git reset HEAD^
+  ```
 
-- 가능하면 commit은 **삭제하지 않고** 갱신만 이어가는게 좋음.
+- 취소 + staged
+  ```bash
+  git reset --soft HEAD^
+  ```
 
-### 2.7.1. 커밋취소+파일 unstaged
+## commit 취소
 
-- 옵션이 없을경우 default 설정임
+- 마지막 2개 취소
+  ```bash
+  git reset HEAD~2
+  ```
 
-```bash
-$ git reset --mixed HEAD^
-$ git reset HEAD^
-```
+- 취소 + 파일삭제
+  ```bash
+  git reset --hard HEAD^
+  ```
 
-### 2.7.2. 커밋취소+파일 staged
+## remote 설정
 
-```bash
-$ git reset --soft HEAD^
-```
+- 기본적으로 github 계정 및 연동가능한 저장소가 존재해야 진행 가능
 
-### 2.7.3. 특정 커밋 취소
+- git 대상 폴더와 연결
+  ```bash
+  git remote add origin https://github.com/<username>/<저장소이름>.git
+  ```
 
-```bash
-$ git reset HEAD~2	# 마지막 2개 커밋 취소
-```
+- 원격서버에서 연결
+  ```bash
+  git remote add origin git@github.com:<username>/<저장소이름>.git
+  ```
 
-### 2.7.4. 커밋취소 + 파일삭제
+- 원격 저장소 유무 확인
+  ```bash
+  git remote -v
+  ```
 
-- 별로 추천하지 않음
+- 연결 삭제
+  ```bash
+  git remote rm
+  ```
 
-```bash
-$ git reset --hard HEAD^
-```
+- url 변경
+  ```bash
+  $ git remote set-url origin https://github.com/<username>/<저장소이름>.git
+  ```
 
-## 2.8. remote(원격저장소)
-
-- github 사이트에 계정 및 원격저장소가 생성되어있다는 가정 하에 진행
-
-### 2.8.1. git 폴더와 연결
-
-```bash
-$ git remote add origin https://github.com/<username>/<저장소이름>.git
-```
-
-### 2.8.2. push
+## push
 
 - 커밋 내역을 원격저장소에 저장
 
 - 최초커밋 및 git 폴더와 연결되어있지 않으면 불가능
+  ```bash
+  git push origin master
+  ```
 
-```bash
-$ git push origin master
-```
+- 강제 push
+  ```bash
+  git push origin master -f
+  ```
 
-### 2.8.3. 강제 push
+- 대용량 파일을 올리는 경우
+  LFS 를 쓰는 것을 할 수 있다.
+  ※ 무료계정은 LFS 저장소를 1GB 까지만 제공함
 
-```bash
-$ git push origin master -f
-```
+  - LFS 설치
+    ```bash
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+    sudo apt-get install git-lfs
+    ```
 
-### 2.8.4. pull
+  - 활성화
+    ```bash
+    git lfs install
+    ```
+
+  - 이미 설치된 100MB 파일을 LFS 로 전환
+    ```bash
+    git lfs migrate import --everything --include="대용량_파일명.확장자"
+    ```
+
+    
+
+## pull
 
 - 원격저장소의 커밋 내역을 불러옴
+  ```bash
+  git pull origin master
+  ```
 
-```bash
-$ git pull origin master
-```
-
-### 2.8.5. 원격저장소 유무
-
-```bash
-$ git remote -v
-```
-
-### 2.8.6. 원격저장소 연결 삭제
-
-```bash
-$ git remote rm
-```
-
-### 2.8.7. 원격저장소 url 변경
-
-```bash
-$ git remote set-url origin https://github.com/<username>/<remotename>.git
-```
-
-### 2.8.8. clone
+## clone
 
 ```bash
 $ git clone https://github.com/<username>/<remotename>.git
@@ -237,44 +272,35 @@ $ git clone https://github.com/<username>/<remotename>.git
 
 참고: [토큰생성방법](https://yian.tistory.com/38)
 
+## 그 외
 
+- main 을 master로 변경
+  ```bash
+  git branch -M master
+  ```
 
-## 2.9. 그 외
+- 현재 내용 임시공간에 보관
+  ```bash
+  git stash
+  ```
 
-### 2.9.1. main 을 master로 변경
+- 임시공간에 보관된 정보 가져옴
+  ```bash
+  git stash pop
+  ```
 
-- 위의 명령어로만 활용하면 이 경우는 없음
+-  git 되돌리기
+  ```bash
+  git reset --hard
+  ```
 
-```bash
-$ git branch -M master
-```
+- 사용자 이름 설정
+  이걸 해주지 않으면 잔디가 생성되지 않는 경우가 있음
 
-### 2.9.2. 현재 내용 임시공간에 보관
-
-```bash
-$ git stash
-```
-
-### 2.9.3. 임시공간에 보관된 정보 가져옴
-
-```bash
-$ git stash pop
-```
-
-### 2.9.4. git 되돌리기
-
-```bash
-$ git reset --hard
-```
-
-### 2.9.5. 사용자 이름 설정
-
-- 이걸 해주지 않으면 잔디가 생성되지 않는 경우가 있음
-
-```bash
-git config --global user.name 'My name'
-git config --global user.email 'my_email@example.com'
-```
+  ```bash
+  git config --global user.name 'My name'
+  git config --global user.email 'my_email@example.com'
+  ```
 
 ## 원격 서버에서 ssh git push&clone
 
@@ -301,6 +327,13 @@ git config --global user.email 'my_email@example.com'
    git remote add origin git@github.com:your-username/my-project.git
    ```
 
+   - remote 삭제하는 방법
+     ```bash
+     git remote remove origin
+     ```
+
+     
+
 5. push 진행
 
 6. clone 을 하려는 경우
@@ -309,7 +342,7 @@ git config --global user.email 'my_email@example.com'
    ```
 
 
-### git 커밋 메시지 명세
+## git 커밋 메시지 명세
 
 ```bash
 <type>: <short summary>

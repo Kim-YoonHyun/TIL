@@ -187,3 +187,56 @@ glob('*.txt')		# 현재 디렉터리의 .txt 파일
 glob(r'C:\U*')		# C:\ 경로에서 U로 시작하는 파일. 이때 r 은 원시(raw) 문자열
 ```
 
+## os.walk
+
+- 특정 디렉토리를 탐색 제외하는 방법
+
+```python
+import os
+
+root_dir = './my_project'
+exclude = {'node_modules', '.git', 'venv'} # 제외할 디렉토리 이름들
+
+for root, dirs, files in os.walk(root_dir):
+    # dirs 리스트를 필터링하여 제외 항목을 제거
+    dirs[:] = [d for d in dirs if d not in exclude]
+    
+    for name in files:
+        print(os.path.join(root, name))
+```
+
+- 와일드 카드 (`*`) 를 포함해서  파일명을 탐색 제외하는 방법
+
+```python
+import os
+import fnmatch
+
+root_dir = '.'
+exclude_pattern = '*.tmp' # 제외하고 싶은 패턴
+
+for root, dirs, files in os.walk(root_dir):
+    # 패턴에 매칭되지 않는 파일만 리스트 생성
+    filtered_files = [f for f in files if not fnmatch.fnmatch(f, exclude_pattern)]
+    
+    for name in filtered_files:
+        print(os.path.join(root, name))
+```
+
+```python
+import os
+import fnmatch
+
+root_dir = '.'
+patterns = ['*.exe', '*.zip', 'backup_*']
+
+for root, dirs, files in os.walk(root_dir):
+    # 각 파일이 패턴들 중 하나라도 일치하면 제외
+    filtered_files = [
+        f for f in files 
+        if not any(fnmatch.fnmatch(f, p) for p in patterns)
+    ]
+    
+    for name in filtered_files:
+        print(os.path.join(root, name))
+```
+
