@@ -50,6 +50,10 @@
   minikube start --driver=docker
   ```
 
+  ```bash
+  minikube start --driver=docker --memory=24576 --cpus=3
+  ```
+  
 - 잘 시작됬는지 확인
   ```bash
   kubectl get nodes
@@ -233,6 +237,7 @@ minikube mount /home/gj_anly/cryptogram:/home/gj_anly/cryptogram
 
 이는 tmux 등으로 계속 켜둬야하는 특성상 백그라운드에 돌릴 필요가 있다.
 이에, 가능하면 `systemd` 를 통한 서비스 등록을 권장한다.
+마운트가 추가되면 서비스 설정 파일을 하나 더 만드는 식으로 하는 것이 권장된다.
 
 - 서비스 설정 파일 생성
   ```bash
@@ -691,12 +696,20 @@ spec:
 
 
 
-# 모음
+# 명령어 모음
 
-- 컨테이너 확인
-  ```bash
-  kubectl get nodes
-  ```
+## 확인
+
+```bash
+kubectl get nodes  # 컨테이너 확인
+kubectl get pods  # 파드 확인
+kubectl get pods -w # 실시간으로 보기
+kubectl get pods --all-namespaces  # 네임 스페이스 확인
+kubectl get svc  # 서비스 확인
+kubectl get cronjob  # cronjob 확인
+```
+
+## 배포
 
 - 배포 실행
 
@@ -742,11 +755,7 @@ spec:
   kubectl delete pod <파드이름>
   ```
 
-- 파드 상태 확인
-  ```bash
-  kubectl get pods
-  kubectl get pods -w # 실시간으로 보기
-  ```
+  
 
 - 파드 로그 확인
   ```bash
@@ -757,11 +766,6 @@ spec:
     ```bash
     kubectl logs -f -l app=analy-consumer --max-log-requests=10
     ```
-
-- 크론잡 확인
-  ```bash
-  kubectl get cronjob
-  ```
 
 - 컨테이너 내부에 들어가기
 
@@ -776,10 +780,7 @@ spec:
   kubectl exec -it <파드이름> -- cat /path/to/file
   ```
 
-- 네임스페이스 확인
-  ```bash
-  kubectl get pods --all-namespaces
-  ```
+  
 
 - 컨테이너 내부 파일 복사해서 가져오기
   ```bash
@@ -822,3 +823,240 @@ spec:
 이를 해결하기 위한 방법으로는 간단하게는 `host = host.minikube.internal`를 하는 방법이 있음.
 
 아예 다른 IP 인 경우 대부분은 문제없이 작동함
+
+# 문법
+
+```yaml
+# 모든 k8s YAML 파일은 반드시 4가지로 시작됨
+# 1. apiVersion : 이 기능을 제공하는 K8s 의 버전
+# 2. kind : 만들고자하는 객체의 종류
+# 3. metadata : 해당 객체의 이름표
+# 4. spec : 해당 객체가 가져야할 "원하는 상태" 의 상세 규격
+
+# 컨슈머 객체
+apiVersion: apps/v1
+
+# Deployment 는 "죽지 않고 계속 실행(Always)되어야 하는 프로그램" 을 관리하는 가장 대표적 설정
+# 웹 서버 또는 무한 루프식 워커에 사용
+kind: Deployment
+
+# 이 Deployment 의 고유 이름 설정
+metadata:
+  name: analy-consumer
+  
+spec:
+  
+  # 오토힐링 및 스케일링 담당
+  # 항상 10개의 컨테이너가 떠 있도록 유지
+  # 만약 서버 하나가 물리적으로 불타서 컨테이너 3개가 죽으면 
+  # 다른 정상 서버에서 즉시 3개를 띄워 항상 10개 유지
+  replicas: 10  
+  
+  # analy-consumer 라는 이름표를 달고 있다는 식별(추적)을 하는 설정
+  selector:
+    matchLabels:
+      app: analy-consumer
+  
+  # Deployment 가 찍어낼 pod 의 명세서
+  # K8s 에서는 컨테이너를 직접 띄우지 않고 pod 라는 캡슐로 한번 감싸서 띄움
+  template:
+    
+    # 이 pod의 이름표 (selector 와 반드시 일치해야 Deployment 가 인식함)
+    metadata:
+      labels:
+        app: analy-consumer
+    
+    spec:
+    
+      # pod 캡슐 안에 들어갈 실제 docker 컨테이너들의 정보
+      containers:
+      
+      # 임의 지정한 컨테이너의 이름
+      - name: consumer
+      
+      	# 입력 받은 인자를 변수로 받아들이는 설정 (run_minikube.sh 연계)
+        image: ${MODULE_IMAGE}
+        
+        # 도커허브에서 이미지 다운을 하지 않고 무조건 현재 컴퓨터의 로컬 이미지를 쓰라는 강제 사용 설정
+        imagePullPolicy: Never
+        
+        # 파드 작동시 바로 실행될 명령어
+        command: [
+          "python", "-m", "scripts.run", 
+          "--name", "analy_module", 
+          "--run_mode", "normal", 
+          "--env", "dev", 
+          "--role", "consumer",
+          "--engine", "k8s",
+        ]
+        # 파드가 바로 complete 되어 끝나버리면 내부에 들어갈 수 없는 것을 방지하고 들어가보기 위한 무한 실행용
+        # command: ["sleep", "infinity"]
+        
+        # 서버 폭주를 막는 K8s 의 핵심 리소스 관리 설정
+        resources:
+          # 최소
+          requests:
+            memory: "100Mi" # 최소 보장 메모리
+            cpu: "100m"     # 최소 보장 CPU
+          # 최대
+          limits:
+            memory: "500Mi" # 💡 이 이상 쓰면 K8s가 파드를 강제로 죽이고 재시작함 (서버 보호)
+            cpu: "500m"     # 💡 최대 CPU 한계치
+            
+        # K8s 는 여러 컴퓨터에 걸쳐 작동하는 것을 전제로 하기 때문에
+        # 도커의 단순 볼륨 마운트보다 설정이 복잡함
+        volumeMounts:
+        - name: ipconfig-vol
+          mountPath: /ipconfig_cryp.ini
+          subPath: ipconfig_cryp.ini
+          readOnly: true
+        - name: cryptogram-vol
+          mountPath: /cryptogram
+          readOnly: true
+      volumes:
+      - name: ipconfig-vol
+        
+        # 설정파일을 텍스트 덩어리 째로 K8s DB 에 저장 후 파일처럼 컨테이너 안에 꽂아줌
+        configMap:
+          name: ipconfig-cmap
+      - name: cryptogram-vol
+        
+        # 도커와 유사한 마운트 방식
+        hostPath:
+          path: /home/gj_anly/cryptogram
+
+# YAML 파일 전용 문서 구분자. 위는 Deployment 지만 아래는 완전히 별개의 K8s 객체로 인식
+---
+# producer 객체
+apiVersion: batch/v1
+
+# 특정 시간에만 생성되어 작업이 끝나면 바로 죽도록 (Exit) 만든 객체
+kind: CronJob
+metadata:
+  name: analy-producer-cron
+ 
+spec:
+  # linux 의 crontab 설정을 그대로 사용
+  schedule: "*/5 * * * *"     # 5분 주기 실행
+  
+  # 5분 안에 작업이 안 끝났을때 새 작업이 바로 실행되지 않도록 다음 스케쥴은 건너뜀(중복 실행 방지)
+  concurrencyPolicy: Forbid
+  
+  # Cronjob 이 5분마다 찍어서 하달하는 job 을 만들기 위한 명세서 역할
+  # 시간이 되면 jobTemplate 의 내용을 그대로 복사해서 Job 객체를 하나 생성하면
+  # 그 Job 은 자신의 template 을 보고 Pod 를 생성하여 일을 시키는 구조
+  # 굳이 바로 Job 을 실행하지 않고 JobTemplate 를 만드는 이유는 역할 분담을 위해서임
+  # 만약 Cronjob 이 Pod 를 직접 관리한다면 CronJob 의 소스 코드 안에 
+  # "시간 일정 계산+Pod 재시작 + Pod 성공/실패 판별" 로직이 전부 들어가야해서 너무 무거워짐
+  # 이에 K8s 는 Job 이라는 1회성 배치 처리기를 재활용하기를 선택
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          # 항상 재시작(always) 하는 Deploment 와 다르게
+          # CronJob 은 한번 실행 후 종료가 목적이기 때문에 끝나면 Completed 상태로 둠
+          # 에러가 났을 경우 (OnFailure) 만 다시 시도
+          restartPolicy: OnFailure 
+          containers:
+          - name: producer
+            image: ${MODULE_IMAGE}
+            imagePullPolicy: Never
+            command: [
+              "python", "-m", "scripts.run", 
+              "--name", "analy_module", 
+              "--run_mode", "normal", 
+              "--env", "dev", 
+              "--role", "producer",
+              "--engine", "k8s",
+            ]
+            # command: ["sleep", "infinity"]
+            resources:
+              requests:
+                memory: "100Mi" 
+                cpu: "100m"     
+              limits:
+                memory: "500Mi" 
+                cpu: "500m"     
+            volumeMounts:
+            - name: ipconfig-vol
+              mountPath: /ipconfig_cryp.ini
+              subPath: ipconfig_cryp.ini
+              readOnly: true
+            - name: cryptogram-vol
+              mountPath: /cryptogram
+              readOnly: true
+          volumes:
+          - name: ipconfig-vol
+            configMap:
+              name: ipconfig-cmap
+          - name: cryptogram-vol
+            hostPath:
+              path: /home/gj_anly/cryptogram
+              
+
+```
+
+- selector 관련 추가 설명
+  `Deployment` 의 경우 24시간 내내 죽은 Pod 를 살려내어 **지정된 갯수** 를 유지하는 것이 유일한 목표임.
+  파드를 누가 띄웠는지는 개의치 않고 `app: analy-consumer` 라는 이름표가 붙은 Pod 가 10개 있는지만을 확인.
+  그렇기 때문에 어떤 이름표를 찾을지 명시하는 `selector(+matchLables)` 가 **필수**로 들어가야함.
+
+  하지만 Cronjob 의 경우 갯수 유지가 아닌 **이번 회차의 작업**을 끝마치는 것이 목표임.
+  만약 job 에도 사람이 직접 selector 를 넣어두면 5분 뒤 `analy-producer` 라는 작업자가 5분만에 작업을 끝내지 못했을 때 그 다음 진행시 기존 작업을 가로채는 식의 이상한 간섭이 발생해 꼬일 수 있음.
+  이에, job 객체가 생성될 때 마다 **절대 겹치지 않는 고유한 무작위 해시값을 자동생성**하는 식으로 되어있음.
+
+- k3s 운영기로 넘어갈 시 추가
+  `docker compose` 또는 `minikube` 환경에서는 로컬에 띄워둔 별도의 Redis 를 바라보게 설계되었으나
+  운영으로 넘어가면 **Redis 자체로 K8s가 관리하는 자원으로 만들고 K8s 전용 통신망을 뚧어주어야 함**
+
+  ```yaml
+  ... (기존 예제와 동일)
+  
+  ---
+  # Redis 를 띄워줄 Deployment. 데이터 무결성이 중요하므로 딱 1개만 띄워서 중앙 집중형 queue 로 사용
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-master
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redis
+    template:
+      metadata:
+        labels:
+          app: redis
+      spec:
+        containers:
+        - name: redis
+          image: redis:7-alpine  # 구워온 Redis 이미지 태그와 동일하게
+          imagePullPolicy: Never   # [핵심] 인터넷에서 받지 말고 서버에 있는 것을 활용
+          
+          # 이 파드는 6379번 포트를 열고 트래픽을 기다리겠다고 K8s시스템에 신고하는 역할
+          ports:
+          - containerPort: 6379
+  
+  ---
+  # Redis 연결 통로 (Service - 파이썬이 접속할 이름)
+  apiVersion: v1
+  # Service 는 K8s 내부의 고정된 주소(DNS)이자 로드 밸런서 역할을 하는 객체
+  kind: Service
+  
+  # 파이썬 코드 내부에 정의한 임의의 도메인 명칭
+  metadata:
+    name: redis-svc
+  spec:
+    # 이 Service 가 어떤 파드에 트래픽을 보낼지 그 타겟을 찾는 기준
+    # 앞서 만든 Redis Deployment 의 redis 이름표를 단 파드를 추적
+    selector:
+      app: redis
+    
+    # 파이썬 워커 (consumer) 들이 접속할 Service 의 포트.
+    # 일반적으로 둘다 6379로 맞춤
+    ports:
+    - port: 6379
+      targetPort: 6379 # Service 가 트래픽을 받아서 실제 Redis 파드의 몇 번 포트로 꽂아줄지 결정
+  ```
+
+  

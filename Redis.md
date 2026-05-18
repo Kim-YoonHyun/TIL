@@ -85,14 +85,61 @@
 
 ### 3) 검증
 
-- K8s 안의 Redis 를 로컬로 끌어오기
+- port-forward
+  K8s 안의 Redis 를 로컬로 끌어오기
   ※ 로컬에서 파이썬을 돌리려면 K8s 안에 있는 Redis에 접근할 수 있어야 한다. 이를 위해 **새로운 터미널 창을 열고** 포트포워딩을 진행해야함
-
+  
   ```bash
   kubectl port-forward svc/redis-svc 6379:6379
   ```
-
+  
   이 명령어를 켜두면 로컬 PC 에서 `127.0.0.1:6379` 로 가는 모든 통신이 K8s 내부의 Redis 파드로 들어가게됨
+  
+- NodePort
+  운영환경에서는 port-forward 같은 임시적 연결보다는 kubernetes 기본 서비스 타입인 NodePort 또는 LoadBalancer 를 사용하는 것이 안정적
+  각 워커 노드의 IP 와 특정 포트를 통해 서비스에 접근하는 방식이며 별도의 외부 로드밸런서 장비가 없을때 주로 사용
+
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-nodeport
+  spec:
+    type: NodePort
+    selector:
+      app: redis  # Redis Pod의 label과 일치해야 함
+    ports:
+      - protocol: TCP
+        port: 6379      # 서비스 내부 포트
+        targetPort: 6379 # Pod 내부 포트
+        nodePort: 31000  # 외부에서 접속할 포트 (생략 시 자동 할당)
+  ```
+
+- LoadBalancer
+  AWS, GCP, Azure 와 같은 클라우드 환경에서 가장 권장되는 방식. 
+
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: redis-loadbalancer
+  spec:
+    type: LoadBalancer
+    selector:
+      app: redis
+    ports:
+      - protocol: TCP
+        port: 6379
+        targetPort: 6379
+  ```
+
+#### 3-1) 서비스 실행
+
+```yaml
+kubectl apply -f <파일이름>.yaml
+```
+
+
 
 # 모음
 

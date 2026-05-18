@@ -326,6 +326,13 @@ services:
   ```bash
   docker compose run --rm <서비스이름1>
   ```
+  
+- Redis 분산처리 실행
+  ```bash
+  docker-compose up -d --scale analy-consumer=3
+  ```
+
+  
 
 
 ### 6) 저장
@@ -537,7 +544,7 @@ host GPU 를 할당하기 위해서는 우선 host 에 NVIDIA Container Toolkit 
   docker start <컨테이너 이름>
   ```
 
-# 모음
+# 명령어 모음
 
 ## 접속
 
@@ -545,6 +552,8 @@ host GPU 를 할당하기 위해서는 우선 host 에 NVIDIA Container Toolkit 
   ```bash
   docker history <이미지명>
   ```
+
+## 이미지 생성
 
 
 
@@ -571,6 +580,14 @@ docker ps -a
   docker rm -f <ID>
   # -f 는 실행중이어도 강제 중지 및 삭제를 의미
   ```
+
+- 도커 compose 의 경우
+  ```bash
+  docker compose stop # 일시정지
+  docker compose down # 완전히 꺼버림
+  ```
+
+  
 
 ## 디버깅(임시)
 
@@ -633,5 +650,122 @@ gunzip -c <myapp>.tar.gz | pv | docker load
 
 ```bash
 docker image prune
+```
+
+# 문법
+
+예제 코드
+```yaml
+# docker compose 는 x- 로 시작하는 항복을 무시. 즉, 임의로 변수를 선언해두는 공용 저장소 역할
+# & 는 이 저장소에 common-config 라는 이름표를 붙인다는 의미 (아래에서 *로 사용)
+x-common-config: &common-config
+
+  # 사용할 도커 이미지
+  image: test:dev
+  
+  # 컨테이너를 도커의 가상 네트워크에 가두지 않고 호스트 컴퓨터의 네트워크 망을 사용하겠다는 의미
+  network_mode: "host"
+  
+  # 호스트 컴퓨터의 폴더나 파일을 컨테이너 내부로 연결(마운트)
+  # [호스트의경로]:[image내부경로]:[권한] 형태로 설정
+  # ro : read-only, 아무것도 지정하지 않으면 rw (read/write) 가 기본설정됨
+  volumes:
+    - /home/gj_anly/ipconfig_cryp.ini:/ipconfig_cryp.ini:ro
+    - /home/gj_anly/cryptogram:/cryptogram:ro
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+    - /home/gj_anly/bus_rt_monitoring_logs:/app/src/analy_module/log:rw
+  
+  # 컨테이너 안의 OS 에 환경 변수 주입
+  # os.environ.get('REDIS_HOST') 로 아래 값을 꺼내 쓸 수 있음
+  environment:
+    # 파이썬 코드에서 읽어들일 Redis 주소
+    - REDIS_HOST=127.0.0.1
+  
+  # 컨테이너가 사용할 수 있는 물리적 자원 제한
+  deploy:
+    resources:
+      # 최소
+      reservations:
+        cpus: '0.05'      # 최소 보장 CPU 5%
+        memory: 100M     # 최소 보장 메모리
+      # 최대
+      limits:
+        cpus: '0.2'      # 최대 허용 CPU 20%
+        memory: 500M     # 최대 허용 메모리
+
+# ---------------------------------------------------
+# 여기서부터 실제 docker compose 가 읽어들이고 실행하는 영역
+# ---------------------------------------------------
+# 파일의 본체가 시작되는 키워드
+# 이 아래에 들여쓰기 된 항목들은 각각 독립된 하나의 컨테이너로 띄워짐
+services:
+
+  # 임의로 작성한 첫 번째 서비스의 이름
+  redis-queue:
+  
+    # 이 서비스에서 사용할 이미지 
+    image: redis:7-alpine   
+    network_mode: "host" 
+    
+    # 컨테이너 에러 또는 서버 재부팅, 도커 데몬 재시작 등이 있을때
+    # 무조건 이 컨테이너를 다시 살려내라는 강력한 자동 복구 명령
+    restart: always
+    
+  # 임의로 작성한 두 번째 서비스의 이름
+  analy-producer:
+  
+  	# 맨위에서 &로 묶어둔 저장소를 호출(*)
+  	# 이 한줄을 통해 위에 적어둔 image, network 모드 등이 그대로 복사 붙여넣기 됨.
+  	# << 는 이곳에 병합(Merge) 하라는 의미
+    <<: *common-config
+    restart: always 
+    
+    # 컨테이너가 켜지자마자 실행할 명령어
+    # 도커 이미지 내부(Dockerfile)에 설정된 기본 명령어를 무시하고 아래의 명령어를 덮어씌움
+    command: [
+      "python", "-m", "scripts.run", 
+      "--name", "analy_module", 
+      "--env", "dev", 
+      "--run_mode", "normal", 
+      "--role", "producer",
+      "--engine", "docker"
+    ]
+    # 실행 순서 제어
+    # 다른건 몰라도 redis-queue 라는 서비스가 먼저 켜진 다음에 이 서비스를 실행하라는 의미
+    depends_on:
+      - redis-queue
+
+  # 임의로 작성한 세 번째 서비스의 이름
+  analy-consumer:
+    <<: *common-config
+    restart: always
+    command: [
+      "python", "-m", "scripts.run", 
+      "--name", "analy_module", 
+      "--env", "dev", 
+      "--run_mode", "normal", 
+      "--role", "consumer",
+      "--engine", "docker"
+    ]
+    depends_on:
+      - redis-queue
+    
+    deploy:
+    
+      # 지금까지 설정한 이 서비스의 컨테이너를 동시에 2개 복제해서 실행하라는 의미
+      # 위의 common-config 에 작성된 내용에 병합되어 적용됨
+      # 병렬식으로 처리 진행
+      replicas: 2
+
+  data-module:
+    <<: *common-config
+    # image: test:dev
+    command: ["python", "-m", "data_module.run"]
+
+  route-module:
+    <<: *common-config
+    # image: test:dev
+    command: ["python", "-m", "route_module.run"]
 ```
 
